@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+   
+<head>
+  <meta charset="utf-8">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.4.3/tabletop.js"></script>
+ <script src="chart.js"></script> 
+<link rel="stylesheet" type="text/css" href="chart.css">
+
+</head>  
+<body>
+<h2>Number of Plays</h2>
+    <button value="Refresh Page" onClick="window.location.reload()">Refresh</button>
+  
+ <script> 
+//***tabletop script***//
+var public_spreadsheet_url = ''; //***googlesheet key***//
+function renderSpreadsheetData() {
+    Tabletop.init( { key: public_spreadsheet_url,
+                     callback: draw,
+                     simpleSheet: true } )
+}
+function draw(data, tabletop) {
+  // draw chart
+  drawChart(data);
+}
+renderSpreadsheetData();
+
+  </script>
+    </body>
+</html>
