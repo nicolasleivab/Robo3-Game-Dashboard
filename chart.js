@@ -8,7 +8,7 @@ for (i = 0; i < data.length; i++) {
 }
        var max=d3.max(data, function(data) { return data.qty-1+1; }); //*** adding a 0 fixed a data arrange bug ***//
 var margin = {top: 20, right: 5, bottom: 30, left: 40},
-    width = 700 - margin.left - margin.right,
+    width = 500 - margin.left - margin.right,
     height = 250 - margin.top - margin.bottom;
 var x = d3.scale.ordinal()
     .rangeRoundBands([0, width], .25)
