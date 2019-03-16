@@ -6,7 +6,8 @@ for (i = 0; i < data.length; i++) {
   category.push(data[i].level);
     
 }
-       var max=d3.max(data, function(data) { return data.qty-1+1; }); //*** adding a 0 fixed a data arrange bug ***//
+data.forEach(function(d){d.qty = +d.qty;});        // passing values from string to integer
+       var max=d3.max(data, function(data) { return data.qty; }); 
 var margin = {top: 20, right: 5, bottom: 30, left: 40},
     width = 500 - margin.left - margin.right,
     height = 250 - margin.top - margin.bottom;
