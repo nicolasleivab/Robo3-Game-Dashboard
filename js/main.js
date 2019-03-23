@@ -1,194 +1,102 @@
-/*
-*    main.js
-*    Mastering Data Visualization with D3.js
-*    Project 3 - CoinStats
-*/
+/*main js*/
 
-var margin = { left:80, right:100, top:50, bottom:100 },
-    height = 500 - margin.top - margin.bottom, 
-    width = 800 - margin.left - margin.right;
+//** tabletop init function **//
+function init() {     
+  Tabletop.init( { key: '10g_TGtruCriERlXJurPZQk76pvk30U0pkWgbbfzPrjA', //google sheet key
+                   callback: function(data, tabletop) { 
+                       console.log(data)
+                       
+//** D3 js script **//
+var margin = { left:80, right:20, top:50, bottom:100 };
 
-var svg = d3.select("#chart-area")
+var width = 600 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+    
+var g = d3.select("#chart-area")
     .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-var g = svg.append("g")
-        .attr("transform", "translate(" + margin.left + 
-            ", " + margin.top + ")");
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+        .attr("transform", "translate(" + margin.left + ", " + margin.top + ")"); //translating our chart
 
-var t = function(){ return d3.transition().duration(1000); }
-
-var parseTime = d3.timeParse("%d/%m/%Y");
-var formatTime = d3.timeFormat("%d/%m/%Y");
-var bisectDate = d3.bisector(function(d) { return d.date; }).left;
-
-// Add the line for the first time
-g.append("path")
-    .attr("class", "line")
-    .attr("fill", "none")
-    .attr("stroke", "grey")
-    .attr("stroke-width", "3px");
-
-// Labels
-var xLabel = g.append("text")
-    .attr("class", "x axisLabel")
+// X Label
+g.append("text")
     .attr("y", height + 50)
     .attr("x", width / 2)
     .attr("font-size", "20px")
-    .attr("text-anchor", "middle")
-    .text("Time");
-var yLabel = g.append("text")
-    .attr("class", "y axisLabel")
-    .attr("transform", "rotate(-90)")
+    .attr("text-anchor", "middle") //align
+    .attr("transform", "translate(" + margin.left + ", " + margin.top +  ")")
+    .text("Level");
+
+// Y Label
+g.append("text")
     .attr("y", -60)
-    .attr("x", -170)
+    .attr("x", -(height / 2))
     .attr("font-size", "20px")
-    .attr("text-anchor", "middle")
-    .text("Price (USD)")
+    .attr("text-anchor", "middle") //align
+    .attr("transform", "rotate(-90)") //rotate label along y scale
+    .text("Played Time");
 
-// Scales
-var x = d3.scaleTime().range([0, width]);
-var y = d3.scaleLinear().range([height, 0]);
 
-// X-axis
-var xAxisCall = d3.axisBottom()
-    .ticks(4);
-var xAxis = g.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(0," + height +")");
+     
 
-// Y-axis
-var yAxisCall = d3.axisLeft()
-var yAxis = g.append("g")
-    .attr("class", "y axis");
-
-// Event listeners
-$("#coin-select").on("change", update)
-$("#var-select").on("change", update)
-
-// Add jQuery UI slider
-$("#date-slider").slider({
-    range: true,
-    max: parseTime("31/10/2017").getTime(),
-    min: parseTime("12/5/2013").getTime(),
-    step: 86400000, // One day
-    values: [parseTime("12/5/2013").getTime(), parseTime("31/10/2017").getTime()],
-    slide: function(event, ui){
-        $("#dateLabel1").text(formatTime(new Date(ui.values[0])));
-        $("#dateLabel2").text(formatTime(new Date(ui.values[1])));
-        update();
-    }
-});
-
-d3.json("data/coins.json").then(function(data){
-    // console.log(data);
-
-    // Prepare and clean data
-    filteredData = {};
-    for (var coin in data) {
-        if (!data.hasOwnProperty(coin)) {
-            continue;
-        }
-        filteredData[coin] = data[coin].filter(function(d){
-            return !(d["price_usd"] == null)
-        })
-        filteredData[coin].forEach(function(d){
-            d["price_usd"] = +d["price_usd"];
-            d["24h_vol"] = +d["24h_vol"];
-            d["market_cap"] = +d["market_cap"];
-            d["date"] = parseTime(d["date"])
-        });
-    }
-
-    // Run the visualization for the first time
-    update();
-})
-
-function update() {
-    // Filter data based on selections
-    var coin = $("#coin-select").val(),
-        yValue = $("#var-select").val(),
-        sliderValues = $("#date-slider").slider("values");
-    var dataTimeFiltered = filteredData[coin].filter(function(d){
-        return ((d.date >= sliderValues[0]) && (d.date <= sliderValues[1]))
+    // Clean data: string to integer
+    data.forEach(function(d) {
+        d.sumtime = +d.sumtime; d.num = +d.num;
     });
+console.log(data);
 
-    // Update scales
-    x.domain(d3.extent(dataTimeFiltered, function(d){ return d.date; }));
-    y.domain([d3.min(dataTimeFiltered, function(d){ return d[yValue]; }) / 1.005, 
-        d3.max(dataTimeFiltered, function(d){ return d[yValue]; }) * 1.005]);
+const MAX = d3.max(data, function(d) { return d.sumtime }); // assigning d3.max to MAX constant
 
-    // Fix for format values
-    var formatSi = d3.format(".2s");
-    function formatAbbreviation(x) {
-      var s = formatSi(x);
-      switch (s[s.length - 1]) {
-        case "G": return s.slice(0, -1) + "B";
-        case "k": return s.slice(0, -1) + "K";
-      }
-      return s;
-    }
+    // X Scale
+    var x = d3.scaleBand()
+        .domain(data.map(function(d){ return d.level })) // data.map to get the domain of our x in scaleBand 
+        .range([0, width])
+        .padding(0.3);
 
-    // Update axes
-    xAxisCall.scale(x);
-    xAxis.transition(t()).call(xAxisCall);
-    yAxisCall.scale(y);
-    yAxis.transition(t()).call(yAxisCall.tickFormat(formatAbbreviation));
+    // Y Scale
+    var y = d3.scaleLinear()
+        .domain([0, MAX])
+        .range([height, 0]);
 
-    // Clear old tooltips
-    d3.select(".focus").remove();
-    d3.select(".overlay").remove();
+    // X Axis
+    var xAxisCall = d3.axisBottom(x);
+    g.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height +")")
+        .call(xAxisCall)
+        .selectAll("text") 
+            .style("text-anchor", "end")
+            .attr("dx", "-.8em")
+            .attr("dy", ".15em")
+            .attr("transform", "rotate(-40)");
 
-    // Tooltip code
-    var focus = g.append("g")
-        .attr("class", "focus")
-        .style("display", "none");
-    focus.append("line")
-        .attr("class", "x-hover-line hover-line")
-        .attr("y1", 0)
-        .attr("y2", height);
-    focus.append("line")
-        .attr("class", "y-hover-line hover-line")
-        .attr("x1", 0)
-        .attr("x2", width);
-    focus.append("circle")
-        .attr("r", 5);
-    focus.append("text")
-        .attr("x", 15)
-        .attr("dy", ".31em");
-    svg.append("rect")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-        .attr("class", "overlay")
-        .attr("width", width)
-        .attr("height", height)
-        .on("mouseover", function() { focus.style("display", null); })
-        .on("mouseout", function() { focus.style("display", "none"); })
-        .on("mousemove", mousemove);
+    // Y Axis
+    var yAxisCall = d3.axisLeft(y)
+        .tickFormat(function(d){ return d + "min"; });
+    g.append("g")
+        .attr("class", "y axis")
+        .call(yAxisCall);
+
+    // Bars
+    var rects = g.selectAll("rect")
+        .data(data);
         
-    function mousemove() {
-        var x0 = x.invert(d3.mouse(this)[0]),
-            i = bisectDate(dataTimeFiltered, x0, 1),
-            d0 = dataTimeFiltered[i - 1],
-            d1 = dataTimeFiltered[i],
-            d = (d1 && d0) ? (x0 - d0.date > d1.date - x0 ? d1 : d0) : 0;
-        focus.attr("transform", "translate(" + x(d.date) + "," + y(d[yValue]) + ")");
-        focus.select("text").text(function() { return d3.format("$,")(d[yValue].toFixed(2)); });
-        focus.select(".x-hover-line").attr("y2", height - y(d[yValue]));
-        focus.select(".y-hover-line").attr("x2", -x(d.date));
-    }
+    rects.enter()
+        .append("rect")
+            .attr("class", "bars")
+            .attr("y", function(d){ return y(d.sumtime); })
+            .attr("x", function(d){ return x(d.level) })
+            .attr("height", function(d){ return height - y(d.sumtime); })
+            .attr("width", x.bandwidth)
+            .attr("fill", "#00994d");
 
-    // Path generator
-    line = d3.line()
-        .x(function(d){ return x(d.date); })
-        .y(function(d){ return y(d[yValue]); });
+            //** end of D3 script **//
 
-    // Update our line path
-    g.select(".line")
-        .transition(t)
-        .attr("d", line(dataTimeFiltered));
-
-    // Update y-axis label
-    var newText = (yValue == "price_usd") ? "Price (USD)" :
-        ((yValue == "market_cap") ?  "Market Capitalization (USD)" : "24 Hour Trading Volume (USD)")
-    yLabel.text(newText);
+                   },
+                   simpleSheet: true } )
 }
+window.addEventListener('DOMContentLoaded', init)
+//** end of tabletop init function **//
+
+

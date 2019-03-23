@@ -1,60 +1,46 @@
 <!doctype html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="description" content="">
-        <title>Interactive Dashboard </title>
-        <!-- Bootstrap Core CSS -->
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <!-- jQuery UI CSS -->
-        <link rel="stylesheet" href="css/jquery-ui.min.css">
-        <link rel="stylesheet" href="css/jquery-ui.structure.min.css">
-        <link rel="stylesheet" href="css/jquery-ui.theme.min.css">
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="css/style.css">
-    </head>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <title>Star Break Coffee</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Custom styling -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
 
-    <body>
-        <nav class="navbar navbar-default">
-            <div class="container">
-                <a class="navbar-brand" href="#"><img id="logo" src="img/logo.png"></a>      
-            </div>
-        </nav>
+<body>
 
-        <!-- Bootstrap grid setup -->
+    <nav class="navbar navbar-default">
         <div class="container">
-            <div id="selections" class="row">
-                <div class="col-md-4">
-                    <div id="slider-div">
-                        <label>Date: <span id="dateLabel1">12/05/2013</span> - <span id="dateLabel2">31/10/2017</span></label>
-                        <div id="date-slider"></div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <select id="var-select" class="form-control">
-                        <option selected value="price_usd">Price in dollars</option>
-                        <option value="market_cap">Market capitalization</option>
-                        <option value="24h_vol">24 hour trading volume</option>
-                    </select>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4" id="chart-area1"></div>
-                <div class="col-md-4" id="chart-area2"></div>  
-                <div class="col-md-4" id="chart-area3"></div>  
-                <div class="col-md-4" id="chart-area4"></div>  
-                <div class="col-md-4" id="chart-area5"></div>  
-            </div>
+            <a class="navbar-brand" href="#"><img id="logo" src="img/logo.png"></a>      
         </div>
+    </nav>
 
-    <!-- External JS libraries -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/d3.min.js"></script>
-    <!-- Custom JS -->
-    <script src="js/lineChart.js"></script>
-    <script src="js/main.js"></script>
+    <!-- Bootstrap grid setup -->
+    <div class="container">
+        <div class="row">
+            <div id="chart-area"></div>
+        </div>
+    </div>
 
-    </body>
+<!-- External JS libraries -->
+<script src="js/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.4.3/tabletop.js"></script>
+<!-- Custom JS -->
+<script src="js/main.js"></script>
+    
+
+
+</body>
 </html>
+
+
+
+
+
+
+
+
+
