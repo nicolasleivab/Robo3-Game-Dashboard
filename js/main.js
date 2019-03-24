@@ -57,14 +57,21 @@ var yLabel = g.append("text")
     .attr("transform", "rotate(-90)")
     .text("Revenue");
 
-console.log(data);
+
+
+
+
+var yFields = ["sumtime", "num", "instr", "func"];
 
     // Clean data
     data.forEach(function(d) {
         d.sumtime = +d.sumtime;
         d.num = +d.num;
-       
+        d.instr = +d.instr;
+        d.func = +d.func;
     });
+
+    
 
     d3.interval(function(){
         var newData = flag ? data : data.slice(0);
