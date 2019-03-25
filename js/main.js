@@ -12,7 +12,17 @@ var margin = { left:80, right:20, top:50, bottom:100 };
 var width = 600 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
-var flag = true;
+// filter user ID
+    var data = data.filter(function(d){return d.ID == '10574525';});
+    // Get every column value
+    var elements = Object.keys(data[0])
+        .filter(function(d){
+            return ((d != "ID") & (d != "level") & (d != "date"));
+        });
+    var selection = elements[0];
+
+    console.log(elements);
+    console.log(selection);
 
 var t = d3.transition().duration(750);
     
@@ -60,35 +70,31 @@ var yLabel = g.append("text")
 
 
 
-
-var yFields = ["sumtime", "num", "instr", "func"];
-
-    // Clean data
+       // Clean data
     data.forEach(function(d) {
         d.sumtime = +d.sumtime;
         d.num = +d.num;
         d.instr = +d.instr;
         d.func = +d.func;
+        d.loops = +d.loops;
+        d.mov = +d.mov;
+        d.pickdrop = +d.pickdrop;
+        d.succ = +d.succ;
+        d.cycles = +d.cycles;
     });
-
     
 
-    d3.interval(function(){
-        var newData = flag ? data : data.slice(0);
-
-        update(newData)
-        flag = !flag
-    }, 1000);
+  
 
     // Run the vis for the first time
     update(data);
 
 
 function update(data) {
-    var value = flag ? "sumtime" : "num";
+    
 
     x.domain(data.map(function(d){ return d.level }));
-    y.domain([0, d3.max(data, function(d) { return d[value] })])
+    y.domain([0, d3.max(data, function(d) { return d[selection] })])
 
     // X Axis
     var xAxisCall = d3.axisBottom(x);
@@ -103,6 +109,8 @@ function update(data) {
     var yAxisCall = d3.axisLeft(y)
         .tickFormat(function(d){ return d; });
     yAxisGroup.transition(t).call(yAxisCall);
+
+
 
     // JOIN new data with old elements.
     var rects = g.selectAll("rect")
@@ -131,11 +139,40 @@ function update(data) {
             .transition(t)
                 .attr("x", function(d){ return x(d.level) })
                 .attr("width", x.bandwidth)
-                .attr("y", function(d){ return y(d[value]); })
-                .attr("height", function(d){ return height - y(d[value]); });
+                .attr("y", function(d){ return y(d[selection]); })
+                .attr("height", function(d){ return height - y(d[selection]); });
 
-    var label = flag ? "Played Time (min)" : "Times Played";
-    yLabel.text(label);
+                var selector = d3.select("#drop")
+        .append("select")
+        .attr("id","dropdown")
+        .on("change", function(d){
+            selection = document.getElementById("dropdown");
+
+            y.domain([0, d3.max(data, function(d){
+                return +d[selection.value];})]);
+                    d3.selectAll("g.y.axis")
+                .transition()
+                .call(yAxisCall);
+
+         });
+
+    selector.selectAll("option")
+      .data(elements)
+      .enter().append("option")
+      .attr("value", function(d){
+        return d;
+      })
+      .text(function(d){
+        return d;
+      })
+
+var select = d3.select("#selection")
+    .style("border-radius", "5px")
+    .on("change", function() {
+        chart.update(this.value, 750)
+    })
+
+  
 
 }
 
