@@ -91,7 +91,64 @@ var yLabel = g.append("text")
 
 
 function update(data) {
-    
+              var selector = d3.select("#drop") //dropdown change selection
+        .append("select")
+        .attr("id","dropdown")
+        .on("change", function(d){
+            selection = document.getElementById("dropdown");
+
+
+
+            y.domain([0, d3.max(data, function(d){
+                return +d[selection.value];})]);
+
+             // JOIN new data with old elements.
+    var rects = g.selectAll("rect")
+        .data(data, function(d){
+            return d.level;
+        });
+
+             // EXIT old elements not present in new data.
+    rects.exit()
+        .attr("fill", "green")
+    .transition(t)
+        .attr("y", y(0))
+        .attr("height", 0)
+        .remove();
+
+// ENTER new elements present in new data...
+             rects.enter()
+        .append("rect")
+            .attr("fill", "green")
+            .attr("y", y(0))
+            .attr("height", 0)
+            .attr("x", function(d){ return x(d.level) })
+            .attr("width", x.bandwidth)
+            // AND UPDATE old elements present in new data.
+            .merge(rects)
+            .transition(t)
+                .attr("x", function(d){ return x(d.level) })
+                .attr("width", x.bandwidth)
+                .attr("y", function(d){ return y(d[selection.value]); })
+                .attr("height", function(d){ return height - y(d[selection.value]); });
+
+                    d3.selectAll("g.y.axis")
+                .transition()
+                .call(yAxisCall);
+
+         });
+
+    selector.selectAll("option")
+      .data(elements)
+      .enter().append("option")
+      .attr("value", function(d){
+        return d;
+      })
+      .text(function(d){
+        return d;
+      })
+
+
 
     x.domain(data.map(function(d){ return d.level }));
     y.domain([0, d3.max(data, function(d) { return d[selection] })])
@@ -111,70 +168,8 @@ function update(data) {
     yAxisGroup.transition(t).call(yAxisCall);
 
 
-
-    // JOIN new data with old elements.
-    var rects = g.selectAll("rect")
-        .data(data, function(d){
-            return d.level;
-        });
-
-    // EXIT old elements not present in new data.
-    rects.exit()
-        .attr("fill", "green")
-    .transition(t)
-        .attr("y", y(0))
-        .attr("height", 0)
-        .remove();
-
-    // ENTER new elements present in new data...
-    rects.enter()
-        .append("rect")
-            .attr("fill", "green")
-            .attr("y", y(0))
-            .attr("height", 0)
-            .attr("x", function(d){ return x(d.level) })
-            .attr("width", x.bandwidth)
-            // AND UPDATE old elements present in new data.
-            .merge(rects)
-            .transition(t)
-                .attr("x", function(d){ return x(d.level) })
-                .attr("width", x.bandwidth)
-                .attr("y", function(d){ return y(d[selection]); })
-                .attr("height", function(d){ return height - y(d[selection]); });
-
-                var selector = d3.select("#drop")
-        .append("select")
-        .attr("id","dropdown")
-        .on("change", function(d){
-            selection = document.getElementById("dropdown");
-
-            y.domain([0, d3.max(data, function(d){
-                return +d[selection.value];})]);
-                    d3.selectAll("g.y.axis")
-                .transition()
-                .call(yAxisCall);
-
-         });
-
-    selector.selectAll("option")
-      .data(elements)
-      .enter().append("option")
-      .attr("value", function(d){
-        return d;
-      })
-      .text(function(d){
-        return d;
-      })
-
-var select = d3.select("#selection")
-    .style("border-radius", "5px")
-    .on("change", function() {
-        chart.update(this.value, 750)
-    })
-
-  
-
 }
+
 
 
             //** end of D3 script **//
