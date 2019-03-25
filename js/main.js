@@ -22,7 +22,7 @@ var width = 600 - margin.left - margin.right,
     var selection = elements[0];
 
     console.log(elements);
-    console.log(selection);
+    
 
 var t = d3.transition().duration(750);
     
@@ -65,22 +65,22 @@ var yLabel = g.append("text")
     .attr("font-size", "20px")
     .attr("text-anchor", "middle")
     .attr("transform", "rotate(-90)")
-    .text("Revenue");
+    .text("Rounds");
 
 
 
 
        // Clean data
     data.forEach(function(d) {
-        d.sumtime = +d.sumtime;
-        d.num = +d.num;
-        d.instr = +d.instr;
-        d.func = +d.func;
-        d.loops = +d.loops;
-        d.mov = +d.mov;
-        d.pickdrop = +d.pickdrop;
-        d.succ = +d.succ;
-        d.cycles = +d.cycles;
+        d.Rounds = +d.Rounds;
+        d.Playtime = +d.Playtime;
+        d.Instructions = +d.Instructions;
+        d.Functions = +d.Functions;
+        d.Loops = +d.Loops;
+        d.Movement = +d.Movement;
+        d.PickDrop = +d.PickDrop;
+        d["Success Probability"] = +d["Success Probability"];
+        d.Cycles = +d.Cycles;
     });
     
 
@@ -101,6 +101,9 @@ function update(data) {
 
             y.domain([0, d3.max(data, function(d){
                 return +d[selection.value];})]);
+console.log(selection.value);
+
+    yLabel.text(selection.value);
 
              // JOIN new data with old elements.
     var rects = g.selectAll("rect")
@@ -135,6 +138,8 @@ function update(data) {
                     d3.selectAll("g.y.axis")
                 .transition()
                 .call(yAxisCall);
+
+                
 
          });
 
