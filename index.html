@@ -23,12 +23,17 @@
     <!-- Bootstrap grid setup -->
     <div class="container">
         <div class="row">
-            <div id="drop" align=center></div>
-            <div id="chart-area"></div>
+        <div class="col-sm-8"><h2 class="subtitle">Progress</h2></div>
+        <div class="col-sm-8" id="drop" align=right></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4" id="donut-area"></div>
+            <div class ="col-sm-8" id="chart-area"></div>
         </div>
     </div>
 
 <!-- External JS libraries -->
+    
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery-ui.min.js"></script>
@@ -36,6 +41,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.4.3/tabletop.js"></script>
 <!-- Custom JS -->
 <script src="js/main.js"></script>
+<script src="js/donut-chart.js"></script>
     
 
 

@@ -9,8 +9,8 @@ function init() {
 //** D3 js script **//
 var margin = { left:80, right:20, top:50, bottom:100 };
 
-var width = 600 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+var width = 500 - margin.left - margin.right,
+    height = 350 - margin.top - margin.bottom;
 
 // filter user ID
     var data = data.filter(function(d){return d.ID == '10574525';});
@@ -84,6 +84,8 @@ var yLabel = g.append("text")
     });
     
 
+        
+ 
   
 
     // Run the vis for the first time
@@ -91,7 +93,6 @@ var yLabel = g.append("text")
 
 
 function update(data) {
-    
 
               var selector = d3.select("#drop") //dropdown change selection
         .append("select")
@@ -100,12 +101,10 @@ function update(data) {
             selection = document.getElementById("dropdown");
 
 
+            
+            y.domain([0, d3.max(data, function(d){return +d[selection.value];})]);
+                                           console.log(selection.value);
 
-            y.domain([0, d3.max(data, function(d){
-                return +d[selection.value];})]);
-console.log(selection.value);
-
-    yLabel.text(selection.value);
 
              // JOIN new data with old elements.
     var rects = g.selectAll("rect")
@@ -129,7 +128,6 @@ console.log(selection.value);
             .attr("height", 0)
             .attr("x", function(d){ return x(d.level) })
             .attr("width", x.bandwidth)
-            
             // AND UPDATE old elements present in new data.
             .merge(rects)
             .transition(t)
@@ -142,10 +140,10 @@ console.log(selection.value);
                 .transition()
                 .call(yAxisCall);
 
-                
+             yLabel.text(selection.value);   
 
          });
-
+//get values for the dropdown
     selector.selectAll("option")
       .data(elements)
       .enter().append("option")
@@ -156,10 +154,7 @@ console.log(selection.value);
         return d;
       })
 
-
-
     x.domain(data.map(function(d){ return d.level }));
-    y.domain([0, d3.max(data, function(d) { return d[selection] })])
 
     // X Axis
     var xAxisCall = d3.axisBottom(x);
