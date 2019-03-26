@@ -91,6 +91,8 @@ var yLabel = g.append("text")
 
 
 function update(data) {
+    
+
               var selector = d3.select("#drop") //dropdown change selection
         .append("select")
         .attr("id","dropdown")
@@ -127,6 +129,7 @@ console.log(selection.value);
             .attr("height", 0)
             .attr("x", function(d){ return x(d.level) })
             .attr("width", x.bandwidth)
+            
             // AND UPDATE old elements present in new data.
             .merge(rects)
             .transition(t)
