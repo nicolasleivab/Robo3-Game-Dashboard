@@ -9,7 +9,7 @@ function init() {
 //** D3 js script **//
 var margin = { left:80, right:20, top:50, bottom:100 };
 
-var width = 500 - margin.left - margin.right,
+var width = 600 - margin.left - margin.right,
     height = 350 - margin.top - margin.bottom;
 
 // filter user ID
