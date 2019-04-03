@@ -8,7 +8,7 @@ function init() {
                        
 //** D3 js script **//
  // set the dimensions and margins of the graph
-var margin = {top: 20, right: 20, bottom: 30, left: 50},
+var margin = {top: 80, right: 20, bottom: 50, left: 100},
     width = 600 - margin.left - margin.right,
     height = 350 - margin.top - margin.bottom;
 
@@ -28,7 +28,7 @@ var valueline = d3.line()
 // append the svg obgect to the body of the page
 // appends a 'group' element to 'svg'
 // moves the 'group' element to the top left margin
-var svg = d3.select("#").append("svg")
+var svg = d3.select("#stacked-chart").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
@@ -58,7 +58,12 @@ var svg = d3.select("#").append("svg")
   // Add the X Axis
   svg.append("g")
       .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
+      .call(d3.axisBottom(x)).selectAll("text") 
+            .style("text-anchor", "end")
+            .attr("dx", "-.8em")
+            .attr("dy", ".15em")
+            .attr("transform", "rotate(-40)" 
+                );;;
 
   // Add the Y Axis
   svg.append("g")
