@@ -18,7 +18,7 @@
         .scale(x);
     var yAxis2 = d3.axisLeft()
         .scale(y)
-        .tickFormat(formatBillion);
+        .ticks(10);
     var area = d3.area()
         .x(function(d) { return x(d.data.date); })
         .y0(function(d) { return y(d[0]); })
@@ -38,14 +38,10 @@
             d.date = parseDate(d.date); 
         });
         
-        tsvData = (function(){ return data; })();
-        var maxDateVal = d3.max(data, function(d){
-            var vals = d3.keys(d).map(function(key){ return key !== 'date' ? d[key] : 0 });
-            return d3.sum(vals);
-        });
+      
         // Set domains for axes
         x.domain(d3.extent(data, function(d) { return d.date; }));
-        y.domain([0, maxDateVal])
+        y.domain([0, 100])
         stack.keys(keys);
         stack.order(d3.stackOrderNone);
         stack.offset(d3.stackOffsetNone);
@@ -61,7 +57,7 @@
         browser.append('text')
             .datum(function(d) { return d; })
             .attr('transform', function(d) { 
-                return 'translate(' + x(data[13].date) + ',' + y(d[13][1]) + ')'; 
+                return 'translate(' + x(data[12].date) + ',' + y(d[11][1]) + ')'; 
             })
             .attr('x', -6) 
             .attr('dy', '.35em')
