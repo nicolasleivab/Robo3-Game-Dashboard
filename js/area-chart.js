@@ -29,6 +29,8 @@
         .attr('height', height + margin.top + margin.bottom)
         .append('g')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+       
     d3.csv('data/stacked_area2.csv').then(function(data) {
         color.domain(d3.keys(data[0]).filter(function(key) { return key !== 'date'; }));
         
