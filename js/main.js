@@ -17,7 +17,7 @@ var width = 600 - margin.left - margin.right,
     // Get every column value
     var elements = Object.keys(data[0])
         .filter(function(d){
-            return ((d != "ID") & (d != "level") & (d != "date"));
+            return ((d != "ID") & (d != "level") & (d != "date") & (d != "Best Solution"));
         });
     var selection = elements[0];
 

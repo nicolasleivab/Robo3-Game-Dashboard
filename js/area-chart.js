@@ -1,4 +1,13 @@
-/*code adapted from Maggie Lee as an example*/
+/*area-chart js*/
+
+//** tabletop init function **//
+function init() {     
+  Tabletop.init( { key: '10g_TGtruCriERlXJurPZQk76pvk30U0pkWgbbfzPrjA', //google sheet key
+                   callback: function(data, tabletop) { 
+                       console.log(data)
+                       
+//** D3 js script **//
+
 
     
     var tsvData = null;
@@ -30,16 +39,31 @@
         .append('g')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
+var data = data.filter(function(d){return d.ID == '10574525';});
+
        
-    d3.csv('data/stacked_area2.csv').then(function(data) {
+      data.forEach(function(d) {
+        d.Rounds = +d.Rounds;
+        d.Playtime = +d.Playtime;
+        d.Instructions = +d.Instructions;
+        d.Functions = +d.Functions;
+        d.Loops = +d.Loops;
+        d.Movement = +d.Movement;
+        d.PickDrop = +d.PickDrop;
+        d["Success Probability"] = +d["Success Probability"];
+        d.Cycles = +d.Cycles;
+        d["Best Solution"] = +d["Best Solution"];
+    });
+
         color.domain(d3.keys(data[0]).filter(function(key) { return key !== 'date'; }));
         
-        var keys = data.columns.filter(function(key) { return key !== 'date'; })
+        var keys = ['Cycles', 'Best Solution'];
         
         data.forEach(function(d) {
             d.date = parseDate(d.date); 
         });
-        
+        console.log(data);
+        console.log(keys);
       
         // Set domains for axes
         x.domain(d3.extent(data, function(d) { return d.date; }));
@@ -69,7 +93,7 @@
         svg.append('g')
             .attr('class', 'x axis')
             .attr('transform', 'translate(0,' + height + ')')
-            .call(xAxis).	selectAll("text") 
+            .call(xAxis).   selectAll("text") 
             .style("text-anchor", "end")
             .attr("dx", "-.8em")
             .attr("dy", ".15em")
@@ -85,7 +109,14 @@
             .attr("text-anchor", "middle")
             .attr("transform", "rotate(-90)")
             .text("Cycles")
-    });
+    
 
-  
+
+            //** end of D3 script **//
+
+                   },
+                   simpleSheet: true } )
+}
+window.addEventListener('DOMContentLoaded', init)
+//** end of tabletop init function **//
    
