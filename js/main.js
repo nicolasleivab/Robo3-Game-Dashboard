@@ -81,6 +81,7 @@ var yLabel = g.append("text")
         d.PickDrop = +d.PickDrop;
         d["Success Probability"] = +d["Success Probability"];
         d.Cycles = +d.Cycles;
+
     });
     
 
