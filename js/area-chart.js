@@ -15,9 +15,8 @@ function init() {
         width = 600 - margin.left - margin.right, 
         height = 350 - margin.top - margin.bottom;
     var parseDate = d3.timeParse("%m/%d/%Y");
-    var formatSi = d3.format(".3s");
-    var formatNumber = d3.format(".1f"),
-    formatBillion = function(x) { return formatNumber(x / 1e9); };
+    
+   
     var x = d3.scaleTime()
         .range([0, width]);
     var y = d3.scaleLinear()
