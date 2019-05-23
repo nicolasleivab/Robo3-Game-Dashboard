@@ -22,6 +22,20 @@ var width = 600 - margin.left - margin.right,
     var selection = elements[0];
 
     console.log(elements);
+
+         // Clean data
+    data.forEach(function(d) {
+        d.Rounds = +d.Rounds;
+        d.Playtime = +d.Playtime;
+        d.Instructions = +d.Instructions;
+        d.Functions = +d.Functions;
+        d.Loops = +d.Loops;
+        d.Movement = +d.Movement;
+        d.PickDrop = +d.PickDrop;
+        d["Success Probability"] = +d["Success Probability"];
+        d.Cycles = +d.Cycles;
+ 
+    });
     
 
 var t = d3.transition().duration(750);
@@ -70,19 +84,7 @@ var yLabel = g.append("text")
 
 
 
-       // Clean data
-    data.forEach(function(d) {
-        d.Rounds = +d.Rounds;
-        d.Playtime = +d.Playtime;
-        d.Instructions = +d.Instructions;
-        d.Functions = +d.Functions;
-        d.Loops = +d.Loops;
-        d.Movement = +d.Movement;
-        d.PickDrop = +d.PickDrop;
-        d["Success Probability"] = +d["Success Probability"];
-        d.Cycles = +d.Cycles;
-
-    });
+  
     
 
         
@@ -90,8 +92,9 @@ var yLabel = g.append("text")
   
 
     // Run the vis for the first time
-    update(data);
 
+    update(data);
+    
 
 function update(data) {
 

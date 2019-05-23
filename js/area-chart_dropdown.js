@@ -76,7 +76,7 @@ var t = d3.transition().duration(750);
 function update(data) {
 
 
-              var selector = d3.select("#drop") //dropdown change selection
+              var selector = d3.select("#drop2") //dropdown change selection
         .append("select")
         .attr("id","dropdown")
         .on("change", function(d){
