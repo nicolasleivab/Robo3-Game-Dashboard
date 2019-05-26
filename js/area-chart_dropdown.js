@@ -31,10 +31,14 @@ function init() {
     });
 
 
-     var elements2 = data.map(function(d){ return d.level });
-      var selection2 = elements2[0];
+     var levels = data.map(function(d){ return d.level });
+     var uniqueLevels = [];
+$.each(levels, function(i, el){
+    if($.inArray(el, uniqueLevels) === -1) uniqueLevels.push(el);
+});
+      var selection2 = uniqueLevels[0];
 
-      console.log(elements2);
+      console.log(uniqueLevels);
 
      var svg = d3.select('#stacked-chart').append('svg')
         .attr('width', width + margin.left + margin.right)
@@ -155,7 +159,7 @@ browser.enter()
              });
 //get values for the dropdown
     selector.selectAll("option")
-      .data(elements2)
+      .data(uniqueLevels)
       .enter().append("option")
       .attr("value", function(d){
         return d;
