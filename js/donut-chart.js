@@ -17,9 +17,17 @@ var colors = {
 var color = colors.green;
 
 var data = data.filter(function(d){return d.ID == '10574525';});
-var levels = data.filter(function(d){return d["Success Probability"] > 0;});
+var data = data.filter(function(d){return d["Success Probability"] > 0;});
 
-console.log(levels.length);
+var levels = data.map(function(d){return d.level;});
+
+var completedLevels = [];
+$.each(levels, function(i, el){
+    if($.inArray(el, completedLevels) === -1) completedLevels.push(el);
+});
+
+
+console.log(completedLevels.length);
 
 
 
@@ -29,7 +37,8 @@ var radius = 75;
 var border = 5;
 var padding = 20;
 var startPercent = 0;
-var endPercent = ((levels.length)/11);
+var endPercent = ((completedLevels.length)/11);
+
 
 
 var twoPi = Math.PI * 2;
