@@ -19,12 +19,8 @@ var color = colors.green;
 var data = data.filter(function(d){return d.ID == '10574525';});
 var data = data.filter(function(d){return d["Success Probability"] > 0;});
 
-var levels = data.map(function(d){return d.level;});
+var completedLevels = d3.map(data, function(d){return(d.level)}).keys();
 
-var completedLevels = [];
-$.each(levels, function(i, el){
-    if($.inArray(el, completedLevels) === -1) completedLevels.push(el);
-});
 
 
 console.log(completedLevels.length);

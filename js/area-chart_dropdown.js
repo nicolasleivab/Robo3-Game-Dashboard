@@ -31,11 +31,8 @@ function init() {
     });
 
 
-     var levels = data.map(function(d){ return d.level });
-     var uniqueLevels = [];
-$.each(levels, function(i, el){
-    if($.inArray(el, uniqueLevels) === -1) uniqueLevels.push(el);
-});
+     var uniqueLevels = d3.map(data, function(d){return(d.level)}).keys();
+
       var selection2 = uniqueLevels[0];
 
       console.log(uniqueLevels);
