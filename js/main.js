@@ -92,8 +92,8 @@ var yLabel = g.append("text")
   
 
     // Run the vis for the first time
-
-    update(data);
+update(data);
+    
     
 
 function update(data) {

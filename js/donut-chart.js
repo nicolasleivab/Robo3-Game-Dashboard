@@ -23,12 +23,6 @@ var completedLevels = d3.map(data, function(d){return(d.level)}).keys();
 
 
 
-console.log(completedLevels.length);
-
-
-
-
-
 var radius = 75;
 var border = 5;
 var padding = 20;

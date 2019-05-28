@@ -75,6 +75,9 @@ var t = d3.transition().duration(750);
 
 
 function update(data) {
+     
+        var dataFilter = data.filter(function(d){return d.level == selection2.value;});
+
 
 
               var selector = d3.select("#drop2") //dropdown change selection
@@ -83,22 +86,26 @@ function update(data) {
         .on("change", function(d){
             selection2 = document.getElementById("dropdown");
 
-        color.domain(d3.keys(data[0]).filter(function(key) { return key !== 'date'; }));
-        
-            y.domain([0, d3.max(data, function(d){return +d[selection2.value];})]);
-                                           console.log(selection2.value);
+        y.domain([0, 100])
+        stack.keys(keys);
+        stack.order(d3.stackOrderNone);
+        stack.offset(d3.stackOffsetNone);
 
         
      
-        console.log(data);
+        console.log(dataFilter);
         console.log(keys);
+        console.log(selection2.value);
+
       
         // Set domains for axes
-        x.domain(d3.extent(data, function(d) { return d.date; }));
+        x.domain(d3.map(data, function(d) { return d.date; }));
         
         stack.keys(keys);
         stack.order(d3.stackOrderNone);
         stack.offset(d3.stackOffsetNone);
+
+
 
         //Join
         var browser = svg.selectAll('.browser')
@@ -129,7 +136,7 @@ browser.enter()
             .merge(browser)
             .transition(t)
             .attr("x", function(d){ return x(data[12].date) })
-            .attr("y", function(d){ return y(d[11][1][selection2.value]) })
+            .attr("y", function(d){ return y(d[11][1]) })
             .attr('dy', '.35em')
             .style("text-anchor", "start")
             .text(function(d) { return d.key; })
@@ -154,6 +161,7 @@ browser.enter()
             .attr("transform", "rotate(-90)")
             .text("Cycles")
              });
+
 //get values for the dropdown
     selector.selectAll("option")
       .data(uniqueLevels)
@@ -165,7 +173,7 @@ browser.enter()
         return d;
       })
 
-    x.domain(data.map(function(d){ return d.level }));
+    x.domain(data.map(function(d){ return d.date }));
 
     // X Axis
     var xAxisCall = d3.axisBottom(x);
