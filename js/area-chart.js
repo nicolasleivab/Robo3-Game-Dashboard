@@ -10,7 +10,6 @@ function init() {
 
 
     
-    var tsvData = null;
     var margin = {top: 80, right: 20, bottom: 50, left: 100},
         width = 600 - margin.left - margin.right, 
         height = 350 - margin.top - margin.bottom;
