@@ -5,14 +5,24 @@ function init() {
                        console.log(data)
                        
 //** D3 js script **//
-// Filter user ID
+//** D3 js script **//
+var margin = { left:80, right:150, top:50, bottom:100 };
+
+var width = 650 - margin.left - margin.right,
+    height = 350 - margin.top - margin.bottom;
+
+// filter user ID
     var data = data.filter(function(d){return d.ID == '10574525';});
-// Create svg
-var svg = d3.select("svg"),
-    margin = {left:80, right:150, top:50, bottom:100},
-    width = +svg.attr("width") - margin.left - margin.right,
-    height = +svg.attr("height") - margin.top - margin.bottom,
-    g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    // Get every column value
+
+    
+var g = d3.select("#barstacked")
+    .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+        .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
+  
 
 // X scale
 var x = d3.scaleBand()
@@ -115,7 +125,7 @@ var z = d3.scaleOrdinal(d3.schemePastel1);;
 
 
   // Tooltips
-  var tooltip = svg.append("g")
+  var tooltip = g.append("g")
     .attr("class", "tooltip")
     .style("display", "none");
       
