@@ -21,9 +21,9 @@ function init() {
     var y = d3.scaleLinear()
         .range([height, 0]);
     var color = d3.scaleOrdinal(d3.schemeCategory10);
-    var xAxis = d3.axisBottom()
+d3.axisBottom()
         .scale(x);
-    var yAxis2 = d3.axisLeft()
+d3.axisLeft()
         .scale(y)
         .ticks(10);
     var area = d3.area()
@@ -91,17 +91,18 @@ var data = data.filter(function(d){return d.ID == '10574525';});
         svg.append('g')
             .attr('class', 'x axis')
             .attr('transform', 'translate(0,' + height + ')')
-            .call(xAxis).   selectAll("text") 
+            .call(d3.axisBottom(x)).   selectAll("text") 
             .style("text-anchor", "end")
             .attr("dx", "-.8em")
             .attr("dy", ".15em")
             .attr("transform", "rotate(-40)" 
                 );;;
         svg.append('g')
-            .attr('class', 'y axis')
-            .call(yAxis2);
+            .attr('class', 'axis')  //changing class from 'x axis' to 'axis' fixed the bug ...
+            .call(d3.axisLeft(y).ticks(null, "s"));
         svg.append ("text")
             .attr("x", 0-margin.left)
+            .attr("y", y(y.ticks().pop()) + 0.5)
             .attr("y", -60)
             .attr("x", -(height / 2))
             .attr("text-anchor", "middle")
