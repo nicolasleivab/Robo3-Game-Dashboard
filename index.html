@@ -24,16 +24,22 @@
     <div class="container">
         <div class="row">
         <div class="col-sm-8"><h2 class="subtitle">Progress</h2></div>
-        <div class="col-sm-8" id="drop" align=right></div>
+        <div class="col-sm-8" id="drop2" align=right></div>
         </div>
         <div class="row">
             <div class="col-sm-4" id="donut-area"></div>
-            <div class ="col-sm-8" id="chart-area"></div>
+            <div class ="col-sm-8" id="stacked-chart"></div>
             <div class="row">
-            <div class="col-sm-8" id="drop2" align=right></div>
-            <div class ="col-sm-8" id="stacked-chart" align=right></div>
+            <div class="col-sm-8" id="drop" align=center></div>
+                <div class="row">
+                <div class="col-sm-8" id="drop2" align=right></div>
+                </div>
+                <div class="row">
+                <div class ="col-sm-4" id="chart-area"></div>
+            <div class ="col-sm-8" id="barstacked"></div>
             </div>
         </div>
+    </div>
     </div>
 
 <!-- External JS libraries -->
@@ -47,10 +53,42 @@
 <script src="js/main.js"></script>
     <script src="js/donut-chart.js"></script>
     <script src="js/area-chart.js"></script>
+    <script src="js/stackedbarchart.js"></script>
     
 
 
 </body>
+
+<br><br>
+<style>
+ 
+.footer {
+ 
+    position: relative;
+ 
+    bottom: 0;
+ 
+    width: 100%;
+ 
+    height: 55px;
+ 
+    background-color: #DFDFDF;
+ 
+}
+ 
+</style>
+ 
+
+ 
+    <footer class="footer">
+ 
+      <div class="container">
+ 
+      <p>&copy; 2019 Nicolás Leiva Büchi</p>
+ 
+      </div>
+ 
+    </footer>
 </html>
 
 
