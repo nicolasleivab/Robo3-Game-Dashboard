@@ -74,7 +74,7 @@ var z = d3.scaleOrdinal(d3.schemePastel1);;
     .on("mouseover", function() { tooltip.style("display", null); })
     .on("mouseout", function() { tooltip.style("display", "none"); })
     .on("mousemove", function(d) {
-      console.log(d);
+      
       var xPosition = d3.mouse(this)[0] - 5;
       var yPosition = d3.mouse(this)[1] - 5;
       tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
