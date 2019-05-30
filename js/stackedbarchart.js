@@ -8,7 +8,7 @@ function init() {
 //** D3 js script **//
 var margin = { left:80, right:150, top:50, bottom:100 };
 
-var width = 750 - margin.left - margin.right,
+var width = 600 - margin.left - margin.right,
     height = 350 - margin.top - margin.bottom;
 
 // filter user ID
@@ -28,11 +28,11 @@ var g = d3.select("#barstacked")
 
 
   
-var xAxisGroup = g.append("g")
-    .attr("class", "x axis")
+var xAxisGroup2 = g.append("g")
+    .attr("class", "axis")
     .attr("transform", "translate(0," + height +")");
 
-var yAxisGroup = g.append("g")
+var yAxisGroup2 = g.append("g")
     .attr("class", "y axis");
 
 // X scale
@@ -161,9 +161,9 @@ rects.enter()
         
 
     // Y Axis
-    var yAxisCall = d3.axisLeft(y)
+    var yAxisCall2 = d3.axisLeft(y)
         .tickFormat(function(d){ return d; });
-    yAxisGroup.transition(t).call(yAxisCall);
+    yAxisGroup2.transition(t).call(yAxisCall2);
 
 
 
@@ -181,17 +181,17 @@ rects.enter()
 
       x.domain(data.map(function(d) { return d.level; }));
     // X Axis
-    var xAxisCall = d3.axisBottom(x);
-    xAxisGroup.transition(t).call(xAxisCall).selectAll("text") 
+    var xAxisCall2 = d3.axisBottom(x);
+    xAxisGroup2.transition(t).call(xAxisCall2).selectAll("text") 
             .style("text-anchor", "end")
             .attr("dx", "-.8em")
             .attr("dy", ".15em")
             .attr("transform", "rotate(-40)" 
                 );;;
  // Y Axis
-    var yAxisCall = d3.axisLeft(y)
+    var yAxisCall2 = d3.axisLeft(y)
         .tickFormat(function(d){ return d; });
-    yAxisGroup.transition(t).call(yAxisCall);
+    yAxisGroup2.transition(t).call(yAxisCall2);
 
 
 }

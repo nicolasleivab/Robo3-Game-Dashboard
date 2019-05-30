@@ -9,7 +9,7 @@ function init() {
 //** D3 js script **//
 var margin = { left:80, right:20, top:50, bottom:100 };
 
-var width = 500 - margin.left - margin.right,
+var width = 600 - margin.left - margin.right,
     height = 350 - margin.top - margin.bottom;
 
 // filter user ID
@@ -137,7 +137,7 @@ function update(data) {
                 .attr("y", function(d){ return y(d[selection.value]); })
                 .attr("height", function(d){ return height - y(d[selection.value]); });
 
-                    d3.selectAll("g.y.axis")
+                    d3.select("g.y.axis")  //changing from selectAll to select fixed the conflict between charts
                 .transition()
                 .call(yAxisCall);
 
