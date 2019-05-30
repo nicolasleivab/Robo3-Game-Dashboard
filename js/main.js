@@ -15,10 +15,7 @@ var width = 500 - margin.left - margin.right,
 // filter user ID
     var data = data.filter(function(d){return d.ID == '10574525';});
     // Filter the data for the dropdown selector
-    var elements = Object.keys(data[0])
-        .filter(function(d){
-            return ((d != "ID") & (d != "level") & (d != "date") & (d != "Best Solution"));
-        });
+    var elements = ['Rounds', 'Playtime (min)', 'Instructions', 'Success Probability'];
     var selection = elements[0];
 
     console.log(elements);
