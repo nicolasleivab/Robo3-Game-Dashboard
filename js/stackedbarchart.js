@@ -84,9 +84,9 @@ function update2(data){
 
                 var selector = d3.select("#drop2") //dropdown change selection
         .append("select")
-        .attr("id","dropdown")
+        .attr("id","dropdown2")
         .on("change", function(d){
-            selection2 = document.getElementById("dropdown");
+            selection2 = document.getElementById("dropdown2");
 
             if(selection2.value == 'Loops'){
               var keys = ['Loops', 'minL', 'avgL'];
