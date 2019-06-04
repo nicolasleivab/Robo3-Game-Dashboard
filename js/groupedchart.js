@@ -53,12 +53,12 @@ var xAxisApp = g.append("g")
     .attr("transform", "translate(0," + height +")");
 
 var yAxisApp = g.append("g")
-    .attr("class", "y axis");
+    .attr("class", "y2 axis");
 
 //X and Y scales
 var x0 = d3.scaleBand()
     .range([0, width])
-    .padding(0.3);
+    .padding(0.2);
 
 var xFilter;
 
@@ -66,11 +66,11 @@ var x1 = d3.scaleBand()
     .range([0, x0.bandwidth() - 5])
     .padding(0.2);
 
-var y = d3.scaleLinear()
+var y2 = d3.scaleLinear()
     .range([height, 0]);
 
 // Color scheme
-var z = d3.scaleOrdinal(d3.schemePastel1);
+var z = d3.scaleOrdinal().range(["#ccffcc","#ffb3b3", "#b3e6ff"])
 
 //Transition
 var t = d3.transition().duration(750);
@@ -86,21 +86,21 @@ var xLabel = g.append("text")
     .attr("transform", "translate(" + margin.left + ", " + margin.top +  ")")
     .text("Level");
 
-var yLabel = g.append("text")
+var yLabel2 = g.append("text")
     .attr("y", -60)
     .attr("x", -(height / 2))
     .attr("font-size", "20px")
     .attr("text-anchor", "middle")
     .attr("transform", "rotate(-90)")
-    .text("Rounds");
+    .text("");
 
 
 //Run visualization for the first time
-update(data);
+update2(data);
 
 //*Update Function*//
 
-function update(data){
+function update2(data){
 
 var dropSelector = d3.select("#drop2") //dropdown change selection
     .append("select")
@@ -128,7 +128,7 @@ var dropSelector = d3.select("#drop2") //dropdown change selection
             }
   
     x1.domain(xFilter).rangeRound([0, x0.bandwidth()]);
-    y.domain([0, d3.max(data, function(d) { return d3.max(xFilter, function(key) { return d[key]; }); })]).nice(); 
+    y2.domain([0, d3.max(data, function(d) { return d3.max(xFilter, function(key) { return d[key]; }); })]).nice(); 
 
 
 //* Actual D3 update func *//
@@ -143,7 +143,7 @@ var rects = g.selectAll("rect")
 rects.exit()
     .attr("fill", 'none')
     .transition(t)
-    .attr("y", y(0))
+    .attr("y2", y2(0))
     .attr("height", 0)
     .remove();
 
@@ -159,11 +159,11 @@ g.append("g")
             .data(function(d) { return xFilter.map(function(key) { return {key: key, value: d[key]}; }); })
             .enter().append("rect")
             .attr("x", function(d) { return x1(d.key); })
-            .attr("y", function(d) { return y(d.value); })
+            .attr("y", function(d) { return y2(d.value); })
             .attr("width", x1.bandwidth())
         .merge(rects)
             .transition(t)
-            .attr("height", function(d) { return height - y(d.value); })
+            .attr("height", function(d) { return height - y2(d.value); })
             .attr("fill", function(d) { return z(d.key); })
             .attr("width", x1.bandwidth());
 
@@ -171,11 +171,11 @@ console.log(data);
 console.log(selected.value);
 
 
-        d3.select("g.y.axis")  //Changing from selectAll to select can fix the conflict between several simultonaeous charts 
+        d3.selectAll("g.y2.axis")  //Changing from selectAll to select can fix the conflict between several simultonaeous charts 
                 .transition()
-                .call(yAxisCall);
+                .call(yAxisCall2).selectAll("text").attr("font-size", "15px");
 
-                 yLabel.text(selected.value);
+                 yLabel2.text(selected.value);
 
 
 
@@ -203,13 +203,17 @@ var xAxisCall = d3.axisBottom(x0);
             .style("text-anchor", "end")
             .attr("dx", "-.8em")
             .attr("dy", ".15em")
+            .attr("font-size", "15px")
             .attr("transform", "rotate(-40)" 
                 );;;
 
 // Call Y Axis
-var yAxisCall = d3.axisLeft(y)
+var yAxisCall2 = d3.axisLeft(y2)
         .tickFormat(function(d){ return d; });
-        yAxisApp.transition(t).call(yAxisCall);
+        yAxisApp.transition(t).call(yAxisCall2).selectAll("text").attr("font-size", "15px");
+
+
+}
 
 //** end of D3.js code **//
 

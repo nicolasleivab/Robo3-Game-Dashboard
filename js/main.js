@@ -136,7 +136,7 @@ rects.exit()
 
                     d3.select("g.y.axis")  //changing from selectAll to select fixed the conflict between charts
                 .transition()
-                .call(yAxisCall);
+                .call(yAxisCall).selectAll("text").attr("font-size", "12px");
 
              yLabel.text(selection.value);   
 
@@ -160,13 +160,14 @@ rects.exit()
             .style("text-anchor", "end")
             .attr("dx", "-.8em")
             .attr("dy", ".15em")
+            .attr("font-size", "12px")
             .attr("transform", "rotate(-40)" 
                 );;;
 
     // Y Axis
     var yAxisCall = d3.axisLeft(y)
         .tickFormat(function(d){ return d; });
-    yAxisGroup.transition(t).call(yAxisCall);
+    yAxisGroup.transition(t).call(yAxisCall).selectAll("text").attr("font-size", "12px");
 
 
 }
