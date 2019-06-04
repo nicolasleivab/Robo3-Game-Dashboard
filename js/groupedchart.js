@@ -35,7 +35,45 @@ var instructions = ['Functions', 'Loops', 'Cycles', 'Movement', 'PickDrop'];
 
 var selected = instructions[0];
 
+//*Chart code*//
 
+var svg = d3.select("#chart"),
+    margin = {top: 20, right: 120, bottom: 100, left: 100},
+    width = 1200 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom,
+    g = svg.append("svg").attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
+
+//Append and class for each axis to reuse later
+
+var xAxisApp = g.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height +")");
+
+var yAxisApp = g.append("g")
+    .attr("class", "y axis");
+
+//X and Y scales
+var x0 = d3.scaleBand()
+    .range([0, width])
+    .padding(0.3);
+
+var xFilter;
+
+var x1 = d3.scaleBand()
+    .range([0, x0.bandwidth() - 5])
+    .padding(0.2);
+
+var y = d3.scaleLinear()
+    .range([height, 0]);
+
+// Color scheme
+var z = d3.scaleOrdinal(d3.schemePastel1);
+
+//Transition
+var t = d3.transition().duration(750);
 
 
 //** end of D3.js code **//
