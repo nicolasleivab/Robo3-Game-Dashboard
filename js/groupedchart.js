@@ -37,7 +37,7 @@ var selected = instructions[0];
 
 //*Chart code*//
 
-var svg = d3.select("#chart"),
+var svg = d3.select("#groupedchart"),
     margin = {top: 20, right: 120, bottom: 100, left: 100},
     width = 1200 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom,
@@ -102,11 +102,11 @@ update(data);
 
 function update(data){
 
-var dropSelector = d3.select("#drop") //dropdown change selection
+var dropSelector = d3.select("#drop2") //dropdown change selection
     .append("select")
-    .attr("id","dropdown")
+    .attr("id","dropdown2")
     .on("change", function(d){
-         selected = document.getElementById("dropdown");
+         selected = document.getElementById("dropdown2");
            
                 console.log(selected.value);
 
@@ -131,6 +131,54 @@ var dropSelector = d3.select("#drop") //dropdown change selection
     y.domain([0, d3.max(data, function(d) { return d3.max(xFilter, function(key) { return d[key]; }); })]).nice(); 
 
 
+//* Actual D3 update func *//
+
+// Join new with old data.
+var rects = g.selectAll("rect")
+    .data(data, function(d){
+        return d.level;
+        });
+
+// Exit old elements.
+rects.exit()
+    .attr("fill", 'none')
+    .transition(t)
+    .attr("y", y(0))
+    .attr("height", 0)
+    .remove();
+
+// Enter new elements.
+g.append("g")
+            .selectAll("g")
+            .data(data)
+        rects.enter()
+            .append("g")
+            .attr("class","bar")
+            .attr("transform", function(d) { return "translate(" + x0(d.level) + ",0)"; })
+            .selectAll("rect")
+            .data(function(d) { return xFilter.map(function(key) { return {key: key, value: d[key]}; }); })
+            .enter().append("rect")
+            .attr("x", function(d) { return x1(d.key); })
+            .attr("y", function(d) { return y(d.value); })
+            .attr("width", x1.bandwidth())
+        .merge(rects)
+            .transition(t)
+            .attr("height", function(d) { return height - y(d.value); })
+            .attr("fill", function(d) { return z(d.key); })
+            .attr("width", x1.bandwidth());
+
+console.log(data);
+console.log(selected.value);
+
+
+        d3.select("g.y.axis")  //Changing from selectAll to select can fix the conflict between several simultonaeous charts 
+                .transition()
+                .call(yAxisCall);
+
+                 yLabel.text(selected.value);
+
+
+
 
 });
 
@@ -145,6 +193,23 @@ dropSelector.selectAll("option")
         return d;
       })
 
+
+x0.domain(data.map(function(d) { return d.level; }));
+
+
+//Call X Axis
+var xAxisCall = d3.axisBottom(x0);
+    xAxisApp.transition(t).call(xAxisCall).selectAll("text") 
+            .style("text-anchor", "end")
+            .attr("dx", "-.8em")
+            .attr("dy", ".15em")
+            .attr("transform", "rotate(-40)" 
+                );;;
+
+// Call Y Axis
+var yAxisCall = d3.axisLeft(y)
+        .tickFormat(function(d){ return d; });
+        yAxisApp.transition(t).call(yAxisCall);
 
 //** end of D3.js code **//
 
