@@ -95,6 +95,39 @@ var yLabel = g.append("text")
     .text("Rounds");
 
 
+//Run visualization for the first time
+update(data);
+
+//*Update Function*//
+
+function update(data){
+
+var dropSelector = d3.select("#drop") //dropdown change selection
+    .append("select")
+    .attr("id","dropdown")
+    .on("change", function(d){
+         selected = document.getElementById("dropdown");
+           
+                console.log(selected.value);
+
+
+
+
+
+});
+
+//Get values for the dropdown (instructions)
+dropSelector.selectAll("option")
+      .data(instructions)
+      .enter().append("option")
+      .attr("value", function(d){
+        return d;
+      })
+      .text(function(d){
+        return d;
+      })
+
+
 //** end of D3.js code **//
 
                    },
