@@ -76,6 +76,25 @@ var z = d3.scaleOrdinal(d3.schemePastel1);
 var t = d3.transition().duration(750);
 
 
+// X and Y Labels
+
+var xLabel = g.append("text")
+    .attr("y", height + 50)
+    .attr("x", width / 2)
+    .attr("font-size", "20px")
+    .attr("text-anchor", "middle")
+    .attr("transform", "translate(" + margin.left + ", " + margin.top +  ")")
+    .text("Level");
+
+var yLabel = g.append("text")
+    .attr("y", -60)
+    .attr("x", -(height / 2))
+    .attr("font-size", "20px")
+    .attr("text-anchor", "middle")
+    .attr("transform", "rotate(-90)")
+    .text("Rounds");
+
+
 //** end of D3.js code **//
 
                    },
