@@ -110,7 +110,25 @@ var dropSelector = d3.select("#drop") //dropdown change selection
            
                 console.log(selected.value);
 
-
+             //Filter for x1 variables and domain
+            if(selected.value == 'Loops'){
+              var xFilter = ['Loops', 'minL', 'avgL']; 
+            }
+            else if(selected.value == 'Functions'){
+              var xFilter = ['Functions', 'minF', 'avgF'];
+            }
+            else if(selected.value == 'Cycles'){
+              var xFilter = ['Cycles', 'minC', 'avgC'];
+            }
+            else if(selected.value == 'PickDrop'){
+              var xFilter = ['PickDrop', 'minP', 'avgP'];
+            }
+            else if(selected.value == 'Movement'){
+              var xFilter = ['Movement', 'minM', 'avgM'];
+            }
+  
+    x1.domain(xFilter).rangeRound([0, x0.bandwidth()]);
+    y.domain([0, d3.max(data, function(d) { return d3.max(xFilter, function(key) { return d[key]; }); })]).nice(); 
 
 
 
