@@ -95,31 +95,28 @@ update(data);
 
 function update(data) {
 
-              var selector = d3.select("#drop") //dropdown change selection
-        .append("select")
-        .attr("id","dropdown")
-        .on("change", function(d){
-            selection = document.getElementById("dropdown");
-
-
-            
+var selector = d3.select("#drop") //dropdown change selection
+    .append("select")
+    .attr("id","dropdown")
+    .on("change", function(d){
+         selection = document.getElementById("dropdown");
             y.domain([0, d3.max(data, function(d){return +d[selection.value];})]);
-                                           console.log(selection.value);
+                console.log(selection.value);
 
 
-             // JOIN new data with old elements.
-    var rects = g.selectAll("rect")
-        .data(data, function(d){
-            return d.level;
+// JOIN new data with old elements.
+var rects = g.selectAll("rect")
+    .data(data, function(d){
+        return d.level;
         });
 
              // EXIT old elements not present in new data.
-    rects.exit()
-        .attr("fill", "green")
+rects.exit()
+    .attr("fill", "green")
     .transition(t)
-        .attr("y", y(0))
-        .attr("height", 0)
-        .remove();
+    .attr("y", y(0))
+    .attr("height", 0)
+    .remove();
 
 // ENTER new elements present in new data...
              rects.enter()
