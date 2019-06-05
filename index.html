@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <!-- Custom styling -->
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/cal-heatmap.css">
 </head>
 
 <body>
@@ -23,21 +24,32 @@
     <!-- Bootstrap grid setup -->
     <div class="container">
         <div class="row">
-        <div class="col-sm-8"><h2 class="subtitle">Progress</h2></div>
-       
+        <div class="col-sm-4"><h2 class="subtitle">Progress</h2></div>
+         <div class="col-sm-8"><h2 class="subtitle">Gameplay</h2></div>
         </div>
-        <div class="row">
-            <div class="col-sm-4" id="donut-area"></div>
-            <div class="col-sm-8" id="drop" align=center></div>
+     
+            <div class="row">
+                <div class="col-sm-4" id="donut-area"></div>
+        <div class="col-sm-8" id="drop" align=left></div>
             <div class ="col-sm-8" id="chart-area"></div>
+        </div>
             
-            <div class="row" style= margin-top:400px;>
+            <div class="row">
+        <div class="col-sm-4"><h2 class="subtitle">Solutions</h2></div>
+        </div>
+            <div class="row">
                 <div class="col-sm-8" id="drop2" align=left></div>
                 <div class ="col-sm-8" id="groupedchart"></div>
             </div>
+          <div class="row" style = "margin-top: 100px";>
+        <div class="col-sm-4"><h2 class="subtitle">Heatmap</h2></div>
         </div>
-    </div>
+            <div class="row">
+                <div class ="col-lg-2" id="cal-heatmap"></div>
+            </div>
+        </div>
 
+    
 
 <!-- External JS libraries -->
     
@@ -46,36 +58,20 @@
 <script src="js/jquery-ui.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/d3.min.js"></script>
+<script src="js/d3v3.min.js"></script>
 
 
 <!-- Custom JS -->
-<script src="js/main.js"></script>
+    <script src="js/main.js"></script>
     <script src="js/donut-chart.js"></script>
     <script src="js/groupedchart.js"></script>
+    <script src="js/cal-heatmap.min.js"></script>
+    <script src="js/heatmapsettings.js"></script>
     
-
 
 </body>
 
 <br><br>
-<style>
- 
-.footer {
- 
-    position: relative;
- 
-    bottom: 0;
- 
-    width: 100%;
- 
-    height: 55px;
- 
-    background-color: #DFDFDF;
- 
-}
- 
-</style>
- 
 
  
     <footer class="footer">
