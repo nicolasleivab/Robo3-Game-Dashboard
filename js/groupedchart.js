@@ -195,8 +195,13 @@ dropSelector.selectAll("option")
         return d;
       })
 
+//* Run default visualization *// 
 
+var keys = ['Functions', 'minF', 'avgF'];
 x0.domain(data.map(function(d) { return d.level; }));
+x1.domain(keys).rangeRound([0, x0.bandwidth()]);
+y2.domain([0, d3.max(data, function(d) { return d3.max(keys, function(key) { return d[key]; }); })]).nice(); 
+
 
 
 //Call X Axis
@@ -213,6 +218,24 @@ var xAxisCall = d3.axisBottom(x0);
 var yAxisCall2 = d3.axisLeft(y2)
         .tickFormat(function(d){ return d; });
         yAxisApp.transition(t).call(yAxisCall2).selectAll("text").attr("font-size", "15px");
+
+
+
+g.append("g")
+            .selectAll("g")
+            .data(data)
+            .enter().append("g")
+            .attr("class","bar")
+            .attr("transform", function(d) { return "translate(" + x0(d.level) + ",0)"; })
+            .selectAll("rect")
+            .data(function(d) { return keys.map(function(key) { return {key: key, value: d[key]}; }); })
+            .enter().append("rect")
+            .attr("x", function(d) { return x1(d.key); })
+            .attr("y", function(d) { return y2(d.value); })
+            .transition(t)
+            .attr("width", x1.bandwidth())
+            .attr("height", function(d) { return height - y2(d.value); })
+            .attr("fill", function(d) { return z(d.key); });
 
 
 }
