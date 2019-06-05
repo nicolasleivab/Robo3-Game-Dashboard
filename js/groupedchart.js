@@ -179,7 +179,25 @@ console.log(selected.value);
 
                  yLabel2.text(selected.value);
 
+//Legend
 
+var keysl = ['Your Solution', 'Min Solution', 'Average Solution'];  
+var legend = g.append("g")
+            .attr("font-family", "sans-serif")
+            .attr("font-size", 10)
+            .attr("text-anchor", "end")
+            .selectAll("g")
+            .data(keysl)
+            .enter().append("g")
+            .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+        legend.append("rect")
+            .attr("x", width + 80)
+            .attr("width", 15)
+            .attr("height", 15)
+            .attr("fill", z)
+            .attr("stroke", z)
+            .attr("stroke-width",2)
 
 
 });
@@ -236,6 +254,33 @@ g.append("g")
             .attr("width", x1.bandwidth())
             .attr("height", function(d) { return height - y2(d.value); })
             .attr("fill", function(d) { return z(d.key); });
+
+//Legend Default
+
+var keysl = ['Your Solution', 'Min Solution', 'Average Solution'];  
+var legend = g.append("g")
+            .attr("font-family", "sans-serif")
+            .attr("font-size", 10)
+            .attr("text-anchor", "end")
+            .selectAll("g")
+            .data(keysl)
+            .enter().append("g")
+            .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+        legend.append("rect")
+            .attr("x", width + 80)
+            .attr("width", 15)
+            .attr("height", 15)
+            .attr("fill", z)
+            .attr("stroke", z)
+            .attr("stroke-width",2)
+        
+
+        legend.append("text")
+            .attr("x", width + 75)
+            .attr("y", 9.5)
+            .attr("dy", "0.32em")
+            .text(function(d) { return d; });
 
 
 }
