@@ -18,7 +18,7 @@ var width = 600 - margin.left - margin.right,
     var elements = ['Rounds', 'Playtime (min)', 'Instructions', 'Success Probability'];
     var selection = elements[0];
 
-    console.log(elements);
+    console.log(elements[0]);
 
          // Clean data
     data.forEach(function(d) {
@@ -119,6 +119,7 @@ rects.exit()
     .remove();
 
 // ENTER new elements present in new data...
+
              rects.enter()
         .append("rect")
             .attr("fill", "green")
@@ -151,9 +152,12 @@ rects.exit()
       .text(function(d){
         return d;
       })
+//* Run default viszualization *//
+
 
     x.domain(data.map(function(d){ return d.level }));
-
+    y.domain([0, d3.max(data, function(d){return +d[selection];})]);
+   
     // X Axis
     var xAxisCall = d3.axisBottom(x);
     xAxisGroup.transition(t).call(xAxisCall).selectAll("text") 
@@ -169,6 +173,23 @@ rects.exit()
         .tickFormat(function(d){ return d; });
     yAxisGroup.transition(t).call(yAxisCall).selectAll("text").attr("font-size", "12px");
 
+
+           
+      g.selectAll("rect")
+        .data(data, function(d){
+        return d.level;
+        }).enter()
+            .append("rect")
+            .attr("fill", "green")
+            .attr("y", y(0))
+            .attr("height", 0)
+            .attr("x", function(d){ return x(d.level) })
+            .attr("width", x.bandwidth)
+            .transition(t)
+                .attr("x", function(d){ return x(d.level) })
+                .attr("width", x.bandwidth)
+                .attr("y", function(d){ return y(d[selection]); })
+                .attr("height", function(d){ return height - y(d[selection]); });
 
 }
 

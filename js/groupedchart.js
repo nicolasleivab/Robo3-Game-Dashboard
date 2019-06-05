@@ -98,6 +98,7 @@ var yLabel2 = g.append("text")
 //Run visualization for the first time
 update2(data);
 
+
 //*Update Function*//
 
 function update2(data){
@@ -109,7 +110,7 @@ var dropSelector = d3.select("#drop2") //dropdown change selection
          selected = document.getElementById("dropdown2");
            
                 console.log(selected.value);
-
+            var xFilter = ['Loops', 'minL', 'avgL']; 
              //Filter for x1 variables and domain
             if(selected.value == 'Loops'){
               var xFilter = ['Loops', 'minL', 'avgL']; 
@@ -126,6 +127,7 @@ var dropSelector = d3.select("#drop2") //dropdown change selection
             else if(selected.value == 'Movement'){
               var xFilter = ['Movement', 'minM', 'avgM'];
             }
+
   
     x1.domain(xFilter).rangeRound([0, x0.bandwidth()]);
     y2.domain([0, d3.max(data, function(d) { return d3.max(xFilter, function(key) { return d[key]; }); })]).nice(); 
