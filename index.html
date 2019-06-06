@@ -13,16 +13,21 @@
 
 <body>
 
-    <nav class="navbar navbar-default">
-        <div class="container">
-            <a class="navbar-brand" href="#"><img id="logo" src="img/logo.png"></a> 
-            <h2 class="title">INTERACTIVE DASHBOARD</h2>
-            
-        </div>
-    </nav>
+<div class="sidenav">
+  <a href="#">ROBO3 DASHBOARD</a>
+  <a href="#first">GamePlay</a>
+  <a href="#second">Solutions</a>
+  <a href="#">Logout</a>
+  <a href="http://home.deib.polimi.it/loiacono/robo3/" rel="noopener noreferrer" target="_blank" class="imgh"><img class = "image1" src=  
+"./img/logo.png"
+        style='width:50%;' border="0" alt="filter applied" />
+</a>
+    </div>
+
+  
 
     <!-- Bootstrap grid setup -->
-    <div class="container">
+    <div class="container" id="first">
         <div class="row">
         <div class="col-sm-4"><h2 class="subtitle">Progress</h2></div>
          <div class="col-sm-8"><h2 class="subtitle">Gameplay</h2></div>
@@ -34,7 +39,7 @@
             <div class ="col-sm-8" id="chart-area"></div>
         </div>
             
-            <div class="row">
+            <div class="row" id="second">
         <div class="col-sm-4"><h2 class="subtitle">Solutions</h2></div>
         </div>
             <div class="row">

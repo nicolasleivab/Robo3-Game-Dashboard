@@ -53,3 +53,59 @@ svg {
     background-color: #DFDFDF;
  
 }
+
+/***---side nav-bar---***/
+.sidenav {
+  height: 100%;
+  width: 140px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+  text-align: center;
+  align-content: center;
+}
+
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  margin-top: 20px;
+  text-decoration: none;
+  font-family: 'ZCOOL QingKe HuangYou', sans-serif;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.main {
+  margin-left: 140px; /* Same as the width of the sidenav */
+  font-size: 28px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+
+img {  
+        width:100%; 
+        margin:0 auto;
+   
+} 
+
+.image1 { 
+    filter: invert(100%);
+} 
+
+.image1:hover {
+    filter: contrast(100%);
+    border-radius: 25px;
+}
