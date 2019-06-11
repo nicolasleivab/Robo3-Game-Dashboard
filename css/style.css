@@ -109,3 +109,17 @@ img {
     filter: contrast(100%);
     border-radius: 25px;
 }
+
+/*Leaderboard*/
+
+    table {
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        border: 1px solid #aaa;
+        padding: 3px;
+        margin: 10px;
+        text-align: center;
+    }
