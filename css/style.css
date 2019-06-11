@@ -122,4 +122,27 @@ img {
         padding: 3px;
         margin: 10px;
         text-align: center;
+        font-family: 'ZCOOL QingKe HuangYou', sans-serif;
     }
+    	.row{
+		    margin-top:40px;
+		    padding: 0 10px;
+		}
+		.clickable{
+		    cursor: pointer;   
+		}
+
+		.panel-heading div {
+			margin-top: -18px;
+			font-size: 15px;
+		}
+		.panel-heading div span{
+			margin-left:5px;
+		}
+		.panel-body{
+			display: none;
+		}
+.panel-title{
+font-family: 'ZCOOL QingKe HuangYou', sans-serif;
+font-size: 18px;
+}
