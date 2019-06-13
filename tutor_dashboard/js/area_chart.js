@@ -64,7 +64,7 @@ var area = d3.area()
 
 var stack = d3.stack()
 
-
+var t = d3.transition().duration(750);
 
 var keys = ['Cycles', 'Best Solution'];
 
@@ -84,9 +84,8 @@ function update(data) {
 
         z.domain(d3.keys(data[0]).filter(function(key) { return key !== 'date'; }));
         
-            y.domain([0, d3.max(data, function(d){return +d[selection2.value];})]);
-                                           console.log(selection2.value);
-        
+       y.domain([0, d3.max(data, function(d) { return +d.Cycles; })])
+      .range([ height, 0 ]);
      
         console.log(data);
         console.log(keys);
@@ -135,7 +134,7 @@ browser.enter()
         g.append('g')
             .attr('class', 'x axis')
             .attr('transform', 'translate(0,' + height + ')')
-            .call(xAxis).   selectAll("text") 
+            .call(xAxisApp).   selectAll("text") 
             .style("text-anchor", "end")
             .attr("dx", "-.8em")
             .attr("dy", ".15em")
@@ -159,7 +158,7 @@ browser.enter()
 
  //get values for the dropdown
     selector.selectAll("option")
-      .data(elements2)
+      .data(levels)
       .enter().append("option")
       .attr("value", function(d){
         return d;
@@ -168,7 +167,11 @@ browser.enter()
         return d;
       })
 
-    x.domain(data.map(function(d){ return d.level }));
+ x.domain(d3.extent(data, function(d) { return d.date; }));
+        
+    stack.keys(keys);
+    stack.order(d3.stackOrderNone);
+    stack.offset(d3.stackOffsetNone);
 
     // X Axis
     var xAxisCall = d3.axisBottom(x);
