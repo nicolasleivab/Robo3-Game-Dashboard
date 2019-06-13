@@ -91,12 +91,27 @@ function update(data) {
         console.log(data);
         console.log(keys);
       
-        // Set domains for axes
-        x.domain(d3.extent(data, function(d) { return d.date; }));
+// Set domains for axes
+ x.domain(d3.extent(data, function(d) { return d.date; }));
         
-        stack.keys(keys);
-        stack.order(d3.stackOrderNone);
-        stack.offset(d3.stackOffsetNone);
+    stack.keys(keys);
+    stack.order(d3.stackOrderNone);
+    stack.offset(d3.stackOffsetNone);
+
+//Join
+var browser = svg.selectAll('.browser')
+            .data(stack(data))
+            .enter().append('g')
+            .attr('class', function(d){ return 'browser ' + d.key; })
+            .attr('fill-opacity', 0.5);
+
+//Exit old elements
+browser.exit()
+    .attr("fill", function(d) { return color(d.key); })
+    .transition(t)
+        .attr("y", y(0))
+        .attr("height", 0)
+        .remove();
 
 
 
