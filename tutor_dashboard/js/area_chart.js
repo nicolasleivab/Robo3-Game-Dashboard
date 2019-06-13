@@ -27,6 +27,14 @@ var parseDate = d3.timeParse("%m/%d/%Y");
 
  //*Chart code*//
 
+var svg = d3.select("#area-chart"),
+    margin = {top: 20, right: 120, bottom: 100, left: 100},
+    width = 1200 - margin.left - margin.right,
+    height = 350 - margin.top - margin.bottom,
+    g = svg.append("svg").attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
 
 
 
