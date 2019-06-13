@@ -89,6 +89,36 @@ function update(data) {
 
  });
 
+ //get values for the dropdown
+    selector.selectAll("option")
+      .data(elements2)
+      .enter().append("option")
+      .attr("value", function(d){
+        return d;
+      })
+      .text(function(d){
+        return d;
+      })
+
+    x.domain(data.map(function(d){ return d.level }));
+
+    // X Axis
+    var xAxisCall = d3.axisBottom(x);
+    xAxisApp.transition(t).call(xAxisCall).selectAll("text") 
+            .style("text-anchor", "end")
+            .attr("dx", "-.8em")
+            .attr("dy", ".15em")
+            .attr("transform", "rotate(-40)" 
+                );;;
+
+    // Y Axis
+    var yAxisCall = d3.axisLeft(y)
+        .tickFormat(function(d){ return d; });
+    yAxisApp.transition(t).call(yAxisCall);
+
+
+}
+
 
             //** end of D3 script **//
 
