@@ -8,7 +8,6 @@ function init() {
 
 
 //* Filter and format data *//
-var data = data.filter(function(d){return d.ID == '10574525';});
 
 var parseDate = d3.timeParse("%m/%d/%Y");
 
@@ -19,6 +18,8 @@ var parseDate = d3.timeParse("%m/%d/%Y");
 
 
     });
+
+var data = data.filter(function(d){return d.ID == '10574525';});
 
  var levels = d3.map(data, function(d){return(d.level)}).keys();
 
@@ -64,7 +65,7 @@ var area = d3.area()
 
 var stack = d3.stack()
 
-var t = d3.transition().duration(750);
+var t = d3.transition().duration(850);
 
 var keys = ['Cycles', 'Best Solution'];
 
@@ -75,84 +76,69 @@ var keys = ['Cycles', 'Best Solution'];
 
 function update(data) {
 
+        var data = data.filter(function(d){return d.level == 'Alterna';});
+    		
+   var selector = d3.select("#drop") //dropdown change selection
+    .append("select")
+    .attr("id","dropdown")
+    .on("change", function(d){
+         selection = document.getElementById("dropdown");
+          
+             
+    
+ 
+    
 
-              var selector = d3.select("#drop") //dropdown change selection
-        .append("select")
-        .attr("id","dropdown")
-        .on("change", function(d){
-            selection2 = document.getElementById("dropdown");
+    var x = d3.scaleTime().range([0, width]),
+        y = d3.scaleLinear().range([height, 0]),
+        z = d3.scaleOrdinal(d3.schemePastel1);
+    var stack = d3.stack();
+    var area = d3.area()
+        .x(function(d) { return x(d.data.date); })
+        .y0(function(d) { return y(d[0]); })
+        .y1(function(d) { return y(d[1]); });
 
-        z.domain(d3.keys(data[0]).filter(function(key) { return key !== 'date'; }));
-        
-       y.domain([0, d3.max(data, function(d) { return +d.Cycles; })])
-      .range([ height, 0 ]);
-     
-        console.log(data);
-        console.log(keys);
-      
-// Set domains for axes
- x.domain(d3.extent(data, function(d) { return d.date; }));
-        
-    stack.keys(keys);
-    stack.order(d3.stackOrderNone);
-    stack.offset(d3.stackOffsetNone);
+   var t = d3.transition().duration(750);
 
-//Join
-var browser = g.selectAll('.browser')
+   
+
+         var keys = ['Cycles', 'Best Solution'];
+        x.domain(d3.extent(data, function(d) { return d.date; }));
+        y.domain([0, (d3.max(data, function(d){return d.Cycles;}))+10]);
+        z.domain(keys);
+        stack.keys(keys);
+        console.log(data)
+        console.log(stack(data))
+        var layer = g.selectAll(".layer")
             .data(stack(data))
-            .enter().append('g')
-            .attr('class', function(d){ return 'browser ' + d.key; })
-            .attr('fill-opacity', 0.5);
-
-//Exit old elements
-browser.exit()
-    .attr("fill", function(d) { return color(d.key); })
-    .transition(t)
-        .attr("y", y(0))
-        .attr("height", 0)
-        .remove();
-
-       // ENTER new elements present in new data...
-browser.enter()
-        .append('path')
-            .attr('class', 'area')
-            .attr('d', area)
-            .style('fill', function(d) { return color(d.key); });
-        browser.append('text')
-            .datum(function(d) { return d; })
-            .attr('transform', function(d) { 
-                return 'translate(' + x(data[12].date) + ',' + y(d[11][1]) + ')'; 
-            }) //Update
-            .merge(browser)
-            .transition(t)
-            .attr("x", function(d){ return x(data[12].date) })
-            .attr("y", function(d){ return y(d[11][1][selection2.value]) })
-            .attr('dy', '.35em')
-            .style("text-anchor", "start")
-            .text(function(d) { return d.key; })
-                .attr('fill-opacity', 1);
-        g.append('g')
-            .attr('class', 'x axis')
-            .attr('transform', 'translate(0,' + height + ')')
-            .call(xAxisApp).   selectAll("text") 
+            .enter().append("g")
+            .attr("class", "layer");
+layer.append("path")
+            .attr("class", "area")
+            .style("fill", function(d) { return z(d.key); })
+            .attr("d", area);
+        // Only label the layers left at the end (if one browser disappears)
+        layer.filter(function(d) { return d[d.length - 1][1] - d[d.length - 1][0] > 0.01; })
+            .append("text")
+            .attr("x", width - 6)
+            .attr("y", function(d) { return y((d[d.length - 1][0] + d[d.length - 1][1]) / 2); })
+            .attr("dy", ".35em")
+            .style("font", "10px sans-serif")
+            .style("text-anchor", "end")
+            .text(function(d) { return d.key; });
+        g.append("g")
+            .attr("class", "axis axis--x")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x)).selectAll("text") 
             .style("text-anchor", "end")
             .attr("dx", "-.8em")
             .attr("dy", ".15em")
             .attr("transform", "rotate(-40)" 
-                );;;
-        g.append('g')
-            .attr('class', 'y axis')
-            .call(yAxis);
-        g.append ("text")
-            .attr("x", 0-margin.left)
-            .attr("y", -60)
-            .attr("x", -(height / 2))
-            .attr("text-anchor", "middle")
-            .attr("transform", "rotate(-90)")
-            .text("Cycles")
-
-
-
+                );;;;
+        g.append("g")
+            .attr("class", "axis axis--y")
+            .call(d3.axisLeft(y).ticks(10));
+            ;
 
  });
 
@@ -173,19 +159,6 @@ browser.enter()
     stack.order(d3.stackOrderNone);
     stack.offset(d3.stackOffsetNone);
 
-    // X Axis
-    var xAxisCall = d3.axisBottom(x);
-    xAxisApp.transition(t).call(xAxisCall).selectAll("text") 
-            .style("text-anchor", "end")
-            .attr("dx", "-.8em")
-            .attr("dy", ".15em")
-            .attr("transform", "rotate(-40)" 
-                );;;
-
-    // Y Axis
-    var yAxisCall = d3.axisLeft(y)
-        .tickFormat(function(d){ return d; });
-    yAxisApp.transition(t).call(yAxisCall);
 
 
 }
