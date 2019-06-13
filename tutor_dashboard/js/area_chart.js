@@ -37,7 +37,29 @@ var svg = d3.select("#area-chart"),
         .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
 
 
+//Append and class for each axis to reuse later
 
+var xAxisApp = g.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height +")");
+
+var yAxisApp = g.append("g")
+        .attr("class", "y axis");
+    
+
+//X and Y scales
+var x = d3.scaleTime()
+    .range([0, width])
+
+var y = d3.scaleLinear()
+    .range([height, 0]);
+
+var area = d3.area()
+        .x(function(d) { return x(d.data.date); })
+        .y0(function(d) { return y(d[0]); })
+        .y1(function(d) { return y(d[1]); });
+
+var stack = d3.stack()
 
 
 
