@@ -63,8 +63,31 @@ var stack = d3.stack()
 
 
 
+var keys = ['Cycles', 'Best Solution'];
 
 
+          // Run the vis for the first time
+    update(data);
+
+
+function update(data) {
+
+
+              var selector = d3.select("#drop") //dropdown change selection
+        .append("select")
+        .attr("id","dropdown")
+        .on("change", function(d){
+            selection2 = document.getElementById("dropdown");
+
+        color.domain(d3.keys(data[0]).filter(function(key) { return key !== 'date'; }));
+        
+            y.domain([0, d3.max(data, function(d){return +d[selection2.value];})]);
+                                           console.log(selection2.value);
+
+
+
+
+ });
 
 
             //** end of D3 script **//
