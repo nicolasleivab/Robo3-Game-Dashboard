@@ -54,6 +54,9 @@ var x = d3.scaleTime()
 var y = d3.scaleLinear()
     .range([height, 0]);
 
+// Color scheme
+var z = d3.scaleOrdinal().range(["#ccffcc","#ffb3b3"])
+
 var area = d3.area()
         .x(function(d) { return x(d.data.date); })
         .y0(function(d) { return y(d[0]); })
@@ -79,10 +82,21 @@ function update(data) {
         .on("change", function(d){
             selection2 = document.getElementById("dropdown");
 
-        color.domain(d3.keys(data[0]).filter(function(key) { return key !== 'date'; }));
+        z.domain(d3.keys(data[0]).filter(function(key) { return key !== 'date'; }));
         
             y.domain([0, d3.max(data, function(d){return +d[selection2.value];})]);
                                            console.log(selection2.value);
+        
+     
+        console.log(data);
+        console.log(keys);
+      
+        // Set domains for axes
+        x.domain(d3.extent(data, function(d) { return d.date; }));
+        
+        stack.keys(keys);
+        stack.order(d3.stackOrderNone);
+        stack.offset(d3.stackOffsetNone);
 
 
 
