@@ -99,7 +99,7 @@ function update(data) {
     stack.offset(d3.stackOffsetNone);
 
 //Join
-var browser = svg.selectAll('.browser')
+var browser = g.selectAll('.browser')
             .data(stack(data))
             .enter().append('g')
             .attr('class', function(d){ return 'browser ' + d.key; })
@@ -112,6 +112,45 @@ browser.exit()
         .attr("y", y(0))
         .attr("height", 0)
         .remove();
+
+       // ENTER new elements present in new data...
+browser.enter()
+        .append('path')
+            .attr('class', 'area')
+            .attr('d', area)
+            .style('fill', function(d) { return color(d.key); });
+        browser.append('text')
+            .datum(function(d) { return d; })
+            .attr('transform', function(d) { 
+                return 'translate(' + x(data[12].date) + ',' + y(d[11][1]) + ')'; 
+            }) //Update
+            .merge(browser)
+            .transition(t)
+            .attr("x", function(d){ return x(data[12].date) })
+            .attr("y", function(d){ return y(d[11][1][selection2.value]) })
+            .attr('dy', '.35em')
+            .style("text-anchor", "start")
+            .text(function(d) { return d.key; })
+                .attr('fill-opacity', 1);
+        g.append('g')
+            .attr('class', 'x axis')
+            .attr('transform', 'translate(0,' + height + ')')
+            .call(xAxis).   selectAll("text") 
+            .style("text-anchor", "end")
+            .attr("dx", "-.8em")
+            .attr("dy", ".15em")
+            .attr("transform", "rotate(-40)" 
+                );;;
+        g.append('g')
+            .attr('class', 'y axis')
+            .call(yAxis);
+        g.append ("text")
+            .attr("x", 0-margin.left)
+            .attr("y", -60)
+            .attr("x", -(height / 2))
+            .attr("text-anchor", "middle")
+            .attr("transform", "rotate(-90)")
+            .text("Cycles")
 
 
 
