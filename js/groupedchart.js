@@ -18,7 +18,7 @@ var data = data.filter(function(d){return d.ID == '10574525';});
         d.Movement = +d.Movement;
         d.PickDrop = +d.PickDrop;
         d.Cycles = +d.Cycles;
-        d.instructions = +d.instructions;
+        d.Instructions = +d.Instructions;
         d.minL = +d.minL;
         d.avgL = +d.avgL;
         d.minF = +d.minF;
