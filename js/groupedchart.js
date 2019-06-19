@@ -2,7 +2,7 @@
 
 //** tabletop init function **//
 function init() {     
-  Tabletop.init( { key: '10g_TGtruCriERlXJurPZQk76pvk30U0pkWgbbfzPrjA', //google sheet key
+  Tabletop.init( { key: '1evjoQPchLR8iUhjQQ8i56hy6Df5z7K_eVSWs8yVugC4', //google sheet key
                    callback: function(data, tabletop) { 
                        console.log(data)
 
@@ -18,6 +18,7 @@ var data = data.filter(function(d){return d.ID == '10574525';});
         d.Movement = +d.Movement;
         d.PickDrop = +d.PickDrop;
         d.Cycles = +d.Cycles;
+        d.instructions = +d.instructions;
         d.minL = +d.minL;
         d.avgL = +d.avgL;
         d.minF = +d.minF;
@@ -28,10 +29,12 @@ var data = data.filter(function(d){return d.ID == '10574525';});
         d.avgP = +d.avgP;
         d.minM = +d.minM;
         d.avgM = +d.avgM;
+        d.minI = +d.minI;
+        d.avgI = d.avgI;
 
     });
 
-var instructions = ['Functions', 'Loops', 'Cycles', 'Movement', 'PickDrop'];
+var instructions = ['Functions', 'Loops', 'Cycles', 'Movement', 'PickDrop', 'instructions'];
 
 var selected = instructions[0];
 
@@ -126,6 +129,9 @@ var dropSelector = d3.select("#drop2") //dropdown change selection
             }
             else if(selected.value == 'Movement'){
               var xFilter = ['Movement', 'minM', 'avgM'];
+            }
+            else if(selected.value == 'Instructions'){
+              var xFilter = ['Instructions', 'minI', 'avgI'];
             }
 
   
