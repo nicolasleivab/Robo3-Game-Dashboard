@@ -34,7 +34,7 @@ var data = data.filter(function(d){return d.ID == '10574525';});
 
     });
 
-var instructions = ['Functions', 'Loops', 'Cycles', 'Movement', 'PickDrop', 'instructions'];
+var instructions = ['Functions', 'Loops', 'Cycles', 'Movement', 'PickDrop', 'Instructions'];
 
 var selected = instructions[0];
 
