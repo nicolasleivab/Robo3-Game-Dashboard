@@ -28,15 +28,15 @@ var data = data.filter(function(d){return d.ID == '10574525';});
         d.minP = +d.minP;
         d.avgP = +d.avgP;
         d.minM = +d.minM;
-        d.avgM = +d.avgM;
+        d.avgM = +d.avgM;	
         d.minI = +d.minI;
-        d.avgI = d.avgI;
+        d.avgI = +d.avgI;
 
     });
 
-var instructions = ['Functions', 'Loops', 'Cycles', 'Movement', 'PickDrop', 'Instructions'];
+var solution = ['Functions', 'Loops', 'Cycles', 'Movement', 'PickDrop', 'Instructions'];
 
-var selected = instructions[0];
+var selected = solution[0];
 
 //*Chart code*//
 
@@ -208,9 +208,9 @@ var legend = g.append("g")
 
 });
 
-//Get values for the dropdown (instructions)
+//Get values for the dropdown (solutions)
 dropSelector.selectAll("option")
-      .data(instructions)
+      .data(solution)
       .enter().append("option")
       .attr("value", function(d){
         return d;
