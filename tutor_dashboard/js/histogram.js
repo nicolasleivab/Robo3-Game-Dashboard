@@ -27,6 +27,19 @@ var data = data.filter(function(d){return d.ID == '';});
 
  //*Chart code*//
 
+//Dimensions
+var margin = {top: 10, right: 30, bottom: 30, left: 40},
+    width = 600 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+//Append svg
+var svg = d3.select("#histogram")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
 
 
 
