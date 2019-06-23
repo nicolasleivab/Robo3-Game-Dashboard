@@ -26,6 +26,7 @@ var data = data.filter(function(d){return d.ID == '';});
 
 
  //*Chart code*//
+ // Derived from https://www.d3-graph-gallery.com/graph/histogram_basic.html
 
 //Dimensions
 var margin = {top: 10, right: 30, bottom: 30, left: 40},
@@ -40,6 +41,20 @@ var svg = d3.select("#histogram")
   .append("g")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
+
+// X axis and call func
+var x = d3.scaleLinear()
+    .domain([0, 1000])   // domain to be replaced later in the update function    
+    .range([0, width]);
+svg.append("g")          //Call axis to be replaced later in the update function
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x));
+
+// Histogram Parameters
+var histogram = d3.histogram()
+    .value(function(d) { return d.Instructions; })   //parameters to be replaced later in the update function with level filter
+    .domain(x.domain())  // domain of the graphic
+    .thresholds(x.ticks(70)); // numbers of bins
 
 
 
