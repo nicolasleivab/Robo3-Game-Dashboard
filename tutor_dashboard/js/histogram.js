@@ -56,6 +56,16 @@ var histogram = d3.histogram()
     .domain(x.domain())  // domain of the graphic
     .thresholds(x.ticks(70)); // numbers of bins
 
+// D3 function to get the bins, assigned to a variable for later reuse
+var bins = histogram(data);
+
+// X axis and call func
+var y = d3.scaleLinear()
+    .range([height, 0]);
+    y.domain([0, d3.max(bins, function(d) { return d.length; })]);   // domain to be replaced later in the update function
+    .call(d3.axisLeft(y)) //Call axis to be replaced later in the update function
+
+    
 
 
             //** end of D3 script **//
