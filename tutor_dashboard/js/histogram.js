@@ -62,10 +62,22 @@ var bins = histogram(data);
 // X axis and call func
 var y = d3.scaleLinear()
     .range([height, 0]);
-    y.domain([0, d3.max(bins, function(d) { return d.length; })]);   // domain to be replaced later in the update function
+    y.domain([0, d3.max(bins, function(d) { return d.Instructions; })]);   // domain to be replaced later in the update function
     .call(d3.axisLeft(y)) //Call axis to be replaced later in the update function
 
-    
+  
+// Appending the bars to the svg 
+svg.selectAll("rect")
+    .data(bins)
+    .enter()
+    .append("rect")
+      .attr("x", 1)
+      .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.Instructions) + ")"; })
+      .attr("width", function(d) { return x(d.x1) - x(d.x0) -1 ; })
+      .attr("height", function(d) { return height - y(d.Instructions); })
+      .style("fill", "#69b3a2")
+
+;
 
 
             //** end of D3 script **//
