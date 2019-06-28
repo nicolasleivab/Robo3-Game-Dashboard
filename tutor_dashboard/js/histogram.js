@@ -62,7 +62,7 @@ var bins = histogram(data);
 // X axis and call func
 var y = d3.scaleLinear()
     .range([height, 0]);
-    y.domain([0, d3.max(bins, function(d) { return d.Instructions; })]);   // domain to be replaced later in the update function
+    y.domain([0, d3.max(bins, function(d){return +d.Instructions;})]);   // domain to be replaced later in the update function
     .call(d3.axisLeft(y)) //Call axis to be replaced later in the update function
 
   
@@ -78,6 +78,23 @@ svg.selectAll("rect")
       .style("fill", "#69b3a2")
 
 ;
+
+// Function Update
+
+function update(data) {
+
+var selector = d3.select("#drop") //dropdown change selection
+    .append("select")
+    .attr("id","dropdown")
+    .on("change", function(d){
+         selection = document.getElementById("dropdown");
+            y.domain([0, d3.max(data, function(d){return +d[selection.value];})]);
+                console.log(selection.value);
+
+
+
+
+ });
 
 
             //** end of D3 script **//
