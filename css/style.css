@@ -1,3 +1,5 @@
+/*Main*/
+
 @import url('https://fonts.googleapis.com/css?family=ZCOOL+QingKe+HuangYou');
 .title{
   font-family: 'ZCOOL QingKe HuangYou', sans-serif;
@@ -145,4 +147,28 @@ img {
 .panel-title{
 font-family: 'ZCOOL QingKe HuangYou', sans-serif;
 font-size: 18px;
+}
+
+/*Media Queries*/
+
+/* Small devices */ 
+@media only screen and (min-width : 320px) {
+
+}
+
+/* Phones */ 
+@media only screen and (min-width : 480px) {
+
+}
+
+/* Tablets */
+@media only screen and (min-width : 768px) {
+.push-right-md {
+  float: right;
+
+}
+
+/* Medium Devices */
+@media only screen and (min-width : 992px) {
+
 }
