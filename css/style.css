@@ -7,7 +7,9 @@
   min-width:20px;
   color:#333;
 }
-
+body{
+padding-left: 130px;
+}
 .subtitle{
   font-family: 'ZCOOL QingKe HuangYou', sans-serif;
   text-align:left;
@@ -57,7 +59,7 @@ svg {
 }
 
 /***---side nav-bar---***/
-.sidenav {
+.nav {
   height: 100%;
   width: 140px;
   position: fixed;
@@ -71,7 +73,7 @@ svg {
   align-content: center;
 }
 
-.sidenav a {
+.nav a {
   padding: 6px 8px 6px 16px;
   margin-top: 20px;
   text-decoration: none;
@@ -81,7 +83,7 @@ svg {
   display: block;
 }
 
-.sidenav a:hover {
+.nav a:hover {
   color: #f1f1f1;
 }
 
@@ -105,6 +107,7 @@ img {
 
 .image1 { 
     filter: invert(100%);
+    width: 50%;
 } 
 
 .image1:hover {
@@ -151,24 +154,45 @@ font-size: 18px;
 
 /*Media Queries*/
 
-/* Small devices */ 
-@media only screen and (min-width : 320px) {
 
-}
 
 /* Phones */ 
-@media only screen and (min-width : 480px) {
+@media only screen and (max-width : 759px) {
 
 }
 
-/* Tablets */
-@media only screen and (min-width : 768px) {
-.push-right-md {
-  float: right;
-
+/* Tablets and Smaller Desktops */
+@media screen and (min-width:760px) and (max-width:1199px) {
+body{
+  padding-top: 120px;
+}
+.nav {
+  height: 120px;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+  text-align: center;
+  align-content: center;
+}
+    
+.nav a {
+  padding: 6px 8px 6px 16px;
+  margin-top: 20px;
+  text-decoration: none;
+  font-family: 'ZCOOL QingKe HuangYou', sans-serif;
+  font-size: 25px;
+  color: #818181;
+  display: inline-block;
+}
+.image1 {  
+        width:60px; 
+        margin:0 auto;
+   
+} 
 }
 
-/* Medium Devices */
-@media only screen and (min-width : 992px) {
-
-}
