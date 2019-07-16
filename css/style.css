@@ -152,20 +152,60 @@ font-family: 'ZCOOL QingKe HuangYou', sans-serif;
 font-size: 18px;
 }
 
+
+
 /*Media Queries*/
 
 
 
 /* Phones */ 
 @media only screen and (max-width : 759px) {
+body{
+  padding-top: 120px;
+  padding-left: 1px;
+}
+    
+.nav {
+  height: 120px;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+  text-align: center;
+  align-content: center;
+}
+    
+.nav a {
+  padding: 6px 8px 6px 16px;
+  margin-top: 1px;
+  text-decoration: none;
+  font-family: 'ZCOOL QingKe HuangYou', sans-serif;
+  color: #818181;
+  display: inline-block;
+  font-size: 20px;
+  margin-right: 30px;
+}
+.image1 {  
+        width:40px; 
+        margin:0 auto;
+   
+ } 
 
 }
+
+
 
 /* Tablets and Smaller Desktops */
 @media screen and (min-width:760px) and (max-width:1199px) {
 body{
   padding-top: 120px;
+  padding-left: 1px;
 }
+    
 .nav {
   height: 120px;
   width: 100%;
@@ -193,6 +233,6 @@ body{
         width:60px; 
         margin:0 auto;
    
-} 
+ } 
 }
 
