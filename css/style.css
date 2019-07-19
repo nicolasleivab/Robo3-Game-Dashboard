@@ -167,7 +167,7 @@ font-size: 18px;
 
 
 /* Phones */ 
-@media only screen and (max-width : 759px) {
+@media only screen and (max-width : 767px) {
 body{
   padding-top: 120px;
   padding-left: 1px;
@@ -206,8 +206,8 @@ body{
 
 
 
-/* Tablets and Smaller Desktops */
-@media screen and (min-width:760px) and (max-width:1199px) {
+/* Tablets */
+@media screen and (min-width:768px) and (max-width:1023px) {
 body{
   padding-top: 120px;
   padding-left: 1px;
