@@ -48,14 +48,15 @@ svg {
 }
 
 .footer {
- 
-    position: fixed;
+    padding-top: 50px;
+    position: static;
     bottom: 0;
     width: 100%;
     height: 55px;
-    background-color: #DFDFDF;
+    background-color: white;
  
 }
+
 
 /***---side nav-bar---***/
 .nav {
@@ -65,7 +66,8 @@ svg {
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: #111;
+  background-color: #383838;
+  border-right: solid #808080 3px;
   overflow-x: hidden;
   padding-top: 20px;
   text-align: center;
@@ -78,12 +80,18 @@ svg {
   text-decoration: none;
   font-family: 'ZCOOL QingKe HuangYou', sans-serif;
   font-size: 25px;
-  color: #818181;
+  color: #C0C0C0;
   display: block;
 }
 
 .nav a:hover {
-  color: #f1f1f1;
+  color: #FFF;
+  background-color: #808080;
+}
+
+.disabled ,.disabled:hover{
+  color: #C0C0C0 !important;
+  background-color: #383838 !important;  
 }
 
 .main {
@@ -105,7 +113,8 @@ img {
 } 
 
 .image1 { 
-    filter: invert(100%);
+    color: #505050;
+    filter: invert(80%);
     width: 50%;
 } 
 
@@ -171,7 +180,6 @@ body{
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: #111;
   overflow-x: hidden;
   padding-top: 20px;
   text-align: center;
@@ -212,7 +220,6 @@ body{
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: #111;
   overflow-x: hidden;
   padding-top: 20px;
   text-align: center;
