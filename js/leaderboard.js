@@ -65,14 +65,15 @@ var DataGrouper = (function() {
 }());
 
 DataGrouper.register("sum", function(item) {
-  return _.extend({}, item.key, {Cycles: _.reduce(item.vals, function(memo, node) {
-      return memo + Number(node.Cycles);
+  return _.extend({}, item.key, {Score: _.reduce(item.vals, function(memo, node) {
+      return memo + Number(node.Cycles + node.Instructions); //total score defined by total number of Cycles and Instructions
   }, 0)});
 });
 
 var sumPlayers = DataGrouper.sum(data, ["ID"]);
+console.log(sumPlayers);
 
-var sortedPlayers = sumPlayers.sort((aPlayer, bPlayer) => aPlayer.Cycles - bPlayer.Cycles);
+var sortedPlayers = sumPlayers.sort((aPlayer, bPlayer) => aPlayer.Score - bPlayer.Score);
 
 var topPlayers = sortedPlayers.slice(0, 3);
 
@@ -82,8 +83,9 @@ console.log(topPlayers);
 
 // Display table func adapted from https://stackoverflow.com/questions/52507871/creating-a-leaderboard-in-html-js
 function displayLeaderboard() {
-        let theExport = ""; 
-        topPlayers.forEach((player) => theExport += '<tr><td>' + player.ID + '</td><td>' + player.Cycles + '</td><td>' + player.Instructions + '</td></tr>');
+        let theExport = "";
+        var i=1;
+        topPlayers.forEach((player) => theExport += '<tr><td>' + i++ + '</td><td>' + player.ID + '</td><td>' + player.Score + '</td></tr>');
         document.getElementById("leaderboard").innerHTML = theExport;
     }
 
