@@ -200,11 +200,13 @@ body{
         width:40px; 
         margin:0 auto;
    
- } 
+ }
 
+.nav a:hover {
+  color: #FFF;
+  background-color: #383838;
+ }
 }
-
-
 
 /* Tablets */
 @media screen and (min-width:768px) and (max-width:1023px) {
@@ -214,27 +216,35 @@ body{
 }
     
 .nav {
-  height: 120px;
+  height: 100px;
   width: 100%;
   position: fixed;
   z-index: 1;
   top: 0;
   left: 0;
   overflow-x: hidden;
-  padding-top: 20px;
+  padding-top 1px;
   text-align: center;
   align-content: center;
+  border-right: 0px;
+  border-bottom: solid #808080 3px;
 }
     
 .nav a {
   padding: 6px 8px 6px 16px;
-  margin-top: 20px;
+  margin-top: 1px;
   text-decoration: none;
   font-family: 'ZCOOL QingKe HuangYou', sans-serif;
   font-size: 25px;
   color: #818181;
   display: inline-block;
 }
+
+.nav a:hover {
+  color: #FFF;
+  background-color: #383838;
+}
+    
 .image1 {  
         width:60px; 
         margin:0 auto;
