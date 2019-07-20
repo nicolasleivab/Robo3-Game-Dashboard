@@ -8,34 +8,73 @@ function init() {
 
 //** Leaderboard script **//
 
-// Create and sort array of players from data
-// groupBy function adapted from Rob Mathers https://gist.github.com/robmathers/1830ce09695f759bf2c4df15c29dd22d
+ // Clean data
+data.forEach(function(d) {
+    d.Rounds = +d.Rounds;
+    d.Playtime = +d.Playtime;
+    d.Instructions = +d.Instructions;
+    d.Functions = +d.Functions;
+    d.Loops = +d.Loops;
+    d.Movement = +d.Movement;
+    d.PickDrop = +d.PickDrop;
+    d["Success Probability"] = +d["Success Probability"];
+    d.Cycles = +d.Cycles;
+   
+      });
+
+// Group and sort array of players from data with their Cycles attribute summed up
+// DataGrouper function adapted from Scott Sauyet https://stackoverflow.com/questions/14446511/most-efficient-method-to-groupby-on-an-array-of-objects
 
 
-function groupBy(arr, key) { 
-  
-return data.reduce(function(storage, item) {
+var DataGrouper = (function() {
+  var has = function(obj, target) {
+      return _.any(obj, function(value) {
+          return _.isEqual(value, target);
+      });
+  };
 
-    var group = item[key];
-    
+  var keys = function(data, names) {
+      return _.reduce(data, function(memo, item) {
+          var key = _.pick(item, names);
+          if (!has(memo, key)) {
+              memo.push(key);
+          }
+          return memo;
+      }, []);
+  };
 
-    storage[group] = storage[group] || [];
-    
-  
-    storage[group].push(item);
-    
-    
-    return storage;
-  }, {}); 
-};
+  var group = function(data, names) {
+      var stems = keys(data, names);
+      return _.map(stems, function(stem) {
+          return {
+              key: stem,
+              vals:_.map(_.where(data, stem), function(item) {
+                  return _.omit(item, names);
+              })
+          };
+      });
+  };
 
-var group = groupBy(data, "ID");
-console.log(group);
+  group.register = function(name, converter) {
+      return group[name] = function(data, names) {
+          return _.map(group(data, names), converter);
+      };
+  };
 
+  return group;
+}());
 
-var Players = data.sort((aPlayer, bPlayer) => aPlayer.Cycles - bPlayer.Cycles);
+DataGrouper.register("sum", function(item) {
+  return _.extend({}, item.key, {Cycles: _.reduce(item.vals, function(memo, node) {
+      return memo + Number(node.Cycles);
+  }, 0)});
+});
 
-var topPlayers = Players.slice(0, 3);
+var sumPlayers = DataGrouper.sum(data, ["ID"]);
+
+var sortedPlayers = sumPlayers.sort((aPlayer, bPlayer) => aPlayer.Cycles - bPlayer.Cycles);
+
+var topPlayers = sortedPlayers.slice(0, 3);
 
 
 console.log(topPlayers);
