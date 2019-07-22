@@ -167,7 +167,17 @@ font-family: 'ZCOOL QingKe HuangYou', sans-serif;
 font-size: 22px;
 }
 
+.row tr:first-child:hover td {
+    background-color: #ffdb4d;
+}
 
+.row tr:nth-child(2):hover td{
+    background-color: #C0C0C0;
+}
+
+.row tr:nth-child(3):hover td {
+    background-color: #cd7f32;
+}
 
 /*Media Queries*/
 
