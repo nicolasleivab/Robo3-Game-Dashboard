@@ -7,6 +7,7 @@
   min-width:20px;
   color:#333;
 }
+
 body{
 padding-left: 130px;
 }
@@ -125,37 +126,42 @@ img {
 
 /*Leaderboard*/
 
-    table {
-        border-collapse: collapse;
-    }
+table {
+    border-collapse: collapse;
+}
 
-    th,
-    td {
-        border: 1px solid #aaa;
-        padding: 3px;
-        margin: 10px;
-        text-align: center;
-        font-family: 'ZCOOL QingKe HuangYou', sans-serif;
-        font-size: 18px;
-    }
-    	.row{
-		    margin-top:40px;
-		    padding: 0 10px;
-		}
-		.clickable{
-		    cursor: pointer;   
-		}
+th,
+td {
+    border: 1px solid #aaa;
+    padding: 3px;
+    margin: 10px;
+    text-align: center;
+    font-family: 'ZCOOL QingKe HuangYou', sans-serif;
+    font-size: 18px;
+}
 
-		.panel-heading div {
-			margin-top: -18px;
-			font-size: 20px;
-		}
-		.panel-heading div span{
-			margin-left:5px;
-		}
-		.panel-body{
-			display: none;
-		}
+.row{
+     margin-top:40px;
+     padding: 0 10px;
+}
+
+.clickable{
+     cursor: pointer;   
+}
+
+.panel-heading div {
+     margin-top: -18px;
+     font-size: 20px;
+}
+		
+.panel-heading div span{
+      margin-left:5px;
+}
+
+.panel-body{
+      display: none;
+}
+
 .panel-title{
 font-family: 'ZCOOL QingKe HuangYou', sans-serif;
 font-size: 22px;
