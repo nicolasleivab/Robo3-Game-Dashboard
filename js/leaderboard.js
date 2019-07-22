@@ -70,12 +70,12 @@ DataGrouper.register("sum", function(item) {
   }, 0)});
 });
 
-var sumPlayers = DataGrouper.sum(data, ["ID"]);
+var sumPlayers = DataGrouper.sum(data, ["ID"]); //assign to sumPlayers the array with the players grouped by score
 console.log(sumPlayers);
 
-var sortedPlayers = sumPlayers.sort((aPlayer, bPlayer) => aPlayer.Score - bPlayer.Score);
+var sortedPlayers = sumPlayers.sort((aPlayer, bPlayer) => aPlayer.Score - bPlayer.Score); //sorts the players by score (ascending)
 
-var topPlayers = sortedPlayers.slice(0, 3);
+var topPlayers = sortedPlayers.slice(0, 3); //filters the first 3 players
 
 
 console.log(topPlayers);
@@ -83,15 +83,24 @@ console.log(topPlayers);
 
 // Display table func adapted from https://stackoverflow.com/questions/52507871/creating-a-leaderboard-in-html-js
 function displayLeaderboard() {
-        let theExport = "";
-        var i=1;
-        topPlayers.forEach((player) => theExport += '<tr><td>' + i++ + '</td><td>' + player.ID + '</td><td>' + player.Score + '</td></tr>');
-        document.getElementById("leaderboard").innerHTML = theExport;
-    }
+    let theExport = ""; //initialize the export
+    var i=1; // counter for ranking position
+    topPlayers.forEach((player) => theExport += '<tr><td>' + i++ + '</td><td>' + player.ID + '</td><td>' + player.Score + '</td></tr>'); //prints the row tables
+    document.getElementById("leaderboard").innerHTML = theExport;
+}
 
 displayLeaderboard(topPlayers);
 
-
+//JQuery onlick function for showing your ranking among the rest of the students 
+$(document).ready(function() {
+    $('span').click(function() {
+    var showYourRanking = sortedPlayers.slice(0, 4); //to be replaced by a ID filter once the login page is setup
+    let theExport = "";
+    var i=1;
+    showYourRanking.forEach((player) => theExport += '<tr><td>' + i++ + '</td><td>' + player.ID + '</td><td>' + player.Score + '</td></tr>');
+    document.getElementById("leaderboard").innerHTML = theExport;
+    });
+});
 
             //** end of Leaderboard script **//
 
