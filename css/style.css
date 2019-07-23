@@ -65,7 +65,6 @@ svg {
   width: 140px;
   position: fixed;
   z-index: 1;
-  top: 0;
   left: 0;
   background-color: #383838;
   border-right: solid #808080 3px;
@@ -196,11 +195,12 @@ body{
   position: fixed;
   z-index: 1;
   top: 0;
-  left: 0;
   overflow-x: hidden;
   padding-top: 20px;
   text-align: center;
   align-content: center;
+  border-right: 0px;
+  border-bottom: solid #808080 3px;
 }
     
 .nav a {
@@ -233,7 +233,7 @@ body{
 }
     
 .nav {
-  height: 100px;
+  height: 80px;
   width: 100%;
   position: fixed;
   z-index: 1;
