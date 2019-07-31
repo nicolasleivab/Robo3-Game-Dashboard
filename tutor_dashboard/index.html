@@ -1,42 +1,61 @@
 <!doctype html>
 <html>
 <head>
+    
     <meta charset="utf-8">
     <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    
     <title>Interactive Dashboard</title>
     <!-- Bootstrap -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!-- Custom styling -->
     <link rel="stylesheet" href="css/style.css">
- 
+    <link rel="stylesheet" href="css/cal-heatmap.css">
+    
 </head>
 
 <body>
-
-<div class="sidenav">
-  <a href="#">ROBO3 DASHBOARD</a>
-  <a href="#first">GamePlay</a>
-  <a href="#second">Solutions</a>
-  <a href="#">Logout</a>
-
-    </div>
+ 
+<div class="nav">
+<a class="disabled">ROBO3 DASHBOARD</a>
+<a href="#">Histogram</a>
+<a href="#second">Solutions</a>
+<a href="#">Logout</a>
+<a class="disabled" href="http://home.deib.polimi.it/loiacono/robo3/" rel="noopener noreferrer" target="_blank" class="imgh"><img class = "image1" src=  
+"./img/logo.png" border="0" alt="filter applied" />
+</a>
+</div>
 
   
 
     <!-- Bootstrap grid setup -->
     <div class="container">
-        <div class="row" id="first">
-        <div class="col-sm-4"><h2 class="subtitle">Area Chart</h2></div>
-         
+            <div class="row">
+                <div class="col-sm-8 "><h2 class="subtitle">Histogram</h2></div>
+        <div id="drop" class="col-sm-8" align=left data-toggle="tooltip" title="Select">
+                </div>
+            <div class ="col-sm-4 col-sm-pull-3" id="histogram"></div>
+        </div>
+        <br>      
+				
+        <br>
+            <div class="row" id="second">
+        <div class="col-sm-4"><h2 class="subtitle">Solutions</h2></div>
         </div>
             <div class="row">
-        <div class="col-sm-8" id="drop" align=left></div>
-            <div class ="col-sm-8" id="area-chart"></div>
+                <div class="col-sm-8" id="drop2" align=left data-toggle="tooltip" title="Select"></div>
+                <div class ="col-sm-8" id="groupedchart"></div>
+            </div>
+          <div class="row" style = "margin-top: 33px";>
+        <div class="col-sm-4"><h2 class="subtitle"></h2></div>
         </div>
-    </div>
-
-
-
+            <div class="row">
+                <div class ="col-lg-2" id="cal-heatmap"></div>
+            </div>
+        </div>
+    
     
 
 <!-- External JS libraries -->
@@ -46,26 +65,32 @@
 <script src="js/jquery-ui.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/d3.min.js"></script>
-
-
+<script src="js/d3v3.min.js"></script>
+<script src="js/underscore-min.js"></script>
 
 <!-- Custom JS -->
-<script src="js/area_chart.js"></script>
-    
-    
+
+<script src="js/main.js"></script>
+<script src="js/histogram.js"></script>
+
 
 </body>
 
-<br>
-
+<footer class="footer">
+    
+    <div class="container">
+        <p>&copy; 2019 Nicolás Leiva Büchi</p>
+    </div>
  
-    <footer class="footer">
- 
-      <div class="container">
- 
-      <p>&copy; 2019 Nicolás Leiva Büchi</p>
- 
-      </div>
- 
-    </footer>
+</footer>
+    
 </html>
+
+
+
+
+
+
+
+
+
