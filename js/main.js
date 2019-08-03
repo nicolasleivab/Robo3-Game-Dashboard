@@ -44,11 +44,11 @@ var g = d3.select("#chart-area")
     .append("g")
         .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
 
-var xAxisGroup = g.append("g")
+var xApp = g.append("g")
     .attr("class", "x axis")
     .attr("transform", "translate(0," + height +")");
 
-var yAxisGroup = g.append("g")
+var yApp = g.append("g")
     .attr("class", "y axis");
 
 // X Scale
@@ -79,20 +79,9 @@ var yLabel = g.append("text")
     .text("Rounds");
 
 
-
-
-  
-    
-
-        
- 
-  
-
     // Run the vis for the first time
 update(data);
     
-    
-
 function update(data) {
 
 var selector = d3.select("#drop") //dropdown change selection
@@ -137,7 +126,7 @@ rects.exit()
 
                     d3.select("g.y.axis")  //changing from selectAll to select fixed the conflict between charts
                 .transition()
-                .call(yAxisCall).selectAll("text").attr("font-size", "12px");
+                .call(yCall).selectAll("text").attr("font-size", "12px");
 
              yLabel.text(selection.value);   
 
@@ -159,8 +148,8 @@ rects.exit()
     y.domain([0, d3.max(data, function(d){return +d[selection];})]);
    
     // X Axis
-    var xAxisCall = d3.axisBottom(x);
-    xAxisGroup.transition(t).call(xAxisCall).selectAll("text") 
+    var xCall = d3.axisBottom(x);
+    xApp.transition(t).call(xCall).selectAll("text") 
             .style("text-anchor", "end")
             .attr("dx", "-.8em")
             .attr("dy", ".15em")
@@ -169,9 +158,9 @@ rects.exit()
                 );;;
 
     // Y Axis
-    var yAxisCall = d3.axisLeft(y)
+    var yCall = d3.axisLeft(y)
         .tickFormat(function(d){ return d; });
-    yAxisGroup.transition(t).call(yAxisCall).selectAll("text").attr("font-size", "12px");
+    yApp.transition(t).call(yCall).selectAll("text").attr("font-size", "12px");
 
 
            
