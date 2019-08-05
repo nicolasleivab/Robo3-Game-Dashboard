@@ -17,6 +17,7 @@ var svg = d3.select("#histogram"),
         .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
 
 var parseDate = d3.timeParse("%m/%d/%Y");
+var formatTime = d3.timeFormat("%d/%m/%Y");
 
 // Format Data
 data.forEach(function(d) {
@@ -120,6 +121,8 @@ $("#dateSlider").slider({
   step: 86400000, //for each day
   values: [parseDate("1/01/2019").getTime(), parseDate("8/07/2019").getTime()],
   slide: function(event, ui){
+      $("#dateLabel1").text(formatTime(new Date(ui.values[0])));
+      $("#dateLabel2").text(formatTime(new Date(ui.values[1])));
       update(data.filter(function(d){return ((d.date >= ui.values[0]) && (d.date <= ui.values[1]));}));
       console.log(ui.values[0]);
       console.log(data);
