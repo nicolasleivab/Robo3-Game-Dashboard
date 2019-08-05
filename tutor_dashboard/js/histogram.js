@@ -33,7 +33,7 @@ data.forEach(function(d) {
 });
 
 // Filter values
-allInstructions = data.columns.slice(2); //get Product columns for the filter
+allInstructions = ['Cycles', 'Functions', 'Loops', 'PickDrop', 'Movement', 'Instructions']; //get Product columns for the filter
 selection = allInstructions[0];
 allLevels = d3.map(data, function(d){return(d.level)}).keys(); //get zones
 selection2= allLevels[0];
@@ -55,6 +55,9 @@ xApp = g.append("g")
 yApp = g.append("g")
 .attr("class", "y axis");
 
+// transition time 
+var t = d3.transition().duration(500);
+
 function update(data) {
     
   // X domain   
@@ -64,7 +67,7 @@ function update(data) {
   var histogram = d3.histogram()
       .value(function(d) { return d[selection.value] || d[selection] ; })   //Value of the vector
       .domain(x.domain())  //load x domain
-      .thresholds(x.ticks(40)); //Set number of bins
+      .thresholds(x.ticks(10)); //Set number of bins
   
   var bins = histogram(data); //Apply d3.histogram function with array data as input and creat a binding 'bins'
   
@@ -109,6 +112,18 @@ function update(data) {
   
   }
 
+//xcall func
+var xCall = d3.axisBottom(x)
+.tickFormat(function(d){ return d; });
+xApp.transition(t).call(xCall).selectAll("text").attr("font-size", "12px");
+
+//ycall func
+var yCall = d3.axisLeft(y)
+.tickFormat(function(d){ return d; });
+yApp.transition(t).call(yCall).selectAll("text").attr("font-size", "12px");
+
+// Render first viz
+update(data.filter(function(d){return d.level == [selection2];}));
 
             //** end of D3 script **//
 
