@@ -21,7 +21,7 @@ var parseDate = d3.timeParse("%m/%d/%Y");
 // Format Data
 data.forEach(function(d) {
   d.Rounds = +d.Rounds;
-  d.Playtime = +d.Playtime;
+  d['Playtime (min)'] = +d['Playtime (min)'];
   d.Instructions = +d.Instructions;
   d.Functions = +d.Functions;
   d.Loops = +d.Loops;
@@ -112,6 +112,20 @@ function update(data) {
   
   }
 
+// Filters
+var levelSelector = d3.select("#drop2") //dropdown change selection
+.append("select") //append row filter dropdown
+.attr("id","dropdown2")
+.on("change", function(d){ // Row Filter
+    selection2 = document.getElementById("dropdown2");
+    console.log([selection2.value]);
+    update(data.filter(function(d){return d.level == [selection2.value];}));
+        instructionSelector.on("change", function(d){ // Column Filter
+            selection = document.getElementById("dropdown");
+            console.log([selection.value]);
+            update(data.filter(function(d){return d.level == [selection2.value];}));
+             });
+      });
 
 //get values for the row filter dropdown
 levelSelector.selectAll("option")
@@ -132,7 +146,6 @@ var instructionSelector = d3.select("#drop") //dropdown change selection
     selection = document.getElementById("dropdown");
     console.log([selection.value]);
     update(data.filter(function(d){return d.level == [selection2];}));
-    resetSlider();
      });
 
 //get values for the column filter dropdown
