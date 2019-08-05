@@ -1,4 +1,4 @@
-/* Stacked Area Chart JS */
+/* Histogram JS */
 
 //** tabletop init function **//
 function init() {     
@@ -54,6 +54,60 @@ xApp = g.append("g")
 // Y axis append
 yApp = g.append("g")
 .attr("class", "y axis");
+
+function update(data) {
+    
+  // X domain   
+  x.domain([(d3.min(data, function(d) { return d[selection.value] || d[selection]; })) - 2, (d3.max(data, function(d) { return d[selection.value] || d[selection] ; })) + 2]); 
+      
+  // Setting Histogram parameters
+  var histogram = d3.histogram()
+      .value(function(d) { return d[selection.value] || d[selection] ; })   //Value of the vector
+      .domain(x.domain())  //load x domain
+      .thresholds(x.ticks(40)); //Set number of bins
+  
+  var bins = histogram(data); //Apply d3.histogram function with array data as input and creat a binding 'bins'
+  
+  // Y domain
+  y.domain([0, d3.max(bins, function(d) { return d.length; })]);   //return length of selected value in hist func
+  
+  // Remove old elements
+  g.selectAll("rect")
+      .data(bins)
+      .exit()
+      .attr("fill", "green")
+      .transition(t)
+      .attr("height", 0)
+      .attr("width", 0)
+      .remove();
+      
+  // Append new rects to svg element
+  g.selectAll("rect")
+      .data(bins)
+      .enter()
+      .append("rect")
+          .attr("x", 1)
+          .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
+          .attr("width", d => Math.max(0, x(d.x1) - x(d.x0) - 1))
+          .style("fill", "green")
+          .merge(g.selectAll("rect") // Update old elements
+          .data(bins))
+              .transition(t)
+              .attr("x", 1)
+              .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
+              .attr("width", d => Math.max(0, x(d.x1) - x(d.x0) - 1))
+              .attr("height", function(d) { return height - y(d.length); })
+              .style("fill", "green")
+  
+  // axis update
+  d3.select("g.y.axis")  //changing from selectAll to select fixed the conflict between charts
+      .transition()
+      .call(yCall).selectAll("text").attr("font-size", "12px");
+  d3.select("g.x.axis")  //changing from selectAll to select fixed the conflict between charts
+      .transition()
+      .call(xCall).selectAll("text").attr("font-size", "12px");
+  
+  }
 
 
             //** end of D3 script **//
