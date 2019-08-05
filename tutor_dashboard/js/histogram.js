@@ -112,6 +112,40 @@ function update(data) {
   
   }
 
+
+//get values for the row filter dropdown
+levelSelector.selectAll("option")
+.data(allLevels)
+.enter().append("option")
+.attr("value", function(d){
+  return d;
+})
+.text(function(d){
+  return d;
+})
+
+// append column filter dropdown
+var instructionSelector = d3.select("#drop") //dropdown change selection
+.append("select")
+.attr("id","dropdown")
+.on("change", function(d){ //default run for column filter
+    selection = document.getElementById("dropdown");
+    console.log([selection.value]);
+    update(data.filter(function(d){return d.level == [selection2];}));
+    resetSlider();
+     });
+
+//get values for the column filter dropdown
+instructionSelector.selectAll("option")
+.data(allInstructions)
+.enter().append("option")
+.attr("value", function(d){
+  return d;
+})
+.text(function(d){
+  return d;
+})
+
 //xcall func
 var xCall = d3.axisBottom(x)
 .tickFormat(function(d){ return d; });
