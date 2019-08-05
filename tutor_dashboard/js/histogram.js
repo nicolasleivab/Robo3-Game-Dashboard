@@ -129,6 +129,14 @@ $("#dateSlider").slider({
   }
 });
 
+//Reset slider func
+function resetSlider() {
+  $("#dateSlider").slider("values", 0, parseDate("1/01/2019").getTime());
+  $("#dateSlider").slider("values", 1, parseDate("8/07/2019").getTime());
+  $("#dateLabel1").text("1/01/2019");
+  $("#dateLabel2").text("8/07/2019");
+}
+
 // Filters
 var levelSelector = d3.select("#drop2") //dropdown change selection
 .append("select") //append row filter dropdown
@@ -137,10 +145,12 @@ var levelSelector = d3.select("#drop2") //dropdown change selection
     selection2 = document.getElementById("dropdown2");
     console.log([selection2.value]);
     update(data.filter(function(d){return d.level == [selection2.value];}));
+    resetSlider();
         instructionSelector.on("change", function(d){ // Column Filter
             selection = document.getElementById("dropdown");
             console.log([selection.value]);
             update(data.filter(function(d){return d.level == [selection2.value];}));
+            resetSlider();
              });
       });
 
@@ -163,6 +173,7 @@ var instructionSelector = d3.select("#drop") //dropdown change selection
     selection = document.getElementById("dropdown");
     console.log([selection.value]);
     update(data.filter(function(d){return d.level == [selection2];}));
+    resetSlider();
      });
 
 //get values for the column filter dropdown
