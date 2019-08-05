@@ -33,7 +33,7 @@ data.forEach(function(d) {
 });
 
 // Filter values
-allInstructions = ['Cycles', 'Functions', 'Loops', 'PickDrop', 'Movement', 'Instructions']; //get Product columns for the filter
+allInstructions = ['Cycles', 'PickDrop', 'Movement', 'Instructions', 'Functions', 'Loops']; //get Product columns for the filter
 selection = allInstructions[0];
 allLevels = d3.map(data, function(d){return(d.level)}).keys(); //get zones
 selection2= allLevels[0];

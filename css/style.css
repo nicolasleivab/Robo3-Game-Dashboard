@@ -57,7 +57,9 @@ svg {
     background-color: white;
     font-size: 15px;
 }
-
+.label label-default{
+    font-size: 12px;
+}
 
 /***---side nav-bar---***/
 .nav {

@@ -58,6 +58,10 @@ svg {
     font-size: 15px;
 }
 
+.label label-default{
+    font-size: 16px;
+}
+
 
 /***---side nav-bar---***/
 .nav {
