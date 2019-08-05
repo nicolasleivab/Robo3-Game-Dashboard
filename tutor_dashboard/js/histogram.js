@@ -112,6 +112,20 @@ function update(data) {
   
   }
 
+//jQuery UI slider
+$("#dateSlider").slider({
+  range: true,
+  max: parseDate("8/07/2019").getTime(),
+  min: parseDate("1/01/2019").getTime(),
+  step: 86400000, //for each day
+  values: [parseDate("1/01/2019").getTime(), parseDate("8/07/2019").getTime()],
+  slide: function(event, ui){
+      update(data.filter(function(d){return ((d.date >= ui.values[0]) && (d.date <= ui.values[1]));}));
+      console.log(ui.values[0]);
+      console.log(data);
+  }
+});
+
 // Filters
 var levelSelector = d3.select("#drop2") //dropdown change selection
 .append("select") //append row filter dropdown
