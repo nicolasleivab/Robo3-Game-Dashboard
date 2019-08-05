@@ -38,6 +38,23 @@ selection = allInstructions[0];
 allLevels = d3.map(data, function(d){return(d.level)}).keys(); //get zones
 selection2= allLevels[0];
 
+// Y axis and call func
+var y = d3.scaleLinear()
+    .range([height, 0]);
+
+// X axis and call func
+var x = d3.scaleLinear()
+    .range([0, width]);
+
+// X axis append
+xApp = g.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height +")");
+
+// Y axis append
+yApp = g.append("g")
+.attr("class", "y axis");
+
 
             //** end of D3 script **//
 
