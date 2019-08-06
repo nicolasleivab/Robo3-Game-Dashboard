@@ -139,16 +139,16 @@ function resetSlider() {
 }
 
 // Filters
-var levelSelector = d3.select("#drop2") //dropdown change selection
+var levelSelector = d3.select("#drop4") //dropdown change selection
 .append("select") //append row filter dropdown
-.attr("id","dropdown2")
+.attr("id","dropdown4")
 .on("change", function(d){ // Row Filter
-    selection2 = document.getElementById("dropdown2");
+    selection2 = document.getElementById("dropdown4");
     console.log([selection2.value]);
     update(data.filter(function(d){return d.level == [selection2.value];}));
     resetSlider();
         instructionSelector.on("change", function(d){ // Column Filter
-            selection = document.getElementById("dropdown");
+            selection = document.getElementById("dropdown3");
             console.log([selection.value]);
             update(data.filter(function(d){return d.level == [selection2.value];}));
             resetSlider();
@@ -167,11 +167,11 @@ levelSelector.selectAll("option")
 })
 
 // append column filter dropdown
-var instructionSelector = d3.select("#drop") //dropdown change selection
+var instructionSelector = d3.select("#drop3") //dropdown change selection
 .append("select")
-.attr("id","dropdown")
+.attr("id","dropdown3")
 .on("change", function(d){ //default run for column filter
-    selection = document.getElementById("dropdown");
+    selection = document.getElementById("dropdown3");
     console.log([selection.value]);
     update(data.filter(function(d){return d.level == [selection2];}));
     resetSlider();
