@@ -4,15 +4,15 @@
 function init() {     
   Tabletop.init( { key: '1evjoQPchLR8iUhjQQ8i56hy6Df5z7K_eVSWs8yVugC4', //google sheet key
                    callback: function(data, tabletop) { 
-                       console.log(data)
+                       
 
 
 //** D3.js code **//
 
 //* Filter and format data *//
-var data = data.filter(function(d){return d.ID == '10574525';});
 
     data.forEach(function(d) {
+        d.ID = +d.ID;
         d.Functions = +d.Functions;
         d.Loops = +d.Loops;
         d.Movement = +d.Movement;
@@ -33,6 +33,8 @@ var data = data.filter(function(d){return d.ID == '10574525';});
         d.avgI = +d.avgI;
 
     });
+
+console.log(data)
 
 var solution = ['Functions', 'Loops', 'Cycles', 'Movement', 'PickDrop', 'Instructions'];
 
@@ -98,18 +100,15 @@ var yLabel2 = g.append("text")
     .text("");
 
 
-//Run visualization for the first time
-update2(data);
-
+var dropSelector = d3.select("#drop2") //dropdown change selection
+    .append("select")
+    .attr("id","dropdown2");
 
 //*Update Function*//
 
 function update2(data){
 
-var dropSelector = d3.select("#drop2") //dropdown change selection
-    .append("select")
-    .attr("id","dropdown2")
-    .on("change", function(d){
+dropSelector.on("change", function(d){
          selected = document.getElementById("dropdown2");
            
                 console.log(selected.value);
@@ -205,7 +204,6 @@ var legend = g.append("g")
             .attr("stroke", z)
             .attr("stroke-width",2)
 
-
 });
 
 //Get values for the dropdown (solutions)
@@ -226,8 +224,6 @@ x0.domain(data.map(function(d) { return d.level; }));
 x1.domain(keys).rangeRound([0, x0.bandwidth()]);
 y2.domain([0, d3.max(data, function(d) { return d3.max(keys, function(key) { return d[key]; }); })]).nice(); 
 
-
-
 //Call X Axis
 var xAxisCall = d3.axisBottom(x0);
     xAxisApp.transition(t).call(xAxisCall).selectAll("text") 
@@ -242,8 +238,6 @@ var xAxisCall = d3.axisBottom(x0);
 var yAxisCall2 = d3.axisLeft(y2)
         .tickFormat(function(d){ return d; });
         yAxisApp.transition(t).call(yAxisCall2).selectAll("text").attr("font-size", "15px");
-
-
 
 g.append("g")
             .selectAll("g")
@@ -288,8 +282,34 @@ var legend = g.append("g")
             .attr("dy", "0.32em")
             .text(function(d) { return d; });
 
-
 }
+
+//Run visualization for the first time
+update2(data);
+
+//student filter
+$(document).ready(function() {
+  $('#filter').click(function() {
+            
+    var studentID = document.getElementById('filterID').value;
+    console.log(studentID);
+    if(studentID > 9999999){
+    g.selectAll("rect")
+    .data(data, function(d){
+        return d.level;
+        }).exit()
+    .attr("fill", 'none')
+    .transition(t)
+    .attr("y2", y2(0))
+    .attr("height", 0)
+    .remove();
+    update2(data.filter(function(d){return d.ID == studentID;}))
+      }
+    else{
+    alert('Please input a valid format');
+    }
+  });
+});
 
 //** end of D3.js code **//
 
