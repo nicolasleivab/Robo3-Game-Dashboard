@@ -7,7 +7,7 @@ function init() {
                        
                        
 //** D3 js script **//
-var margin = { left:80, right:20, top:50, bottom:100 };
+var margin = { left:90, right:20, top:50, bottom:100 };
 
 var width = 600 - margin.left - margin.right,
     height = 350 - margin.top - margin.bottom;
@@ -15,7 +15,7 @@ var width = 600 - margin.left - margin.right,
 // filter user ID
 var data = data.filter(function(d){return d.ID == '10574525';});
 // Filter the data for the dropdown selector
-var columns = ['Rounds', 'Playtime (min)', 'Instructions'];
+var columns = ['Playtime (min)', 'Rounds', 'Instructions'];
 var selection = columns[0];
 
 // Clean data
@@ -118,18 +118,17 @@ rects.exit()
 
 
 // axis update
-d3.selectAll("g.y.axis")  //changing from selectAll to select fixed the conflict between charts
+d3.select("g.y.axis")  
       .transition(t)
       .call(yCall).select("text").attr("font-size", "12px");
-d3.selectAll("g.x.axis")  
+d3.select("g.x.axis")   //changing from selectAll to select fixed the conflict between charts
       .transition(t)
       .call(xCall).selectAll("text").style("text-anchor", "end").attr("font-size", "12px").attr("dx", "-.8em")
       .attr("dy", ".15em").attr("transform", "rotate(-40)");
 
-yLabel.text(selection.value);   
+yLabel.text(selection.value || selection);   
 
 }
-//* Run default viszualization *//
    
 // X Axis call
 var xCall = d3.axisBottom(x);
