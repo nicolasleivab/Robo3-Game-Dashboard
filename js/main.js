@@ -4,7 +4,7 @@
 function init() {     
   Tabletop.init( { key: '10g_TGtruCriERlXJurPZQk76pvk30U0pkWgbbfzPrjA', //google sheet key
                    callback: function(data, tabletop) { 
-                       console.log(data)
+                       
                        
 //** D3 js script **//
 var margin = { left:80, right:20, top:50, bottom:100 };
@@ -13,27 +13,26 @@ var width = 600 - margin.left - margin.right,
     height = 350 - margin.top - margin.bottom;
 
 // filter user ID
-    var data = data.filter(function(d){return d.ID == '10574525';});
-    // Filter the data for the dropdown selector
-    var elements = ['Rounds', 'Playtime (min)', 'Instructions'];
-    var selection = elements[0];
+var data = data.filter(function(d){return d.ID == '10574525';});
+// Filter the data for the dropdown selector
+var columns = ['Rounds', 'Playtime (min)', 'Instructions'];
+var selection = columns[0];
 
-    console.log(elements[0]);
-
-         // Clean data
-    data.forEach(function(d) {
-        d.Rounds = +d.Rounds;
-        d.Playtime = +d.Playtime;
-        d.Instructions = +d.Instructions;
-        d.Functions = +d.Functions;
-        d.Loops = +d.Loops;
-        d.Movement = +d.Movement;
-        d.PickDrop = +d.PickDrop;
-        d["Success Probability"] = +d["Success Probability"];
-        d.Cycles = +d.Cycles;
+// Clean data
+data.forEach(function(d) {
+    d.Rounds = +d.Rounds;
+    d["Playtime (min)"] = +d["Playtime (min)"];
+    d.Instructions = +d.Instructions;
+    d.Functions = +d.Functions;
+    d.Loops = +d.Loops;
+    d.Movement = +d.Movement;
+    d.PickDrop = +d.PickDrop;
+    d["Success Probability"] = +d["Success Probability"];
+    d.Cycles = +d.Cycles;
  
     });
-    
+
+console.log(data);
 
 var t = d3.transition().duration(750);
     
@@ -77,21 +76,14 @@ var yLabel = g.append("text")
     .attr("text-anchor", "middle")
     .attr("transform", "rotate(-90)")
     .text("Rounds");
+  
 
-
-    // Run the vis for the first time
-update(data);
-    
+//update function    
 function update(data) {
 
-var selector = d3.select("#drop") //dropdown change selection
-    .append("select")
-    .attr("id","dropdown")
-    .on("change", function(d){
-         selection = document.getElementById("dropdown");
-            y.domain([0, d3.max(data, function(d){return +d[selection.value];})]);
-                console.log(selection.value);
-
+var t = d3.transition().duration(500);
+x.domain(data.map(function(d){ return d.level }));
+y.domain([0, d3.max(data, function(d){return d[selection.value] || d[selection];})]);
 
 // JOIN new data with old elements.
 var rects = g.selectAll("rect")
@@ -121,68 +113,65 @@ rects.exit()
             .transition(t)
                 .attr("x", function(d){ return x(d.level) })
                 .attr("width", x.bandwidth)
-                .attr("y", function(d){ return y(d[selection.value]); })
-                .attr("height", function(d){ return height - y(d[selection.value]); });
-
-                    d3.select("g.y.axis")  //changing from selectAll to select fixed the conflict between charts
-                .transition()
-                .call(yCall).selectAll("text").attr("font-size", "12px");
-
-             yLabel.text(selection.value);   
-
-         });
-//get values for the dropdown
-    selector.selectAll("option")
-      .data(elements)
-      .enter().append("option")
-      .attr("value", function(d){
-        return d;
-      })
-      .text(function(d){
-        return d;
-      })
-//* Run default viszualization *//
+                .attr("y", function(d){ return y(d[selection.value] || d[selection]); })
+                .attr("height", function(d){ return height - y(d[selection.value] || d[selection]); });
 
 
-    x.domain(data.map(function(d){ return d.level }));
-    y.domain([0, d3.max(data, function(d){return +d[selection];})]);
-   
-    // X Axis
-    var xCall = d3.axisBottom(x);
-    xApp.transition(t).call(xCall).selectAll("text") 
-            .style("text-anchor", "end")
-            .attr("dx", "-.8em")
-            .attr("dy", ".15em")
-            .attr("font-size", "12px")
-            .attr("transform", "rotate(-40)" 
-                );;;
+// axis update
+d3.selectAll("g.y.axis")  //changing from selectAll to select fixed the conflict between charts
+      .transition(t)
+      .call(yCall).select("text").attr("font-size", "12px");
+d3.selectAll("g.x.axis")  
+      .transition(t)
+      .call(xCall).selectAll("text").style("text-anchor", "end").attr("font-size", "12px").attr("dx", "-.8em")
+      .attr("dy", ".15em").attr("transform", "rotate(-40)");
 
-    // Y Axis
-    var yCall = d3.axisLeft(y)
-        .tickFormat(function(d){ return d; });
-    yApp.transition(t).call(yCall).selectAll("text").attr("font-size", "12px");
-
-
-           
-      g.selectAll("rect")
-        .data(data, function(d){
-        return d.level;
-        }).enter()
-            .append("rect")
-            .attr("fill", "green")
-            .attr("y", y(0))
-            .attr("height", 0)
-            .attr("x", function(d){ return x(d.level) })
-            .attr("width", x.bandwidth)
-            .transition(t)
-                .attr("x", function(d){ return x(d.level) })
-                .attr("width", x.bandwidth)
-                .attr("y", function(d){ return y(d[selection]); })
-                .attr("height", function(d){ return height - y(d[selection]); });
+yLabel.text(selection.value);   
 
 }
+//* Run default viszualization *//
+   
+// X Axis call
+var xCall = d3.axisBottom(x);
+    xApp.transition(t).call(xCall).selectAll("text") 
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", ".15em")
+        .attr("font-size", "12px")
+        .attr("transform", "rotate(-40)" 
+        );;;
+
+// Y Axis call
+var yCall = d3.axisLeft(y)
+        .tickFormat(function(d){ return d; });
+        yApp.transition(t).call(yCall).selectAll("text").attr("font-size", "12px");
 
 
+var selector = d3.select("#drop") //dropdown change selection
+    .append("select")
+    .attr("id","dropdown")
+    .on("change", function(d){
+         selection = document.getElementById("dropdown");
+            y.domain([0, d3.max(data, function(d){return d[selection.value];})]);
+                console.log(selection.value);
+                update(data);
+            
+
+});
+
+//get values for the dropdown
+selector.selectAll("option")
+.data(columns)
+.enter().append("option")
+.attr("value", function(d){
+  return d;
+})
+.text(function(d){
+  return d;
+})
+
+// Run the vis for the first time
+update(data);
 
             //** end of D3 script **//
 

@@ -306,7 +306,7 @@ $(document).ready(function() {
     update2(data.filter(function(d){return d.ID == studentID;}))
       }
     else{
-    alert('Please input a valid format');
+    alert('Please input a valid format like: 10574525');
     }
   });
 });
