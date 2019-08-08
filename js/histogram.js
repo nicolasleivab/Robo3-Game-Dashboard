@@ -34,7 +34,7 @@ data.forEach(function(d) {
 });
 
 // Filter values
-allInstructions = ['Cycles', 'PickDrop', 'Movement', 'Instructions', 'Functions', 'Loops']; //get Product columns for the filter
+allInstructions = ['Cycles','Instructions', 'PickDrop', 'Movement', 'Functions', 'Loops']; //get Product columns for the filter
 selection = allInstructions[0];
 allLevels = d3.map(data, function(d){return(d.level)}).keys(); //get zones
 selection2= allLevels[0];
@@ -205,7 +205,8 @@ update(data.filter(function(d){return d.level == [selection2];}));
 
 
 /* Pie Chart */
-// Adapted from Adam Jane https://bl.ocks.org/adamjanes/5e53cfa2ef3d3f05828020315a3ba18c/22619fa86de2045b6eeb4060e747c5076569ec47 
+// Structure and path update adapted from Adam Jane 
+// https://bl.ocks.org/adamjanes/5e53cfa2ef3d3f05828020315a3ba18c/22619fa86de2045b6eeb4060e747c5076569ec47 
 
 const width2 = 250;
 const height2 = 250;
@@ -218,7 +219,7 @@ const svg2 = d3.select("#donut")
     .append("g")
         .attr("transform", `translate(${width2 / 2}, ${height2 / 2})`);
 
-const color = d3.scaleOrdinal(d3.schemePastel1);
+const color = d3.scaleOrdinal().range(["#ccffcc","#ffb3b3", "#b3e6ff", "#fdfd96"]);
 
 const pie = d3.pie()
     .value(d => d.count)
@@ -234,7 +235,47 @@ function arcTween(a) {
     return (t) => arc(i(t));
 }
 
-function updateDate(data){
+//Legend
+var resultLegend = [data.reduce((acc, n) => {    //loop through data array objects and sum objects properties
+  for (var prop in n) {
+    if (acc.hasOwnProperty(prop)) acc[prop] += n[prop];
+    else acc[prop] = n[prop];
+    }
+    return acc;
+    }, {})]
+
+var legendData = (resultLegend.map(function(d){return [
+  {"Instruction": "Functions", "count": d.Functions}, 
+  {"Instruction": "Loops", "count": d.Loops}, 
+  {"Instruction": "Movement", "count": d.Movement}, 
+  {"Instruction": "PickDrop", "count": d.PickDrop} ];}))[0];
+  
+var legend = d3.select("#donut").append("svg")
+  .attr("class", "legend")
+  .selectAll("g")
+  .data(legendData)
+  .enter().append("g")
+  .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+legend.append("text")
+  .attr("x", 115)
+  .attr("y", 40)
+  .attr("dy", ".35em")
+  .text(function(d) { return d.Instruction; });
+
+legend.append("rect")
+  .attr("x", 90)
+  .attr("y", 33)
+  .attr("width", 18)
+  .attr("height", 18)
+  .attr("fill", color)
+  .style("fill", function(d, i) {
+  return color(d.Instruction);
+});
+
+
+
+function updateDate(data){ //update data by date range (JQuery slider func above)
   updatePie(data, "level");
 }
 
@@ -247,29 +288,34 @@ function updatePie(data, val = this.value) {
       return acc;
       }, {})]
     
-var newData = result.map(function(d){return [{"Instruction": "Functions", "count": d.Functions}, {"Instruction": "Loops", "count": d.Loops}, {"Instruction": "Movement", "count": d.Movement}, {"Instruction": "PickDrop", "count": d.PickDrop} ];})
-var pieData = {"level":newData[0]}; 
-console.log(pieData);
+var newData = result.map(function(d){return [
+  {"Instruction": "Functions", "count": d.Functions}, 
+  {"Instruction": "Loops", "count": d.Loops}, 
+  {"Instruction": "Movement", "count": d.Movement}, 
+  {"Instruction": "PickDrop", "count": d.PickDrop} ];})
+var pieData = {"level":newData[0]}; //new filtered data to be used in path update func
+var legendData = newData[0];
+console.log(legendData);
 
-        // Join new data
-        const path = svg2.selectAll("path")
-            .data(pie(pieData[val]));
+//path update
+// Join new data
+const path = svg2.selectAll("path")
+.data(pie(pieData[val]));
 
-        // Update existing arcs
-        path.transition().duration(200).attrTween("d", arcTween);
+// Update existing arcs
+path.transition().duration(200).attrTween("d", arcTween);
 
-        // Enter new arcs
-        path.enter().append("path")
-            .attr("fill", (d, i) => color(i))
-            .attr("d", arc)
-            .attr("stroke", "white")
-            .attr("stroke-width", "6px")
-            .each(function(d) { this._current = d; });
+// Enter new arcs
+path.enter().append("path")
+    .attr("fill", (d, i) => color(i))
+    .attr("d", arc)
+    .attr("stroke", "white")
+    .attr("stroke-width", "6px")
+    .each(function(d) { this._current = d; });
 
-    }
+}
 
-    updatePie(data.filter(function(d){return d.level == [selection2];}), "level");
-
+updatePie(data.filter(function(d){return d.level == [selection2];}), "level");
 
             //** end of D3 script **//
 
