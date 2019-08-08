@@ -21,7 +21,7 @@
  
 <div class="nav">
 <a class="disabled">ROBO3 DASHBOARD</a>
-<a href="#">Histogram</a>
+<a href="#">Overview</a>
 <a href="#second">Solutions</a>
 <a href="/index.html">Logout</a>
 <a class="disabled" href="http://home.deib.polimi.it/loiacono/robo3/" rel="noopener noreferrer" target="_blank" class="imgh"><img class = "image1" src=  
@@ -34,7 +34,7 @@
     <!-- Bootstrap grid setup -->
     <div class="container">
             <div class="row">
-                <div class="col-sm-4 "><h2 class="subtitle">Histogram</h2></div>
+                <div class="col-sm-4 "><h2 class="subtitle">Overview</h2></div>
                 <div class ="row">
                     <br>
                      
@@ -45,7 +45,8 @@
                 </div>
                 <br><br><br>
                 <div class="row">
-            <div class ="col-sm-4" id="histogram"></div>
+            <div class ="col-sm-8" id="histogram"></div>
+                    <div class ="col-sm-4" id="donut"></div>
                     </div>
                 </div>
         <div class="row">
@@ -53,6 +54,7 @@
             <div id="slider-div" align = center>
             <label>Date: <span id="dateLabel1">1/01/2019</span> - <span id="dateLabel2">8/07/2019</span></label>
             <div id="dateSlider" align = center></div>
+                <div id = "dateSlider2"></div>
             </div>     
             </div>
             </div>
@@ -87,8 +89,10 @@
 
 
 <!-- Custom JS -->
+    
 <script src="js/histogram.js"></script>
 <script src="js/groupedchart.js"></script>
+    
 
 
 </body>

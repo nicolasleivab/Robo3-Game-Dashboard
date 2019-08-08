@@ -293,6 +293,7 @@ $(document).ready(function() {
             
     var studentID = document.getElementById('filterID').value;
     console.log(studentID);
+    
     if(studentID > 9999999){
     g.selectAll("rect")
     .data(data, function(d){
@@ -310,6 +311,7 @@ $(document).ready(function() {
     }
   });
 });
+
 
 //** end of D3.js code **//
 

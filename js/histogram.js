@@ -8,8 +8,8 @@ function init() {
 
 // Set dimensions and append svg to div #histogram
 var svg = d3.select("#histogram"),
-    margin = {top: 20, right: 120, bottom: 100, left: 100},
-    width = 1200 - margin.left - margin.right,
+    margin = {top: 30, right: 40, bottom: 50, left: 50},
+    width = 600 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom,
     g = svg.append("svg").attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -200,6 +200,84 @@ yApp.transition(t).call(yCall).selectAll("text").attr("font-size", "12px");
 
 // Render first viz
 update(data.filter(function(d){return d.level == [selection2];}));
+
+
+/* Pie Chart */
+// Adapted from Adam Jane https://bl.ocks.org/adamjanes/5e53cfa2ef3d3f05828020315a3ba18c/22619fa86de2045b6eeb4060e747c5076569ec47 
+
+const width2 = 250;
+const height2 = 250;
+const radius = Math.min(width2, height2) / 2;
+
+const svg2 = d3.select("#donut")
+    .append("svg")
+        .attr("width", width2)
+        .attr("height", height2)
+    .append("g")
+        .attr("transform", `translate(${width2 / 2}, ${height2 / 2})`);
+
+const color = d3.scaleOrdinal(d3.schemePastel1);
+
+const pie = d3.pie()
+    .value(d => d.count)
+    .sort(null);
+
+const arc = d3.arc()
+    .innerRadius(0)
+    .outerRadius(radius);
+
+function type(d) {
+    d.apples = Number(d.apples);
+    d.oranges = Number(d.oranges);
+    return d;
+}
+
+function arcTween(a) {
+    const i = d3.interpolate(this._current, a);
+    this._current = i(1);
+    return (t) => arc(i(t));
+}
+
+var data2 = {       // to be replaced by data grouper function
+	"Hello, world!!!": [
+		{ "Instruction": "Functions", "count": "5"},
+		{ "Instruction": "Loopss", "count": "10"},
+		{ "Instruction": "Movement", "count": "20"},
+		{ "Instruction": "PickDrop", "count": "15"},
+		
+	],
+	"Inverti": [
+		{ "Instruction": "Functions", "count": "3"},
+		{ "Instruction": "Loopss", "count": "8"},
+		{ "Instruction": "Movement", "count": "11"},
+		{ "Instruction": "PickDrop", "count": "5"},
+	
+	]
+}
+ 
+    function update2(val = this.value) {
+        // Join new data
+        const path = svg2.selectAll("path")
+            .data(pie(data2[val]));
+
+        // Update existing arcs
+        path.transition().duration(200).attrTween("d", arcTween);
+
+        // Enter new arcs
+        path.enter().append("path")
+            .attr("fill", (d, i) => color(i))
+            .attr("d", arc)
+            .attr("stroke", "white")
+            .attr("stroke-width", "6px")
+            .each(function(d) { this._current = d; });
+    }
+
+    update2("Hello, world!!!");
+
+
+
+
+
 
             //** end of D3 script **//
 
