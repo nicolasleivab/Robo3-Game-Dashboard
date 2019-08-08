@@ -125,6 +125,7 @@ $("#dateSlider").slider({
       $("#dateLabel1").text(formatTime(new Date(ui.values[0])));
       $("#dateLabel2").text(formatTime(new Date(ui.values[1])));
       update(data.filter(function(d){return ((d.date >= ui.values[0]) && (d.date <= ui.values[1]) && (d.level == [selection2.value] || d.level == [selection2]));}));
+      updateDate(data.filter(function(d){return ((d.date >= ui.values[0]) && (d.date <= ui.values[1]) && (d.level == [selection2.value] || d.level == [selection2]));}));
       console.log(ui.values[0]);
       console.log(data);
   }
@@ -233,18 +234,22 @@ function arcTween(a) {
     return (t) => arc(i(t));
 }
 
+function updateDate(data){
+  updatePie(data, "level");
+}
 
-    function updatePie(data, val = this.value) {
-        var result = [data.reduce((acc, n) => {    //loop through data array objects and sum objects properties
-          for (var prop in n) {
-            if (acc.hasOwnProperty(prop)) acc[prop] += n[prop];
-            else acc[prop] = n[prop];
-          }
-          return acc;
-        }, {})]
-        var newData = result.map(function(d){return [{"Instruction": "Functions", "count": d.Functions}, {"Instruction": "Loops", "count": d.Loops}, {"Instruction": "Movement", "count": d.Movement}, {"Instruction": "PickDrop", "count": d.PickDrop} ];})
-        var pieData = {"level":newData[0]}; 
-        console.log(pieData);
+function updatePie(data, val = this.value) {
+  var result = [data.reduce((acc, n) => {    //loop through data array objects and sum objects properties
+    for (var prop in n) {
+      if (acc.hasOwnProperty(prop)) acc[prop] += n[prop];
+      else acc[prop] = n[prop];
+      }
+      return acc;
+      }, {})]
+    
+var newData = result.map(function(d){return [{"Instruction": "Functions", "count": d.Functions}, {"Instruction": "Loops", "count": d.Loops}, {"Instruction": "Movement", "count": d.Movement}, {"Instruction": "PickDrop", "count": d.PickDrop} ];})
+var pieData = {"level":newData[0]}; 
+console.log(pieData);
 
         // Join new data
         const path = svg2.selectAll("path")
