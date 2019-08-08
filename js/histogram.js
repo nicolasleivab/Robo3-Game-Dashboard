@@ -226,39 +226,28 @@ const arc = d3.arc()
     .innerRadius(0)
     .outerRadius(radius);
 
-function type(d) {
-    d.apples = Number(d.apples);
-    d.oranges = Number(d.oranges);
-    return d;
-}
-
 function arcTween(a) {
     const i = d3.interpolate(this._current, a);
     this._current = i(1);
     return (t) => arc(i(t));
 }
 
-var data2 = {       // to be replaced by data grouper function
-	"Hello, world!!!": [
-		{ "Instruction": "Functions", "count": "5"},
-		{ "Instruction": "Loopss", "count": "10"},
-		{ "Instruction": "Movement", "count": "20"},
-		{ "Instruction": "PickDrop", "count": "15"},
-		
-	],
-	"Inverti": [
-		{ "Instruction": "Functions", "count": "3"},
-		{ "Instruction": "Loopss", "count": "8"},
-		{ "Instruction": "Movement", "count": "11"},
-		{ "Instruction": "PickDrop", "count": "5"},
-	
-	]
-}
- 
-    function update2(val = this.value) {
+
+    function updatePie(data, val = this.value) {
+        var result = [data.reduce((acc, n) => {    //loop through data array objects and sum objects properties
+          for (var prop in n) {
+            if (acc.hasOwnProperty(prop)) acc[prop] += n[prop];
+            else acc[prop] = n[prop];
+          }
+          return acc;
+        }, {})]
+        var newData = result.map(function(d){return [{"Instruction": "Functions", "count": d.Functions}, {"Instruction": "Loops", "count": d.Loops}, {"Instruction": "Movement", "count": d.Movement}, {"Instruction": "PickDrop", "count": d.PickDrop} ];})
+        var pieData = {"level":newData[0]}; 
+        console.log(pieData);
+
         // Join new data
         const path = svg2.selectAll("path")
-            .data(pie(data2[val]));
+            .data(pie(pieData[val]));
 
         // Update existing arcs
         path.transition().duration(200).attrTween("d", arcTween);
@@ -270,13 +259,10 @@ var data2 = {       // to be replaced by data grouper function
             .attr("stroke", "white")
             .attr("stroke-width", "6px")
             .each(function(d) { this._current = d; });
+
     }
 
-    update2("Hello, world!!!");
-
-
-
-
+    updatePie(data, "level");
 
 
             //** end of D3 script **//
