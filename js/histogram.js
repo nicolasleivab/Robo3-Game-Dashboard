@@ -146,6 +146,7 @@ var levelSelector = d3.select("#drop4") //dropdown change selection
     selection2 = document.getElementById("dropdown4");
     console.log([selection2.value]);
     update(data.filter(function(d){return d.level == [selection2.value];}));
+    updatePie(data.filter(function(d){return d.level == [selection2.value];}), "level");
     resetSlider();
         instructionSelector.on("change", function(d){ // Column Filter
             selection = document.getElementById("dropdown3");
@@ -262,7 +263,7 @@ function arcTween(a) {
 
     }
 
-    updatePie(data, "level");
+    updatePie(data.filter(function(d){return d.level == [selection2];}), "level");
 
 
             //** end of D3 script **//
