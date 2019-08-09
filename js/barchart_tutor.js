@@ -9,7 +9,7 @@ function init() {
   //** D3 js script **//
   var margin = { left:40, right:20, top:30, bottom:100 };
   
-  var width = 400 - margin.left - margin.right,
+  var width = 700 - margin.left - margin.right,
       height = 400 - margin.top - margin.bottom;
     
   var parseDate = d3.timeParse("%m/%d/%Y");
@@ -26,7 +26,7 @@ function init() {
   
   var t = d3.transition().duration(750);
       
-  var g2 = d3.select("#barchart")
+  var g2 = d3.select("#barchart_tutor")
       .append("svg")
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
@@ -43,7 +43,7 @@ function init() {
   // X Scale
   var x2 = d3.scaleBand()
       .range([0, width])
-      .padding(0.2);
+      .padding(0.5);
   
   // Y Scale
   var y2 = d3.scaleLinear()
@@ -69,7 +69,7 @@ g2.append("text")
     
   
   //update function    
-  function update2(data) {
+  function update3(data) {
   
   var t = d3.transition().duration(500);
   x2.domain(data.map(function(d){ return d.level }));
@@ -137,7 +137,7 @@ g2.append("text")
   
 
   // Run the vis for the first time
-  update2(data);
+  update3(data);
 
 
               //** end of D3 script **//

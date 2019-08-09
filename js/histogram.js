@@ -7,7 +7,7 @@ function init() {
                        console.log(data)
 
 // Set dimensions and append svg to div #histogram
-var svg = d3.select("#histogram"),
+const svg = d3.select("#histogram"),
     margin = {top: 30, right: 40, bottom: 50, left: 50},
     width = 600 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom,
@@ -40,7 +40,7 @@ allLevels = d3.map(data, function(d){return(d.level)}).keys(); //get zones
 selection2= allLevels[0];
 
 // Y axis and call func
-var y = d3.scaleLinear()
+const y = d3.scaleLinear()
     .range([height, 0]);
 
 // X axis and call func
@@ -48,12 +48,12 @@ var x = d3.scaleLinear()
     .range([0, width]);
 
 // X axis append
-xApp = g.append("g")
+const xApp = g.append("g")
     .attr("class", "x axis")
     .attr("transform", "translate(0," + height +")");
 
 // Y axis append
-yApp = g.append("g")
+const yApp = g.append("g")
 .attr("class", "y axis");
 
 // transition time 
@@ -196,7 +196,7 @@ var xCall = d3.axisBottom(x)
 xApp.transition(t).call(xCall).selectAll("text").attr("font-size", "12px");
 
 //ycall func
-var yCall = d3.axisLeft(y)
+const yCall = d3.axisLeft(y)
 .tickFormat(function(d){ return d; });
 yApp.transition(t).call(yCall).selectAll("text").attr("font-size", "12px");
 
