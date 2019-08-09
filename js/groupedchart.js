@@ -97,7 +97,7 @@ var yLabel2 = g.append("text")
     .attr("font-size", "20px")
     .attr("text-anchor", "middle")
     .attr("transform", "rotate(-90)")
-    .text("");
+    .text("Functions");
 
 
 var dropSelector = d3.select("#drop2") //dropdown change selection
@@ -178,7 +178,7 @@ console.log(data);
 console.log(selected.value);
 
 
-        d3.selectAll("g.y2.axis")  //Changing from selectAll to select can fix the conflict between several simultonaeous charts 
+        d3.select("g.y2.axis")  //Changing from selectAll to select fix the y axis conflict
                 .transition()
                 .call(yAxisCall2).selectAll("text").attr("font-size", "15px");
 

@@ -9,7 +9,7 @@ function init() {
   //** D3 js script **//
   var margin = { left:40, right:20, top:30, bottom:100 };
   
-  var width = 700 - margin.left - margin.right,
+  var width = 800 - margin.left - margin.right,
       height = 400 - margin.top - margin.bottom;
     
   var parseDate = d3.timeParse("%m/%d/%Y");
@@ -46,12 +46,12 @@ function init() {
       .padding(0.5);
   
   // Y Scale
-  var y2 = d3.scaleLinear()
+  var y3 = d3.scaleLinear()
       .range([height, 0]);
   
   // X Label
 g2.append("text")
-      .attr("y2", height + 50)
+      .attr("y3", height + 50)
       .attr("x2", width / 2)
       .attr("font-size", "20px")
       .attr("text-anchor", "end")
@@ -60,7 +60,7 @@ g2.append("text")
   
   // Y Label
 g2.append("text")
-      .attr("y2", -60)
+      .attr("y3", -60)
       .attr("x2", -(height / 2))
       .attr("font-size", "20px")
       .attr("text-anchor", "end")
@@ -73,7 +73,7 @@ g2.append("text")
   
   var t = d3.transition().duration(500);
   x2.domain(data.map(function(d){ return d.level }));
-  y2.domain([0, d3.max(data, function(d){return d.Instructions;})]);
+  y3.domain([0, d3.max(data, function(d){return d.Instructions;})]);
   
   // JOIN new data with old elements.
   var rects = g2.selectAll("rect")
@@ -85,7 +85,7 @@ g2.append("text")
   rects.exit()
       .attr("fill", "green")
       .transition(t)
-      .attr("y", y2(0))
+      .attr("y3", y3(0))
       .attr("height", 0)
       .remove();
   
@@ -94,7 +94,7 @@ g2.append("text")
                rects.enter()
           .append("rect")
               .attr("fill", "green")
-              .attr("y", y2(0))
+              .attr("y3", y3(0))
               .attr("height", 0)
               .attr("x", function(d){ return x2(d.level) })
               .attr("width", x2.bandwidth)
@@ -103,15 +103,15 @@ g2.append("text")
               .transition(t)
                   .attr("x", function(d){ return x2(d.level) })
                   .attr("width", x2.bandwidth)
-                  .attr("y", function(d){ return y2(d.Instructions); })
-                  .attr("height", function(d){ return height - y2(d.Instructions); });
+                  .attr("y", function(d){ return y3(d.Instructions); })
+                  .attr("height", function(d){ return height - y3(d.Instructions); });
   
   
   // axis update
-  d3.select("g.y2.axis")  
+  d3.select("g.y3.axis")  
         .transition(t)
         .call(yCall2).select("text").attr("font-size", "12px");
-  d3.select("g.x2.axis")   //changing from selectAll to select fixed the conflict between charts
+  d3.select("g.x2.axis")   
         .transition(t)
         .call(xCall2).selectAll("text").style("text-anchor", "end").attr("font-size", "12px").attr("dx", "-.8em")
         .attr("dy", ".15em").attr("transform", "rotate(-40)");  
@@ -131,7 +131,7 @@ g2.append("text")
           );;;
   
   // Y Axis call
-  var yCall2 = d3.axisLeft(y2)
+  var yCall2 = d3.axisLeft(y3)
           .tickFormat(function(d){ return d; });
           yApp2.transition(t).call(yCall2).selectAll("text").attr("font-size", "12px");
   
