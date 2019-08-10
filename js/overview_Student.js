@@ -121,8 +121,7 @@ d3.select("g.y.axis")
       .call(yCall).select("text").attr("font-size", "12px");
 d3.select("g.x.axis")   //changing from selectAll to select fixed the conflict between charts
       .transition(t)
-      .call(xCall).selectAll("text").style("text-anchor", "end").attr("font-size", "12px").attr("dx", "-.8em")
-      .attr("dy", ".15em").attr("transform", "rotate(-40)");
+      .call(xCall).selectAll("text").style("text-anchor", "end").attr("font-size", "12px").attr("transform", "rotate(-40)");
 
 yLabel.text(selection.value || selection);   
 
