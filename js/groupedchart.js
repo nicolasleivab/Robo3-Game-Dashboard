@@ -185,8 +185,7 @@ console.log(selected.value);
                  yLabel2.text(selected.value);
 
 //Legend
-
-var keysl = ['Your Solution', 'Min Solution', 'Average Solution'];  
+ 
 var legend = g.append("g")
             .attr("font-family", "sans-serif")
             .attr("font-size", 10)
@@ -257,7 +256,7 @@ g.append("g")
 
 //Legend Default
 
-var keysl = ['Your Solution', 'Min Solution', 'Average Solution'];  
+var keysl = ["Student's Solution", 'Min Solution', 'Average Solution'];  
 var legend = g.append("g")
             .attr("font-family", "sans-serif")
             .attr("font-size", 10)

@@ -86,11 +86,13 @@ function average(arr) {
 
 //update function    
 function update3(data) {
+
 let newData = average(data)
 let t = d3.transition().duration(500);
-x2.domain(newData.map(function(d){ return d.level }));
+
+//y domain
 y3.domain([0, d3.max(newData, function(d){return d.average;})]);
-  
+
 // JOIN new data with old elements.
 const rects = g2.selectAll("rect")
     .data(newData, function(d){
@@ -131,7 +133,10 @@ d3.select("g.x2.axis")
         .attr("dy", ".15em").attr("transform", "rotate(-40)");  
   
 }
- 
+
+//xy domain
+x2.domain(data.map(function(d){ return d.level }));
+
 // X Axis call
 const xCall2 = d3.axisBottom(x2);
     xApp2.transition(t).call(xCall2).selectAll("text") 
@@ -150,6 +155,23 @@ const yCall2 = d3.axisLeft(y3)
 
 // Run the vis for the first time
 update3(data);
+
+const minDate = d3.min(data, function(d) { return d.date; }); //min and max date for the date slider
+const maxDate = d3.max(data, function(d) { return d.date; });
+
+//jQuery UI slider
+$("#dateSlider2").slider({
+  range: true,
+  max: maxDate.getTime(),
+  min: minDate.getTime(),
+  step: 86400000, //for each day
+  values: [minDate.getTime(), maxDate.getTime()],
+  slide: function(event, ui){
+      $("#dateLabel3").text(formatTime(new Date(ui.values[0])));
+      $("#dateLabel4").text(formatTime(new Date(ui.values[1])));
+      update3(data.filter(function(d){return ((d.date >= ui.values[0]) && (d.date <= ui.values[1]));}));
+  }
+});
 
               //** end of D3 script **//
   
