@@ -80,8 +80,6 @@ var yLabel = g.append("text")
 function update(data) {
 
 var t = d3.transition().duration(500);
-x.domain(data.map(function(d){ return d.level }));
-y.domain([0, d3.max(data, function(d){return d[selection.value] || d[selection];})]);
 
 // JOIN new data with old elements.
 var rects = g.selectAll("rect")
@@ -126,7 +124,11 @@ d3.select("g.x.axis")   //changing from selectAll to select fixed the conflict b
 yLabel.text(selection.value || selection);   
 
 }
-   
+
+//XY domain
+x.domain(data.map(function(d){ return d.level }));
+y.domain([0, d3.max(data, function(d){return d[selection.value] || d[selection];})]);
+
 // X Axis call
 var xCall = d3.axisBottom(x);
     xApp.transition(t).call(xCall).selectAll("text") 
