@@ -16,8 +16,8 @@ const svg = d3.select("#histogram"),
         .append("g")
         .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
 
-var parseDate = d3.timeParse("%m/%d/%Y");
-var formatTime = d3.timeFormat("%d/%m/%Y");
+const parseDate = d3.timeParse("%m/%d/%Y");
+const formatTime = d3.timeFormat("%d/%m/%Y");
 
 // Format Data
 data.forEach(function(d) {
@@ -34,17 +34,17 @@ data.forEach(function(d) {
 });
 
 // Filter values
-allInstructions = ['Cycles','Instructions', 'PickDrop', 'Movement', 'Functions', 'Loops']; //get Product columns for the filter
-selection = allInstructions[0];
-allLevels = d3.map(data, function(d){return(d.level)}).keys(); //get zones
-selection2= allLevels[0];
+const allInstructions = ['Cycles','Instructions', 'PickDrop', 'Movement', 'Functions', 'Loops']; //get Product columns for the filter
+let selection = allInstructions[0];
+const allLevels = d3.map(data, function(d){return(d.level)}).keys(); //get zones
+let selection2= allLevels[0];
 
 // Y axis and call func
 const y = d3.scaleLinear()
     .range([height, 0]);
 
 // X axis and call func
-var x = d3.scaleLinear()
+const x = d3.scaleLinear()
     .range([0, width]);
 
 // X axis append
@@ -57,59 +57,77 @@ const yApp = g.append("g")
 .attr("class", "y axis");
 
 // transition time 
-var t = d3.transition().duration(500);
+let t = d3.transition().duration(500);
+
+  // X Label
+g.append("text")
+  .attr("y", height + 60)
+  .attr("x", width / 2)
+  .attr("font-size", "20px")
+  .attr("text-anchor", "end")
+  .attr("transform", "translate(" + margin.left + ", " + margin.top +  ")")
+  .text("Cycles");
+
+// Y Label
+g.append("text")
+  .attr("y",  - 60)
+  .attr("x", -50)
+  .attr("font-size", "20px")
+  .attr("text-anchor", "end")
+  .attr("transform", "rotate(-90)")
+  .text("Absolute Frequency");
 
 function update(data) {
     
-  // X domain   
-  x.domain([(d3.min(data, function(d) { return d[selection.value] || d[selection]; })) - 2, (d3.max(data, function(d) { return d[selection.value] || d[selection] ; })) + 2]); 
+// X domain   
+x.domain([(d3.min(data, function(d) { return d[selection.value] || d[selection]; })) - 2, (d3.max(data, function(d) { return d[selection.value] || d[selection] ; })) + 2]); 
       
-  // Setting Histogram parameters
-  var histogram = d3.histogram()
+// Setting Histogram parameters
+const histogram = d3.histogram()
       .value(function(d) { return d[selection.value] || d[selection] ; })   //Value of the vector
       .domain(x.domain())  //load x domain
       .thresholds(x.ticks(7)); //Set number of bins
   
-  var bins = histogram(data); //Apply d3.histogram function with array data as input and creat a binding 'bins'
+const bins = histogram(data); //Apply d3.histogram function with array data as input and creat a binding 'bins'
   
-  // Y domain
-  y.domain([0, d3.max(bins, function(d) { return d.length; })]);   //return length of selected value in hist func
+// Y domain
+y.domain([0, d3.max(bins, function(d) { return d.length; })]);   //return length of selected value in hist func
   
-  // Remove old elements
-  g.selectAll("rect")
-      .data(bins)
-      .exit()
-      .attr("fill", "green")
-      .transition(t)
-      .attr("height", 0)
-      .attr("width", 0)
-      .remove();
+// Remove old elements
+g.selectAll("rect")
+    .data(bins)
+    .exit()
+    .attr("fill", "green")
+    .transition(t)
+    .attr("height", 0)
+    .attr("width", 0)
+    .remove();
       
-  // Append new rects to svg element
-  g.selectAll("rect")
-      .data(bins)
-      .enter()
-      .append("rect")
-          .attr("x", 1)
-          .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
-          .attr("width", d => Math.max(0, x(d.x1) - x(d.x0) - 1))
-          .style("fill", "green")
-          .merge(g.selectAll("rect") // Update old elements
-          .data(bins))
-              .transition(t)
-              .attr("x", 1)
-              .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
-              .attr("width", d => Math.max(0, x(d.x1) - x(d.x0) - 1))
-              .attr("height", function(d) { return height - y(d.length); })
-              .style("fill", "green")
+// Append new rects to svg element
+g.selectAll("rect")
+    .data(bins)
+    .enter()
+    .append("rect")
+        .attr("x", 1)
+        .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
+        .attr("width", d => Math.max(0, x(d.x1) - x(d.x0) - 1))
+        .style("fill", "green")
+        .merge(g.selectAll("rect") // Update old elements
+        .data(bins))
+            .transition(t)
+            .attr("x", 1)
+            .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
+            .attr("width", d => Math.max(0, x(d.x1) - x(d.x0) - 1))
+            .attr("height", function(d) { return height - y(d.length); })
+            .style("fill", "green")
   
-  // axis update
-  d3.select("g.y.axis")  //changing from selectAll to select fixed the conflict between charts
-      .transition()
-      .call(yCall).selectAll("text").attr("font-size", "12px");
-  d3.select("g.x.axis")  //changing from selectAll to select fixed the conflict between charts
-      .transition()
-      .call(xCall).selectAll("text").attr("font-size", "12px");
+// axis update
+d3.select("g.y.axis")  //changing from selectAll to select fixed the conflict between charts
+    .transition()
+    .call(yCall).selectAll("text").attr("font-size", "12px");
+d3.select("g.x.axis")  //changing from selectAll to select fixed the conflict between charts
+    .transition()
+    .call(xCall).selectAll("text").attr("font-size", "12px");
   
   }
 
@@ -140,7 +158,7 @@ function resetSlider() {
 }
 
 // Filters
-var levelSelector = d3.select("#drop4") //dropdown change selection
+const levelSelector = d3.select("#drop4") //dropdown change selection
 .append("select") //append row filter dropdown
 .attr("id","dropdown4")
 .on("change", function(d){ // Row Filter
@@ -169,7 +187,7 @@ levelSelector.selectAll("option")
 })
 
 // append column filter dropdown
-var instructionSelector = d3.select("#drop3") //dropdown change selection
+const instructionSelector = d3.select("#drop3") //dropdown change selection
 .append("select")
 .attr("id","dropdown3")
 .on("change", function(d){ //default run for column filter
@@ -191,7 +209,7 @@ instructionSelector.selectAll("option")
 })
 
 //xcall func
-var xCall = d3.axisBottom(x)
+const xCall = d3.axisBottom(x)
 .tickFormat(function(d){ return d; });
 xApp.transition(t).call(xCall).selectAll("text").attr("font-size", "12px");
 
