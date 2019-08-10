@@ -71,7 +71,7 @@ function update3(data) {
   
 let t = d3.transition().duration(500);
 x2.domain(data.map(function(d){ return d.level }));
-y3.domain([0, d3.max(data, function(d){return d.Instructions;})]);
+y3.domain([0, d3.max(data, function(d){return d['Success Probability'];})]);
   
 // JOIN new data with old elements.
 const rects = g2.selectAll("rect")
@@ -101,9 +101,8 @@ rects.enter()
             .transition(t)
                 .attr("x", function(d){ return x2(d.level) })
                 .attr("width", x2.bandwidth)
-                .attr("y", function(d){ return y3(d.Instructions); })
-                .attr("height", function(d){ return height - y3(d.Instructions); });
-  
+                .attr("y", function(d){ return y3(d['Success Probability']); })
+                .attr("height", function(d){ return height - y3(d['Success Probability']); });
   
   // axis update
 d3.select("g.y3.axis")  
@@ -136,7 +135,6 @@ const yCall2 = d3.axisLeft(y3)
 
 // Run the vis for the first time
 update3(data);
-
 
               //** end of D3 script **//
   

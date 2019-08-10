@@ -8,9 +8,9 @@ function init() {
 
 // Set dimensions and append svg to div #histogram
 const svg = d3.select("#histogram"),
-    margin = {top: 30, right: 40, bottom: 50, left: 50},
-    width = 600 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom,
+    margin = {top: 30, right: 70, bottom: 100, left: 100},
+    width = 550,
+    height = 300,
     g = svg.append("svg").attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
@@ -37,7 +37,7 @@ data.forEach(function(d) {
 const allInstructions = ['Cycles','Instructions', 'PickDrop', 'Movement', 'Functions', 'Loops']; //get Product columns for the filter
 let selection = allInstructions[0];
 const allLevels = d3.map(data, function(d){return(d.level)}).keys(); //get zones
-let selection2= allLevels[0];
+let selection2 = allLevels[0];
 
 // Y axis and call func
 const y = d3.scaleLinear()
@@ -60,7 +60,7 @@ const yApp = g.append("g")
 let t = d3.transition().duration(500);
 
   // X Label
-g.append("text")
+let xLabel = g.append("text")
   .attr("y", height + 60)
   .attr("x", width / 2)
   .attr("font-size", "20px")
@@ -128,8 +128,9 @@ d3.select("g.y.axis")  //changing from selectAll to select fixed the conflict be
 d3.select("g.x.axis")  //changing from selectAll to select fixed the conflict between charts
     .transition()
     .call(xCall).selectAll("text").attr("font-size", "12px");
-  
-  }
+    
+xLabel.text(selection.value || selection);
+}
 
 
 //jQuery UI slider
@@ -230,6 +231,7 @@ const width2 = 250;
 const height2 = 250;
 const radius = Math.min(width2, height2) / 2;
 
+
 const svg2 = d3.select("#donut")
     .append("svg")
         .attr("width", width2)
@@ -291,8 +293,7 @@ legend.append("rect")
   return color(d.Instruction);
 });
 
-
-
+//piechart update func
 function updateDate(data){ //update data by date range (JQuery slider func above)
   updatePie(data, "level");
 }

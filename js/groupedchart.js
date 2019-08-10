@@ -295,7 +295,7 @@ $(document).ready(function() {
     console.log(studentID);
     
     if(studentID > 9999999){
-    g.selectAll("rect")
+    g.selectAll("rect")       //removing rects to update according to filter
     .data(data, function(d){
         return d.level;
         }).exit()
