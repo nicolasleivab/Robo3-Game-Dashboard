@@ -132,14 +132,16 @@ d3.select("g.x.axis")  //changing from selectAll to select fixed the conflict be
 xLabel.text(selection.value || selection);
 }
 
+const minDate = d3.min(data, function(d) { return d.date; }); //min and max date for the date slider
+const maxDate = d3.max(data, function(d) { return d.date; });
 
 //jQuery UI slider
 $("#dateSlider").slider({
   range: true,
-  max: parseDate("8/07/2019").getTime(),
-  min: parseDate("1/01/2019").getTime(),
+  max: maxDate.getTime(),
+  min: minDate.getTime(),
   step: 86400000, //for each day
-  values: [parseDate("1/01/2019").getTime(), parseDate("8/07/2019").getTime()],
+  values: [minDate.getTime(), maxDate.getTime()],
   slide: function(event, ui){
       $("#dateLabel1").text(formatTime(new Date(ui.values[0])));
       $("#dateLabel2").text(formatTime(new Date(ui.values[1])));
