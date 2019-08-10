@@ -64,22 +64,40 @@ g2.append("text")
       .attr("text-anchor", "end")
       .attr("transform", "rotate(-90)")
       .text("Probability of Success");
-    
-  
-  //update function    
+
+//calculate average func
+function average(arr) {
+  let sums = {}, counts = {}, averages = [], name;
+    for (var i = 0; i < arr.length; i++) { //loop through array
+      name = arr[i].level;
+        if (!(name in sums)) {
+            sums[name] = 0;
+            counts[name] = 0;
+          }
+        sums[name] += arr[i]['Success Probability'];
+        counts[name]++;
+    }
+      
+    for(name in sums) {
+        averages.push({ level: name, average: sums[name] / counts[name] }); //push elements to new array with averages per level
+    }
+    return averages;
+}
+
+//update function    
 function update3(data) {
-  
+let newData = average(data)
 let t = d3.transition().duration(500);
-x2.domain(data.map(function(d){ return d.level }));
-y3.domain([0, d3.max(data, function(d){return d['Success Probability'];})]);
+x2.domain(newData.map(function(d){ return d.level }));
+y3.domain([0, d3.max(newData, function(d){return d.average;})]);
   
 // JOIN new data with old elements.
 const rects = g2.selectAll("rect")
-    .data(data, function(d){
+    .data(newData, function(d){
         return d.level;
         });
   
-               // EXIT old elements not present in new data.
+// EXIT old elements not present in new data.
 rects.exit()
     .attr("fill", "green")
     .transition(t)
@@ -87,8 +105,7 @@ rects.exit()
     .attr("height", 0)
     .remove();
   
-  // ENTER new elements present in new data...
-  
+// ENTER new elements present in new data... 
 rects.enter()
     .append("rect")
         .attr("fill", "green")
@@ -101,8 +118,8 @@ rects.enter()
             .transition(t)
                 .attr("x", function(d){ return x2(d.level) })
                 .attr("width", x2.bandwidth)
-                .attr("y", function(d){ return y3(d['Success Probability']); })
-                .attr("height", function(d){ return height - y3(d['Success Probability']); });
+                .attr("y", function(d){ return y3(d.average); })
+                .attr("height", function(d){ return height - y3(d.average); });
   
   // axis update
 d3.select("g.y3.axis")  
@@ -113,10 +130,8 @@ d3.select("g.x2.axis")
         .call(xCall2).selectAll("text").style("text-anchor", "end").attr("font-size", "12px").attr("dx", "-.8em")
         .attr("dy", ".15em").attr("transform", "rotate(-40)");  
   
-  }
+}
  
-
-     
 // X Axis call
 const xCall2 = d3.axisBottom(x2);
     xApp2.transition(t).call(xCall2).selectAll("text") 
