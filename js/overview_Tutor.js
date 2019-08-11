@@ -147,10 +147,16 @@ $("#dateSlider").slider({
   slide: function(event, ui){
       $("#dateLabel1").text(formatTime(new Date(ui.values[0])));
       $("#dateLabel2").text(formatTime(new Date(ui.values[1])));
+      if (selection2.value != 'All Levels'){
       update(data.filter(function(d){return ((d.date >= ui.values[0]) && (d.date <= ui.values[1]) && (d.level == [selection2.value] || d.level == [selection2]));}));
       updateDate(data.filter(function(d){return ((d.date >= ui.values[0]) && (d.date <= ui.values[1]) && (d.level == [selection2.value] || d.level == [selection2]));}));
       console.log(ui.values[0]);
       console.log(data);
+      }
+      else{
+      update(data.filter(function(d){return ((d.date >= ui.values[0]) && (d.date <= ui.values[1]));}));
+      updateDate(data.filter(function(d){return ((d.date >= ui.values[0]) && (d.date <= ui.values[1]));}));
+      }
   }
 });
 
