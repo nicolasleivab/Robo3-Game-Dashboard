@@ -36,8 +36,10 @@ data.forEach(function(d) {
 // Filter values
 const allInstructions = ['Cycles','Instructions', 'PickDrop', 'Movement', 'Functions', 'Loops']; //get Product columns for the filter
 let selection = allInstructions[0];
-const allLevels = d3.map(data, function(d){return(d.level)}).keys(); //get zones
+let levels = d3.map(data, function(d){return(d.level)}).keys(); //get levels
+const allLevels = [...levels, 'All Levels'];
 let selection2 = allLevels[0];
+console.log(allLevels);
 
 // Y axis and call func
 const y = d3.scaleLinear()
@@ -167,6 +169,7 @@ const levelSelector = d3.select("#drop4") //dropdown change selection
 .on("change", function(d){ // Row Filter
     selection2 = document.getElementById("dropdown4");
     console.log([selection2.value]);
+    if (selection2.value != 'All Levels'){
     update(data.filter(function(d){return d.level == [selection2.value];}));
     updatePie(data.filter(function(d){return d.level == [selection2.value];}), "level");
     resetSlider();
@@ -175,8 +178,20 @@ const levelSelector = d3.select("#drop4") //dropdown change selection
             console.log([selection.value]);
             update(data.filter(function(d){return d.level == [selection2.value];}));
             resetSlider();
-             });
-      });
+        });
+    }
+    else {
+      update(data);
+      updatePie(data, 'level');
+      resetSlider();
+          instructionSelector.on("change", function(d){ // Column Filter
+              selection = document.getElementById("dropdown3");
+              console.log([selection.value]);
+              update(data);
+              resetSlider();
+          });
+    }
+});
 
 //get values for the row filter dropdown
 levelSelector.selectAll("option")

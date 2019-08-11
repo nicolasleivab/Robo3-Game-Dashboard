@@ -1,129 +1,115 @@
 <!doctype html>
 <html>
-<head>
-    
+  <head>
     <meta charset="utf-8">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    
     <title>Interactive Dashboard</title>
     <!-- Bootstrap -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-     <!-- JQuery UI -->
+    <!-- JQuery UI -->
     <link rel="stylesheet"href="css/jquery-ui.min.css">
     <!-- Custom styling -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/cal-heatmap.css">
+  </head>
     
-</head>
-
-<body>
- 
-<div class="nav">
-<a class="disabled">ROBO3 DASHBOARD</a>
-<a href="#">Overview</a>
-<a href="#second">Solutions</a>
-<a href="/index.html">Logout</a>
-<a class="disabled" href="http://home.deib.polimi.it/loiacono/robo3/" rel="noopener noreferrer" target="_blank" class="imgh"><img class = "image1" src=  
-"./img/logo.png" border="0" alt="filter applied" />
-</a>
-</div>
-
-  
-
+  <body>
+    <div class="nav">
+      <a class="disabled">ROBO3 DASHBOARD</a>
+      <a href="#">Overview</a>
+      <a href="#second">Solutions</a>
+      <a href="/index.html">Logout</a>
+      <a class="disabled" href="http://home.deib.polimi.it/loiacono/robo3/" rel="noopener noreferrer" target="_blank" class="imgh"><img class = "image1" src=  
+        "./img/logo.png" border="0" alt="filter applied" />
+      </a>
+    </div>
     <!-- Bootstrap grid setup -->
     <div class="container">
-            <div class="row">
-                <div class="col-sm-4"><h2 class="subtitle">Progress</h2></div>
-                <div class="col-sm-4 col-sm-pull-4" id="donut-area"></div>
-                <div class="col-sm-4 col-sm-pull-3"><h2 class="subtitle">Gameplay</h2></div>
+      <div class="row">
+        <div class="col-sm-4">
+          <h2 class="subtitle">Progress</h2>
+        </div>
+        <div class="col-sm-4 col-sm-pull-4" id="donut-area"></div>
+        <div class="col-sm-4 col-sm-pull-3">
+          <h2 class="subtitle">Gameplay</h2>
+        </div>
         <div id="drop" class="col-sm-4 col-sm-pull-3" align=left data-toggle="tooltip" title="Select">
-                </div>
-            <div class ="col-sm-4 col-sm-pull-3" id="chart-area"></div>
         </div>
-        <br>
-            <div class="row">
-                <div class="col-md-6 col-md-push-3">
-				<div class="panel panel-primary">
-                    
-					<div class="panel-heading">
-						<h3 class="panel-title">Leaderboard</h3>
-						<div class="pull-right">
-							<span class="clickable filter" data-toggle="tooltip" title="Show your ranking">
-								<i class="glyphicon glyphicon-user"></i>
-							</span>
-						</div>
-					
-                </div>
-					<div class="panel-body">
-						<input type="text" class="form-control" id="dev-table-filter" data-action="filter" data-filters="#dev-table" placeholder="Filter Developers" />
-					</div>
-					<table class="table table-hover" id="dev-table">
-						<thead>
-							<tr>
-			
-								<th>Position</th>
-								<th>Player</th>
-								<th>Score</th>
-							</tr>
-						</thead>
-						<tbody id="leaderboard">
-					 <thead>
-   
-    </thead>
-						</tbody>
-					</table>
-				</div>
-			</div>
-    
-        </div>
-        
-        <br>
-            <div class="row" id="second">
-        <div class="col-sm-4"><h2 class="subtitle">Solutions</h2></div>
-        </div>
-            <div class="row">
-                <div class="col-sm-8" id="drop2" align=left data-toggle="tooltip" title="Select"></div>
-                <div class ="col-sm-8" id="groupedchart"></div>
+        <div class ="col-sm-4 col-sm-pull-3" id="chart-area"></div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-6 col-md-push-3">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Leaderboard</h3>
+              <div class="pull-right">
+                <span class="clickable filter" data-toggle="tooltip" title="Show your ranking">
+                <i class="glyphicon glyphicon-user"></i>
+                </span>
+              </div>
             </div>
-          <div class="row" style = "margin-top: 33px";>
-        <div class="col-sm-4"><h2 class="subtitle">Heatmap</h2></div>
-        </div>
-            <div class="row">
-                <div class ="col-lg-2" id="cal-heatmap"></div>
+            <div class="panel-body">
+              <input type="text" class="form-control" id="dev-table-filter" data-action="filter" data-filters="#dev-table" placeholder="Filter Developers" />
             </div>
+            <table class="table table-hover" id="dev-table">
+              <thead>
+                <tr>
+                  <th>Position</th>
+                  <th>Player</th>
+                  <th>Score</th>
+                </tr>
+              </thead>
+              <tbody id="leaderboard">
+              <thead>
+              </thead>
+              </tbody>
+            </table>
+          </div>
         </div>
-
-    
-
-<!-- External JS libraries -->
-    
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.4.3/tabletop.js"></script>  
-<script src="js/jquery.min.js"></script>
-<script src="js/jquery-ui.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/d3.min.js"></script>
-<script src="js/d3v3.min.js"></script>
-<script src="js/underscore-min.js"></script>
-
-<!-- Custom JS -->
-<script src="js/leaderboard.js"></script>
-<script src="js/overview_Student.js"></script>
-<script src="js/groupedchart.js"></script>
-<script src="js/cal-heatmap.min.js"></script>
-<script src="js/heatmapsettings.js"></script>
-
-</body>
-
-<footer class="footer">
-    
-    <div class="container">
-        <p>&copy; 2019 Nicolás Leiva Büchi</p>
+      </div>
+      <br>
+      <div class="row" id="second">
+        <div class="col-sm-4">
+          <h2 class="subtitle">Solutions</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8" id="drop2" align=left data-toggle="tooltip" title="Select"></div>
+        <div class ="col-sm-8" id="groupedchart"></div>
+      </div>
+      <div class="row" style = "margin-top: 33px";>
+        <div class="col-sm-4">
+          <h2 class="subtitle">Heatmap</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class ="col-lg-2" id="cal-heatmap"></div>
+      </div>
     </div>
- 
-</footer>
+    <!-- External JS libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.4.3/tabletop.js"></script>  
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/d3.min.js"></script>
+    <script src="js/d3v3.min.js"></script>
+    <script src="js/underscore-min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/leaderboard.js"></script>
+    <script src="js/overview_Student.js"></script>
+    <script src="js/groupedchart.js"></script>
+    <script src="js/cal-heatmap.min.js"></script>
+    <script src="js/heatmapsettings.js"></script>
+  </body>
     
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2019 Nicolás Leiva Büchi</p>
+    </div>
+  </footer>
 </html>
 
 

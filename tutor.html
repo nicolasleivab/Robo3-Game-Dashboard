@@ -1,11 +1,9 @@
 <!doctype html>
 <html>
-<head>
-    
+  <head>
     <meta charset="utf-8">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    
     <title>Interactive Dashboard</title>
     <!-- Bootstrap -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -14,115 +12,98 @@
     <link rel="stylesheet" href="css/style.css">
     <!-- JQuery UI -->
     <link rel="stylesheet"href="css/jquery-ui.min.css">
+  </head>
     
-</head>
-
-<body>
- 
-<div class="nav">
-<a class="disabled">ROBO3 DASHBOARD</a>
-<a href="#">Overview</a>
-<a href="#successprob">Probability of Success</a>  
-<a href="#solutions">Solutions</a>
-<a href="/index.html">Logout</a>
-<a class="disabled" href="http://home.deib.polimi.it/loiacono/robo3/" rel="noopener noreferrer" target="_blank" class="imgh"><img class = "image1" src=  
-"./img/logo.png" border="0" alt="filter applied" />
-</a>
-</div>
-
-  
-
-<!-- Bootstrap grid setup -->
-<div class="container">
-            <div class="row">
-                <div class="col-sm-4 "><h2 class="subtitle">Instructions Distribution per Level</h2></div>
-                <div class ="row">
-                    <br>
-                     
-        <div id="drop3" class="col-sm-4" data-toggle="tooltip" title="Select instruction"><span class="label label-default" style= "font-size: 14px";>Instruction:</span></div>
-             <div class ="row">
-        <div id="drop4" class="col-sm-4" data-toggle="tooltip" title="Select level"><span class="label label-default" style= "font-size: 14px";>Level:</span></div>
-            </div>
-                </div>
-                <br><br>
-                <div class="row">
-            <div class ="col-sm-8" id="histogram"></div>
-                    <div class ="col-sm-4" id="donut"></div>
-                    </div>
-                </div>
-        <div class="row">
-        <div class ="col-sm-8 col-sm-push-2">
-            <div id="slider-div" align = center>
-                <label ><span class="label label-default" style= "font-size: 14px";>Date range filter:</span>&nbsp;&nbsp;&nbsp;<span id="dateLabel1">1/01/2019</span> - <span id="dateLabel2">8/07/2019</span></label>
-            <div id="dateSlider" align = center></div>
-            </div>     
-            </div>
-            </div>
-        <br>  
-        <div class="row" id = "successprob">
-                <div class="col-sm-4 "><h2 class="subtitle">Probability of Success</h2></div>
-            <div class ="row"></div></div>
-        <div class = "row">
-        <div class = "col-sm-4 col-sm-push-2" id="barchart_tutor"></div>
-        </div>
-        <div class="row">
-        <div class ="col-sm-8 col-sm-push-2">
-            <div id="slider-div" align = center>
-                <label ><span class="label label-default" style= "font-size: 14px";>Date range filter:</span>&nbsp;&nbsp;&nbsp;<span id="dateLabel3">1/01/2019</span> - <span id="dateLabel4">8/07/2019</span></label>
-            <div id="dateSlider2" align = center></div>
-            </div>     
-            </div>
-            </div>
-        <br><br>
-        <div class = "row" id = "solutions">
-        <div class="col-sm-4 "><h2 class="subtitle">Solutions</h2></div>
-        </div>
-        <div class = "row">
-        <span class="label label-default" style= "font-size: 14px";>Student filter:</span><input id = "filterID" type="text" placeholder="Person code: 00000000"/><input id = "filter" type = "submit"/>
-        </div>
-        <div class = "row">
-        <div id="drop2" class="col-sm-4" data-toggle="tooltip" title="Select instruction"><span class="label label-default" style= "font-size: 14px";>Instruction:</span></div>
-        </div>
-        <div class = "row">
-        <div class ="col-sm-4" id="groupedchart"></div>
-        </div>
-        </div>
-    
-        <br>     	
-        <br>
-
-    
-    
-
-<!-- External JS libraries -->
-    
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.4.3/tabletop.js"></script>  
-<script src="js/jquery.min.js"></script>
-<script src="js/jquery-ui.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/d3.min.js"></script>
-<script src="js/underscore-min.js"></script>
-
-
-<!-- Custom JS -->
-    
-<script src="js/overview_Tutor.js"></script>
-<script src="js/groupedchart.js"></script>
-<script src="js/barchart_Tutor.js"></script>
-
-    
-
-
-</body>
-
-<footer class="footer">
-    
-    <div class="container">
-        <p>&copy; 2019 Nicolás Leiva Büchi</p>
+  <body>
+    <div class="nav">
+      <a class="disabled">ROBO3 DASHBOARD</a>
+      <a href="#">Overview</a>
+      <a href="#successprob">Probability of Success</a>  
+      <a href="#solutions">Solutions</a>
+      <a href="/index.html">Logout</a>
+      <a class="disabled" href="http://home.deib.polimi.it/loiacono/robo3/" rel="noopener noreferrer" target="_blank" class="imgh"><img class = "image1" src=  
+        "./img/logo.png" border="0" alt="filter applied" />
+      </a>
     </div>
- 
-</footer>
+    <!-- Bootstrap grid setup -->
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4 ">
+          <h2 class="subtitle">Instructions Distribution per Level</h2>
+        </div>
+      </div>
+      <div class ="row">
+        <div id="drop3" class="col-sm-4" data-toggle="tooltip" title="Select instruction"><span class="label label-default" style= "font-size: 14px";>Instruction:</span></div>
+        <div class ="row">
+          <div id="drop4" class="col-sm-4" data-toggle="tooltip" title="Select level"><span class="label label-default" style= "font-size: 14px";>Level:</span></div>
+        </div>
+        <div class="row">
+          <div class ="col-sm-8" id="histogram"></div>
+          <div class ="col-sm-4" id="donut"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class ="col-sm-8 col-sm-push-2">
+          <div id="slider-div" align = center>
+            <label ><span class="label label-default" style= "font-size: 14px";>Date range filter:</span>&nbsp;&nbsp;&nbsp;<span id="dateLabel1">1/01/2019</span> - <span id="dateLabel2">8/07/2019</span></label>
+            <div id="dateSlider" align = center></div>
+          </div>
+        </div>
+      </div>
+      <br>  
+      <div class="row" id = "successprob">
+        <div class="col-sm-4 ">
+          <h2 class="subtitle">Probability of Success</h2>
+        </div>
+        <div class ="row"></div>
+      </div>
+      <div class = "row">
+        <div class = "col-sm-4 col-sm-push-2" id="barchart_tutor"></div>
+      </div>
+      <div class="row">
+        <div class ="col-sm-8 col-sm-push-2">
+          <div id="slider-div" align = center>
+            <label ><span class="label label-default" style= "font-size: 14px";>Date range filter:</span>&nbsp;&nbsp;&nbsp;<span id="dateLabel3">1/01/2019</span> - <span id="dateLabel4">8/07/2019</span></label>
+            <div id="dateSlider2" align = center></div>
+          </div>
+        </div>
+      </div>
+      <br><br>
+      <div class = "row" id = "solutions">
+        <div class="col-sm-4 ">
+          <h2 class="subtitle">Solutions</h2>
+        </div>
+      </div>
+      <div class = "row">
+        <span class="label label-default" style= "font-size: 14px";>Student filter:</span><input id = "filterID" type="text" placeholder="Person code: 00000000"/><input id = "filter" type = "submit"/>
+      </div>
+      <div class = "row">
+        <div id="drop2" class="col-sm-4" data-toggle="tooltip" title="Select instruction"><span class="label label-default" style= "font-size: 14px";>Instruction:</span></div>
+      </div>
+      <div class = "row">
+        <div class ="col-sm-4" id="groupedchart"></div>
+      </div>
+    </div>
+    <br>     	
+    <br>
+    <!-- External JS libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.4.3/tabletop.js"></script>  
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/d3.min.js"></script>
+    <script src="js/underscore-min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/overview_Tutor.js"></script>
+    <script src="js/groupedchart.js"></script>
+    <script src="js/barchart_Tutor.js"></script>
+  </body>
     
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2019 Nicolás Leiva Büchi</p>
+    </div>
+  </footer>
 </html>
 
 
