@@ -6,7 +6,6 @@ function init() {
                    callback: function(data, tabletop) { 
                        
 
-
 //** D3.js code **//
 
 //* Filter and format data *//
@@ -34,7 +33,16 @@ function init() {
 
     });
 
-console.log(data)
+//load default personCode for the tutor page
+if (personCode != null && personCode != undefined){
+  personCode = personCode;
+} else {
+  personCode = 10574525;
+}
+// filter user ID
+let newData = data.filter(function(d){return d.ID == personCode;});
+
+console.log(newData)
 
 var solution = ['Functions', 'Loops', 'Cycles', 'Movement', 'PickDrop', 'Instructions'];
 
@@ -64,8 +72,6 @@ var yAxisApp = g.append("g")
 var x0 = d3.scaleBand()
     .range([0, width])
     .padding(0.2);
-
-var xFilter;
 
 var x1 = d3.scaleBand()
     .range([0, x0.bandwidth() - 5])
@@ -106,7 +112,7 @@ var dropSelector = d3.select("#drop2") //dropdown change selection
 
 //*Update Function*//
 
-function update2(data){
+function update2(newData){
 
 dropSelector.on("change", function(d){
          selected = document.getElementById("dropdown2");
@@ -135,14 +141,14 @@ dropSelector.on("change", function(d){
 
   
     x1.domain(xFilter).rangeRound([0, x0.bandwidth()]);
-    y2.domain([0, d3.max(data, function(d) { return d3.max(xFilter, function(key) { return d[key]; }); })]).nice(); 
+    y2.domain([0, d3.max(newData, function(d) { return d3.max(xFilter, function(key) { return d[key]; }); })]).nice(); 
 
 
 //* Actual D3 update func *//
 
 // Join new with old data.
 var rects = g.selectAll("rect")
-    .data(data, function(d){
+    .data(newData, function(d){
         return d.level;
         });
 
@@ -157,7 +163,7 @@ rects.exit()
 // Enter new elements.
 g.append("g")
             .selectAll("g")
-            .data(data)
+            .data(newData)
         rects.enter()
             .append("g")
             .attr("class","bar")
@@ -174,7 +180,7 @@ g.append("g")
             .attr("fill", function(d) { return z(d.key); })
             .attr("width", x1.bandwidth());
 
-console.log(data);
+console.log(newData);
 console.log(selected.value);
 
 
@@ -219,9 +225,9 @@ dropSelector.selectAll("option")
 //* Run default visualization *// 
 
 var keys = ['Functions', 'minF', 'avgF'];
-x0.domain(data.map(function(d) { return d.level; }));
+x0.domain(newData.map(function(d) { return d.level; }));
 x1.domain(keys).rangeRound([0, x0.bandwidth()]);
-y2.domain([0, d3.max(data, function(d) { return d3.max(keys, function(key) { return d[key]; }); })]).nice(); 
+y2.domain([0, d3.max(newData, function(d) { return d3.max(keys, function(key) { return d[key]; }); })]).nice(); 
 
 //Call X Axis
 var xAxisCall = d3.axisBottom(x0);
@@ -240,7 +246,7 @@ var yAxisCall2 = d3.axisLeft(y2)
 
 g.append("g")
             .selectAll("g")
-            .data(data)
+            .data(newData)
             .enter().append("g")
             .attr("class","bar")
             .attr("transform", function(d) { return "translate(" + x0(d.level) + ",0)"; })
@@ -282,7 +288,7 @@ legend.append("text")
     .text(function(d) { return d; });
 
 //Run visualization for the first time
-update2(data);
+update2(newData);
 
 //student filter
 $(document).ready(function() {

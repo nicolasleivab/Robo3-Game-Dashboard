@@ -12,8 +12,6 @@ var margin = { left:90, right:20, top:50, bottom:100 };
 var width = 700 - margin.left - margin.right,
     height = 350 - margin.top - margin.bottom;
 
-// filter user ID
-var data = data.filter(function(d){return d.ID == '10574525';});
 // Filter the data for the dropdown selector
 var columns = ['Playtime (min)', 'Rounds', 'Instructions'];
 var selection = columns[0];
@@ -29,8 +27,13 @@ data.forEach(function(d) {
     d.PickDrop = +d.PickDrop;
     d["Success Probability"] = +d["Success Probability"];
     d.Cycles = +d.Cycles;
- 
-    });
+    d.ID = +d.ID;
+});
+
+// filter user ID
+let newData = data.filter(function(d){return d.ID == personCode;});
+console.log(personCode);
+console.log(newData);
 
 var t = d3.transition().duration(750);
     
@@ -77,13 +80,13 @@ var yLabel = g.append("text")
   
 
 //update function    
-function update(data) {
+function update(newData) {
 
 var t = d3.transition().duration(500);
 
 // JOIN new data with old elements.
 var rects = g.selectAll("rect")
-    .data(data, function(d){
+    .data(newData, function(d){
         return d.level;
         });
 
@@ -126,8 +129,8 @@ yLabel.text(selection.value || selection);
 }
 
 //XY domain
-x.domain(data.map(function(d){ return d.level }));
-y.domain([0, d3.max(data, function(d){return d[selection.value] || d[selection];})]);
+x.domain(newData.map(function(d){ return d.level }));
+y.domain([0, d3.max(newData, function(d){return d[selection.value] || d[selection];})]);
 
 // X Axis call
 var xCall = d3.axisBottom(x);
@@ -150,9 +153,9 @@ var selector = d3.select("#drop") //dropdown change selection
     .attr("id","dropdown")
     .on("change", function(d){
          selection = document.getElementById("dropdown");
-            y.domain([0, d3.max(data, function(d){return d[selection.value];})]);
+            y.domain([0, d3.max(newData, function(d){return d[selection.value];})]);
                 console.log(selection.value);
-                update(data);
+                update(newData);
             
 
 });
@@ -169,7 +172,7 @@ selector.selectAll("option")
 })
 
 // Run the vis for the first time
-update(data);
+update(newData);
 
 
 
@@ -183,12 +186,9 @@ var colors = {
 
 var color = colors.green;
 
-var data = data.filter(function(d){return d.ID == '10574525';});
-var data = data.filter(function(d){return d["Success Probability"] > 0;});
+const donutData = newData.filter(function(d){return d["Success Probability"] > 0;});
 
-var completedLevels = d3.map(data, function(d){return(d.level)}).keys();
-
-
+var completedLevels = d3.map(donutData, function(d){return(d.level)}).keys();
 
 var radius = 75;
 var border = 5;
@@ -196,12 +196,9 @@ var padding = 20;
 var startPercent = 0;
 var endPercent = ((completedLevels.length)/11);
 
-
-
 var twoPi = Math.PI * 2;
 var formatPercent = d3.format('.0%');
 var boxSize = (radius + padding)*2;
-
 
 var count = Math.abs((endPercent - startPercent) / 0.01);
 var step = endPercent < startPercent ? -0.01 : 0.01;
