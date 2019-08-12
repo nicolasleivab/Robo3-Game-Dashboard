@@ -87,9 +87,14 @@ x.domain([(d3.min(data, function(d) { return d[selection.value] || d[selection];
 // Setting Histogram parameters
 const histogram = d3.histogram()
       .value(function(d) { return d[selection.value] || d[selection] ; })   //Value of the vector
-      .domain(x.domain())  //load x domain
-      .thresholds(x.ticks(7)); //Set number of bins
-  
+      .domain(x.domain());  //load x domain
+      
+if (selection2.value != 'All Levels' || (selection.value == 'Functions' || selection.value == 'Loops')){
+  histogram.thresholds(x.ticks(7));
+} else {
+    histogram.thresholds(x.ticks(21)); //Set number of bins
+}
+
 const bins = histogram(data); //Apply d3.histogram function with array data as input and creat a binding 'bins'
   
 // Y domain
@@ -357,7 +362,7 @@ path.enter().append("path")
     .each(function(d) { this._current = d; });
 
 //update legends
-//remove
+//remove previous text
 d3.select('#donut').selectAll('text').remove();
 
 //get sum of instructions
