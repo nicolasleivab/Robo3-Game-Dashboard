@@ -18,13 +18,13 @@
           <h3>Student Login</h3>
           <form id="studentForm">
             <div class="form-group">
-              <input id = "personCode" type="number" max = '99999999' class="form-control" placeholder="Person Code *" value="" />
+              <input id = "personCode" type="number" max = '99999999' class="form-control" placeholder="Person Code *" name="personCode" />
             </div>
             <div class="form-group">
               <input type="password" class="form-control" placeholder="Your Password *" value="" />
             </div>
             <div class="form-group">
-              <a href="student.html"><input id='studentSubmit' type="reset"  class="btnSubmit" value="Login" onclick="window.location.href = 'student.html';"/></a>
+            <input id='studentSubmit' type="reset"  class="btnSubmit" value="Login" onclick="check(this.form)"/>
             </div>
             <div class="form-group">
               <a href="" class="ForgetPwd">Forget Password?</a>
@@ -51,17 +51,8 @@
       </div>
     </div>
   </body>
-    
-<script>
-var form = document.getElementById("studentForm");
-
-form.addEventListener("reset", function(){
-var personCode = document.getElementById('personCode').value;
-localStorage.setItem( 'objectToPass', personCode );
-
-window.location = "/student.html"; //pass person code input value to student dashboard page
-
-});
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.4.3/tabletop.js"></script>
+<script src="js/d3.min.js"></script>
+<script src="js/inputlogin.js"></script>
     
 </html>
