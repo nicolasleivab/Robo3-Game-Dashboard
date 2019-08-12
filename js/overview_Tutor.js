@@ -293,20 +293,21 @@ var legendData = (resultLegend.map(function(d){return [
   {"Instruction": "Movement", "count": d.Movement}, 
   {"Instruction": "PickDrop", "count": d.PickDrop} ];}))[0];
   
-var legend = d3.select("#donut").append("svg")
+const legend = d3.select("#donut").append("svg")
   .attr("class", "legend")
-  .selectAll("g")
-  .data(legendData)
-  .enter().append("g")
-  .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
-legend.append("text")
+  .selectAll("g");
+  
+legend.data(legendData)
+.enter().append("g")
+.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; }).append("text")
   .attr("x", 115)
   .attr("y", 40)
   .attr("dy", ".35em")
   .text(function(d) { return d.Instruction; });
 
-legend.append("rect")
+legend.data(legendData)
+.enter().append("g")
+.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; }).append("rect")
   .attr("x", 90)
   .attr("y", 33)
   .attr("width", 18)
@@ -354,6 +355,20 @@ path.enter().append("path")
     .attr("stroke", "white")
     .attr("stroke-width", "6px")
     .each(function(d) { this._current = d; });
+
+//update legends
+//remove
+d3.select('#donut').selectAll('text').remove();
+
+//apend new text (percentages)
+legend
+    .data(pie(pieData[val]))
+    .enter().append("g")
+    .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; }).append("text")
+    .attr("x", 115)
+    .attr("y", 40)
+    .attr("dy", ".35em")
+    .text(function(d) { return d.data.Instruction + ':   ' + d.data.count; });
 
 }
 
