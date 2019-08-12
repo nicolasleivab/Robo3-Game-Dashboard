@@ -185,7 +185,7 @@ console.log(selected.value);
                  yLabel2.text(selected.value);
 
 //Legend
- 
+
 var legend = g.append("g")
             .attr("font-family", "sans-serif")
             .attr("font-size", 10)
@@ -254,9 +254,18 @@ g.append("g")
             .attr("height", function(d) { return height - y2(d.value); })
             .attr("fill", function(d) { return z(d.key); });
 
-//Legend Default
+//apend legend rects          
+legend.append("rect")
+    .attr("x", width + 80)
+    .attr("width", 15)
+    .attr("height", 15)
+    .attr("fill", z)
+    .attr("stroke", z)
+    .attr("stroke-width",2)
+}
 
-var keysl = ["Student's Solution", 'Min Solution', 'Average Solution'];  
+//Legend Default
+var keysl = ["Student's Solution", 'Min Solution', 'Average Solution']; 
 var legend = g.append("g")
             .attr("font-family", "sans-serif")
             .attr("font-size", 10)
@@ -266,22 +275,11 @@ var legend = g.append("g")
             .enter().append("g")
             .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
-        legend.append("rect")
-            .attr("x", width + 80)
-            .attr("width", 15)
-            .attr("height", 15)
-            .attr("fill", z)
-            .attr("stroke", z)
-            .attr("stroke-width",2)
-        
-
-        legend.append("text")
-            .attr("x", width + 75)
-            .attr("y", 9.5)
-            .attr("dy", "0.32em")
-            .text(function(d) { return d; });
-
-}
+legend.append("text")
+    .attr("x", width + 75)
+    .attr("y", 9.5)
+    .attr("dy", "0.32em")
+    .text(function(d) { return d; });
 
 //Run visualization for the first time
 update2(data);
@@ -294,6 +292,7 @@ $(document).ready(function() {
     console.log(studentID);
     
     if(studentID > 9999999){
+      
     g.selectAll("rect")       //removing rects to update according to filter
     .data(data, function(d){
         return d.level;
@@ -302,6 +301,7 @@ $(document).ready(function() {
     .transition(t)
     .attr("y2", y2(0))
     .attr("height", 0)
+    .attr('text')
     .remove();
     update2(data.filter(function(d){return d.ID == studentID;}))
       }
