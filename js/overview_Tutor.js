@@ -323,21 +323,21 @@ function updateDate(data){ //update data by date range (JQuery slider func above
 }
 
 function updatePie(data, val = this.value) {
-  var result = [data.reduce((acc, n) => {    //loop through data array objects and sum objects properties
-    for (var prop in n) {
-      if (acc.hasOwnProperty(prop)) acc[prop] += n[prop];
-      else acc[prop] = n[prop];
-      }
-      return acc;
-      }, {})]
+const result = [data.reduce((acc, n) => {    //loop through data array objects and sum objects properties
+  for (var prop in n) {
+    if (acc.hasOwnProperty(prop)) acc[prop] += n[prop];
+    else acc[prop] = n[prop];
+    }
+    return acc;
+    }, {})]
     
-var newData = result.map(function(d){return [
+const newData = result.map(function(d){return [
   {"Instruction": "Functions", "count": d.Functions}, 
   {"Instruction": "Loops", "count": d.Loops}, 
   {"Instruction": "Movement", "count": d.Movement}, 
   {"Instruction": "PickDrop", "count": d.PickDrop} ];})
-var pieData = {"level":newData[0]}; //new filtered data to be used in path update func
-var legendData = newData[0];
+const pieData = {"level":newData[0]}; //new filtered data to be used in path update func
+const legendData = newData[0];
 console.log(legendData);
 
 //path update
@@ -360,6 +360,15 @@ path.enter().append("path")
 //remove
 d3.select('#donut').selectAll('text').remove();
 
+//get sum of instructions
+const sum = function(arr, prop){
+  return arr.reduce( function(a, b){
+      return a + b[prop];
+  }, 0);
+};
+
+const totalInstructions = sum(data, 'Instructions');
+
 //apend new text (percentages)
 legend
     .data(pie(pieData[val]))
@@ -368,7 +377,7 @@ legend
     .attr("x", 115)
     .attr("y", 40)
     .attr("dy", ".35em")
-    .text(function(d) { return d.data.Instruction + ':   ' + d.data.count; });
+    .text(function(d) { return d.data.Instruction + ':   ' + Math.round((d.data.count/totalInstructions)*100) +'%'; });
 
 }
 
