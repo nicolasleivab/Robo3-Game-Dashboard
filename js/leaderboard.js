@@ -91,16 +91,6 @@ function displayLeaderboard() {
 
 displayLeaderboard(topPlayers);
 
-//JQuery onlick function for showing your ranking among the rest of the students 
-$(document).ready(function() {
-    $('span').click(function() {
-    var showYourRanking = sortedPlayers.slice(0, 4); //to be replaced by a ID filter once the login page is setup
-    let theExport = "";
-    var i=1;
-    showYourRanking.forEach((player) => theExport += '<tr><td>' + i++ + '</td><td>' + player.ID + '</td><td>' + player.Score + '</td></tr>');
-    document.getElementById("leaderboard").innerHTML = theExport;
-    });
-});
 
             //** end of Leaderboard script **//
 
