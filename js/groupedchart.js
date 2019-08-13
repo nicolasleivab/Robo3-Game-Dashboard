@@ -33,6 +33,8 @@ function init() {
 
     });
 
+personCode = Number(personCode);
+
 //load default personCode for the tutor page
 if (personCode != null && personCode != undefined){
   personCode = personCode;

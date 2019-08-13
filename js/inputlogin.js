@@ -1,21 +1,26 @@
 var allStudents = localStorage.getItem('arrayToPass');
-    console.log(allStudents);
     
-function check(form) { //function to check personCode
-let code = form.personCode.value;
-    if(code == 10574525 || code == 10101010 || code == 11111111 ||code == 12341234){
-        var form = document.getElementById("studentForm");
+var studentsArray;
+if (allStudents.length === 0) {
+    studentsArray = new Array();
+} else {
+    studentsArray = allStudents.replace(/, +/g, ",").split(",").map(Number); //convert stored string to array of integers
+}
+console.log(studentsArray);
 
-        form.addEventListener("reset", function(){
-        var personCode = document.getElementById('personCode').value;
-        localStorage.setItem( 'objectToPass', personCode );
+function check(form) { //function to check personCode
+let code = Number(form.personCode.value);
+
+    if(studentsArray.includes(code)){
+    var form = document.getElementById("studentForm");
+    form.addEventListener("reset", function(){
+    var personCode = document.getElementById('personCode').value;
+    localStorage.setItem( 'objectToPass', personCode );
         
-        window.location = "/student.html"; //pass person code input value to student dashboard page
-        
-        });
+    window.location = "/student.html"; //pass person code input value to student dashboard page
+    });  
     }
     else {
-        alert("Invalid Person Code")/*displays error message*/
+    alert("Invalid Person Code")/*displays error message*/  
     }
-
 }

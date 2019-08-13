@@ -1,27 +1,34 @@
 <!doctype html>
 <html>
-  <head>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.4.3/tabletop.js"></script>
-<script src="js/d3.min.js"></script>
-    </head>
-    
-<body>
-<script>
-//** tabletop init function **//
-function init() {     
-    Tabletop.init( { key: '1evjoQPchLR8iUhjQQ8i56hy6Df5z7K_eVSWs8yVugC4', //google sheet key
-                     callback: function(data, tabletop) { 
-                    
-let students = d3.map(data, function(d){return(+d.ID)}).keys();
-let allStudents = students.map(Number);
-console.log(allStudents);
-var storedStudents = allStudents;
-localStorage.setItem( 'arrayToPass', storedStudents );//save students list in local storage
-},
-simpleSheet: true } )
-}
-window.addEventListener('DOMContentLoaded', init)
 
-setTimeout(function(){ window.location = "/login.html";; }, 1500);
-    </script>    
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.4.3/tabletop.js"></script>
+    <script src="js/d3.min.js"></script>
+</head>
+
+<body>
+    <script>
+        //** tabletop init function **//
+        function init() {
+            Tabletop.init({
+                key: '1evjoQPchLR8iUhjQQ8i56hy6Df5z7K_eVSWs8yVugC4', //google sheet key
+                callback: function(data, tabletop) {
+
+                    let students = d3.map(data, function(d) {
+                        return (+d.ID)
+                    }).keys();
+                    let allStudents = students.map(Number);
+                    console.log(allStudents);
+                    var storedStudents = allStudents;
+                    localStorage.setItem('arrayToPass', storedStudents); //save students list in local storage
+                },
+                simpleSheet: true
+            })
+        }
+        window.addEventListener('DOMContentLoaded', init)
+
+        setTimeout(function() {
+            window.location = "/login.html";;
+        }, 2000);
+    </script>
 </body>

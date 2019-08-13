@@ -29,10 +29,11 @@ data.forEach(function(d) {
     d.Cycles = +d.Cycles;
     d.ID = +d.ID;
 });
+personCode = Number(personCode);
+console.log(personCode);
 
 // filter user ID
 let newData = data.filter(function(d){return d.ID == personCode;});
-console.log(personCode);
 console.log(newData);
 
 var t = d3.transition().duration(750);
