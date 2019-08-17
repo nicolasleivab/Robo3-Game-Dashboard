@@ -36,7 +36,7 @@ const xApp2 = g2.append("g")
       .attr("transform", "translate(0," + height +")");
   
 const yApp2 = g2.append("g")
-      .attr("class", "y2 axis");
+      .attr("class", "y3 axis");
   
 // X Scale
 const x2 = d3.scaleBand()
