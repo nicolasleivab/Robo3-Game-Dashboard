@@ -294,7 +294,7 @@ update2(newData);
 $(document).ready(function() {
   $('#filter').click(function() {
             
-    var studentID = document.getElementById('filterID').value;
+    var studentID = Number(document.getElementById('filterID').value);
     console.log(studentID);
 
     if(studentsArray.includes(studentID)){
