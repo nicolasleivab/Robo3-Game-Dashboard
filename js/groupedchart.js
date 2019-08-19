@@ -296,24 +296,23 @@ $(document).ready(function() {
             
     var studentID = document.getElementById('filterID').value;
     console.log(studentID);
-    
-    if(studentID > 9999999){
-      
-    g.selectAll("rect")       //removing rects to update according to filter
-    .data(data, function(d){
-        return d.level;
-        }).exit()
-    .attr("fill", 'none')
-    .transition(t)
-    .attr("y2", y2(0))
-    .attr("height", 0)
-    .attr('text')
-    .remove();
-    update2(data.filter(function(d){return d.ID == studentID;}))
+
+    if(studentsArray.includes(studentID)){
+      g.selectAll("rect")       //removing old rects
+      .data(data, function(d){
+          return d.level;
+          }).exit()
+      .attr("fill", 'none')
+      .transition(t)
+      .attr("y2", y2(0))
+      .attr("height", 0)
+      .attr('text')
+      .remove();
+      update2(data.filter(function(d){return d.ID == studentID;})) //enter new rects for the new filtered student 
+
+      } else {
+      alert("'Please input a valid Person Code (10574525, 11111111, 10101010 or 12341234)'")//error message and list of students  
       }
-    else{
-    alert('Please input a valid format (10574525, 11111111, 10101010 or 12341234)');
-    }
   });
 });
 
