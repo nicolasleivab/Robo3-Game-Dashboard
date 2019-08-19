@@ -26,6 +26,7 @@ The goal of the interactive dashboard is to collect and process the data from ea
 
 * [D3.js](https://d3js.org) is used for the actual data visualization, to create the graphs and the interactive functionalities.
 * [tabletop.js](https://github.com/jsoma/tabletop) is used to fetch the data from the game log. 
+* [Jest](https://jestjs.io/docs/en/getting-started) is used to perform unit and integration tests.
 
 ### HTML and CSS
 
