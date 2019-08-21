@@ -1,0 +1,19 @@
+{
+  "name": "game-dashboard",
+  "version": "1.0.0",
+  "description": "D3js Game Dashboard",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nicolasleivab/Game-Dashboard.git"
+  },
+  "author": "Nicolás Leiva Büchi <nicolasleivab@gmail.com>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/nicolasleivab/Interactive-Dashboard/issues"
+  },
+  "homepage": "https://github.com/nicolasleivab/Interactive-Dashboard#readme"
+}
