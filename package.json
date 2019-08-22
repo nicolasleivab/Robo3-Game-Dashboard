@@ -4,7 +4,7 @@
   "description": "D3js Game Dashboard",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/nicolasleivab/Interactive-Dashboard/issues"
   },
-  "homepage": "https://github.com/nicolasleivab/Interactive-Dashboard#readme"
+  "homepage": "https://github.com/nicolasleivab/Interactive-Dashboard#readme",
+  "devDependencies": {
+    "jest": "^24.9.0"
+  }
 }
