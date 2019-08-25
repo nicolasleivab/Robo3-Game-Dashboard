@@ -91,6 +91,14 @@ function displayLeaderboard() {
 
 displayLeaderboard(topPlayers);
 
+//JQuery show ranking func
+$(document).ready(function() {
+    $('span').click(function() {
+    let showYourRanking = sortedPlayers.filter(function(d){return d.ID == personCode;}); 
+//append new row
+    });
+});
+
 
             //** end of Leaderboard script **//
 
