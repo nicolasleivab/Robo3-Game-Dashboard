@@ -94,7 +94,8 @@ displayLeaderboard(topPlayers);
 //JQuery show ranking func
 $(document).ready(function() {
     $('span').click(function() {
-    let showYourRanking = sortedPlayers.filter(function(d){return d.ID == personCode;}); 
+    let currentPlayer = sortedPlayers.filter(function(d){return d.ID == personCode;});
+    $('#leaderboard > tbody:last-child').append('<tr><td>' + i + '</td><td>' + currentPlayer.ID + '</td><td>' + currentPlayer.Score + '</td></tr>');//append extra row
 //append new row
     });
 });
