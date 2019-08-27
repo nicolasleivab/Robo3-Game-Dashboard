@@ -30,6 +30,7 @@ data.forEach(function(d) {
     d.ID = +d.ID;
 });
 personCode = Number(personCode);
+personCode = 10574525;
 console.log(personCode);
 
 // filter user ID
@@ -195,8 +196,8 @@ const twoPi = Math.PI * 2;
 const formatPercent = d3.format('.0%');
 const boxSize = (radius + padding)*2;
 
-const count = Math.abs((endPercent - startPercent) / 0.01);
-const step = endPercent < startPercent ? -0.01 : 0.01;
+let count = Math.abs((endPercent - startPercent) / 0.01);   //count and step must be mutable
+let step = endPercent < startPercent ? -0.01 : 0.01;
 
 const arc = d3.arc()
   .startAngle(0)
