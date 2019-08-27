@@ -258,7 +258,7 @@ function updateProgress(progress) {
   numberText.text(formatPercent(progress));
 }
 
-const progress = startPercent;
+let progress = startPercent;
 
 (function loops() {
   updateProgress(progress);
