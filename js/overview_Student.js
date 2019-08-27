@@ -179,56 +179,50 @@ update(newData);
 
 /* Donut chart */
 
-var colors = {
-  'pink': '#E1499A',
-  'yellow': '#f0ff08',
-  'green': '#47e495'
-};
+const color = '#47e495';
 
-var color = colors.green;
+const donutData = newData.filter(function(d){return d["Success Probability"] > 0;}); //Filter completed levels
 
-const donutData = newData.filter(function(d){return d["Success Probability"] > 0;});
+const completedLevels = d3.map(donutData, function(d){return(d.level)}).keys(); //get each level name
 
-var completedLevels = d3.map(donutData, function(d){return(d.level)}).keys();
+const radius = 75;
+const border = 5;
+const padding = 20;
+const startPercent = 0;
+const endPercent = ((completedLevels.length)/11);
 
-var radius = 75;
-var border = 5;
-var padding = 20;
-var startPercent = 0;
-var endPercent = ((completedLevels.length)/11);
+const twoPi = Math.PI * 2;
+const formatPercent = d3.format('.0%');
+const boxSize = (radius + padding)*2;
 
-var twoPi = Math.PI * 2;
-var formatPercent = d3.format('.0%');
-var boxSize = (radius + padding)*2;
+const count = Math.abs((endPercent - startPercent) / 0.01);
+const step = endPercent < startPercent ? -0.01 : 0.01;
 
-var count = Math.abs((endPercent - startPercent) / 0.01);
-var step = endPercent < startPercent ? -0.01 : 0.01;
-
-var arc = d3.arc()
+const arc = d3.arc()
   .startAngle(0)
   .innerRadius(radius)
   .outerRadius(radius - border);
 
-var parent = d3.select('#donut-area');
+const parent = d3.select('#donut-area');
 
-var svg2 = parent.append('svg')
+const svg2 = parent.append('svg')
   .attr('width', boxSize)
   .attr('height', boxSize);
 
-var defs = svg2.append('defs');
+const defs = svg2.append('defs');
 
-var filter = defs.append('filter')
+const filter = defs.append('filter')
   .attr('id', 'blur');
 
 filter.append('feGaussianBlur')
   .attr('in', 'SourceGraphic')
   .attr('stdDeviation', '7');
 
-var g2 = svg2.append('g')
+const g2 = svg2.append('g')
   .attr('transform', 'translate(' + boxSize / 2 + ',' + boxSize / 2 + ')')
   
 
-var meter = g2.append('g')
+const meter = g2.append('g')
   .attr('class', 'progress-meter');
 
 meter.append('path')
@@ -237,7 +231,7 @@ meter.append('path')
   .attr('fill-opacity', 0.5)
   .attr('d', arc.endAngle(twoPi));
 
-var foreground = meter.append('path')
+const foreground = meter.append('path')
   .attr('class', 'foreground')
   .attr('fill', color)
   .attr('fill-opacity', 1)
@@ -246,25 +240,25 @@ var foreground = meter.append('path')
   .attr('stroke-opacity', 1)
   .attr('filter', 'url(#blur)');
 
-var front = meter.append('path')
+const front = meter.append('path')
   .attr('class', 'foreground')
   .attr('fill', color)
   .attr('fill-opacity', 1);
 
-var numberText = meter.append('text')
+const numberText = meter.append('text')
   .attr('fill', '#000')
   .attr('text-anchor', 'middle')
   .attr('dy', '.35em')
   .style('font', 'ZCOOL QingKe HuangYou');
 
-
+//update function adapted from Nam Nguyen https://codepen.io/hoangnam/pen/VLXBPq
 function updateProgress(progress) {
   foreground.attr('d', arc.endAngle(twoPi * progress));
   front.attr('d', arc.endAngle(twoPi * progress));
   numberText.text(formatPercent(progress));
 }
 
-var progress = startPercent;
+const progress = startPercent;
 
 (function loops() {
   updateProgress(progress);
