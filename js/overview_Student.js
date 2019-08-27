@@ -29,8 +29,8 @@ data.forEach(function(d) {
     d.Cycles = +d.Cycles;
     d.ID = +d.ID;
 });
+
 personCode = Number(personCode);
-personCode = 10574525;
 console.log(personCode);
 
 // filter user ID
