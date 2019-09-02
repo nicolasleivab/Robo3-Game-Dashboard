@@ -94,10 +94,12 @@ displayLeaderboard(topPlayers);
 //JQuery show ranking func
 $(document).ready(function() {
     $('span').click(function() {
-    let currentPlayer = sortedPlayers.filter(function(d){return d.ID == personCode;});
-    $('#leaderboard > tbody:last-child').append('<tr><td>' + i + '</td><td>' + currentPlayer.ID + '</td><td>' + currentPlayer.Score + '</td></tr>');//append extra row
-//append new row
-    });
+        var showYourRanking = sortedPlayers.slice(0, 4); //to be replaced by a ID filter once the login page is setup
+        let theExport = "";
+        var i=1;
+        showYourRanking.forEach((player) => theExport += '<tr><td>' + i++ + '</td><td>' + player.ID + '</td><td>' + player.Score + '</td></tr>');
+        document.getElementById("leaderboard").innerHTML = theExport;
+        });
 });
 
 
