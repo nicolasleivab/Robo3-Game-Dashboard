@@ -21,6 +21,8 @@ data.forEach(function(d) {
     d.Cycles = +d.Cycles;
    
       });
+    
+personCode = Number(personCode);
 
 function sumAll(arr) {
     let sums = {}, value = [], studentID;
@@ -63,12 +65,14 @@ displayLeaderboard(topPlayers);
 //JQuery show ranking func
 $(document).ready(function() {
     $('span').click(function() {
-        if(personCode){
-        let theExport = ""; //initialize the export
-        topPlayers.forEach((player) => theExport += '<tr><td>' + player.ranking + '</td><td>' + player.ID + '</td><td>' + player.Score + '</td></tr>'); //prints the row tables
-        document.getElementById("leaderboard").innerHTML = theExport;
+        if(topPlayers.some(student => student.ID === personCode)){
+            //if the current student is already in the leaderboard do nothing
     }else{
-
+        let currentStudent = sortedPlayers.find( student => student.ID === personCode );
+        let showRanking = topPlayers.push(currentStudent)
+        let theExport = ""; //initialize the export
+        showRanking.forEach((player) => theExport += '<tr><td>' + player.ranking + '</td><td>' + player.ID + '</td><td>' + player.Score + '</td></tr>'); //prints the row tables
+        document.getElementById("leaderboard").innerHTML = theExport;
     }
     });
 });
