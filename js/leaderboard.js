@@ -20,7 +20,9 @@ data.forEach(function(d) {
     d["Success Probability"] = +d["Success Probability"];
     d.Cycles = +d.Cycles;
    
-      });
+});
+
+//Filter students 100% progress
     
 personCode = Number(personCode);
 
@@ -65,13 +67,14 @@ displayLeaderboard(topPlayers);
 //JQuery show ranking func
 $(document).ready(function() {
     $('span').click(function() {
-        if(topPlayers.some(student => student.ID === personCode)){
+        if(topPlayers.some(student => student.ID == personCode)){
             //if the current student is already in the leaderboard do nothing
     }else{
-        let currentStudent = sortedPlayers.find( student => student.ID === personCode );
-        let showRanking = topPlayers.push(currentStudent)
+        let currentStudent = sortedPlayers.find( student => student.ID == personCode );
+        topPlayers.push(currentStudent);
+        console.log(topPlayers);
         let theExport = ""; //initialize the export
-        showRanking.forEach((player) => theExport += '<tr><td>' + player.ranking + '</td><td>' + player.ID + '</td><td>' + player.Score + '</td></tr>'); //prints the row tables
+        topPlayers.forEach((player) => theExport += '<tr><td>' + player.ranking + '</td><td>' + player.ID + '</td><td>' + player.Score + '</td></tr>'); //prints the row tables
         document.getElementById("leaderboard").innerHTML = theExport;
     }
     });
