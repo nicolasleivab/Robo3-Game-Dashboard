@@ -22,7 +22,11 @@ data.forEach(function(d) {
    
 });
 
-//Filter students 100% progress
+/*Filter students and get only the ones that have completed every level
+const completedLevels = d3.map(donutData, function(d){return(d.level)}).keys(); //get each level
+data.forEach((player) => if(completedLevels.length < 11){ return player.exclude = 1} // boolean property for the filer
+let boardData = data.filter(function(d){return d.exclude < 1;}); //filter in progress students
+*/
     
 personCode = Number(personCode);
 
