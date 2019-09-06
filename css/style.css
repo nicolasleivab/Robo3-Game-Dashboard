@@ -239,7 +239,6 @@ body{
   position: fixed;
   z-index: 3 !important;;
   top: 0;
-  left: 0;
   overflow-x: hidden;
   padding-top 1px;
   text-align: center;
