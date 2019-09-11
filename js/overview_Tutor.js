@@ -33,6 +33,8 @@ data.forEach(function(d) {
   d.date = parseDate(d.date);
 });
 
+var data = data.filter(function(d){return d["Success Probability"] > 0;}); //filter all data by succesful rounds
+
 // Filter values
 const allInstructions = ['Cycles','Instructions', 'PickDrop', 'Movement', 'Functions', 'Loops']; //get Product columns for the filter
 let selection = allInstructions[0];
