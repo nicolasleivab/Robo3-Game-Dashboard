@@ -30,6 +30,7 @@ data.forEach(function(d) {
     d.ID = +d.ID;
 });
 
+var data = data.filter(function(d){return d["Success Probability"] > 0;}); //filter all data by succesful rounds
 personCode = Number(personCode);
 console.log(personCode);
 
@@ -182,7 +183,7 @@ update(newData);
 
 const color = '#47e495';
 
-//var data = data.filter(function(d){return d["Success Probability"] > 0;}); //filter all data by succesful rounds
+
 const donutData = newData.filter(function(d){return d["Success Probability"] > 0;}); //Filter completed levels
 
 const completedLevels = d3.map(donutData, function(d){return(d.level)}).keys(); //get each level name
