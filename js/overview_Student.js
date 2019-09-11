@@ -30,12 +30,12 @@ data.forEach(function(d) {
     d.ID = +d.ID;
 });
 
-var data = data.filter(function(d){return d["Success Probability"] > 0;}); //filter all data by succesful rounds
+let data2 = data.filter(function(d){return d["Success Probability"] > 0;}); //filter all data by succesful rounds
 personCode = Number(personCode);
 console.log(personCode);
 
 // filter user ID
-let newData = data.filter(function(d){return d.ID == personCode;});
+let newData = data2.filter(function(d){return d.ID == personCode;});
 console.log(newData);
 
 var t = d3.transition().duration(750);
