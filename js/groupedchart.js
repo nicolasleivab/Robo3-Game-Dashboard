@@ -291,10 +291,9 @@ legend.append("text")
 update2(newData);
 
 //student filter
-$(document).ready(function() {
-  $('#filter').click(function() {
+function filterStudent(){
             
-    var studentID = Number(document.getElementById('filterID').value);
+    let studentID = Number(document.getElementById('filterID').value);
     console.log(studentID);
 
     if(studentsArray.includes(studentID)){
@@ -313,9 +312,8 @@ $(document).ready(function() {
       } else {
       alert("'Please input a valid Person Code (10574525, 11111111, 10101010 or 12341234)'")//error message and list of students  
       }
-  });
-});
-
+};
+document.getElementById('filter').addEventListener('click', filterStudent);
 
 //** end of D3.js code **//
 

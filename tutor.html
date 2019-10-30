@@ -104,11 +104,10 @@
 </body>
 
 <script>
-    localStorage.removeItem('objectToPass');
-    var personCode;
-    var allStudents = localStorage.getItem('arrayToPass');
+    let personCode;
+    let allStudents = localStorage.getItem('arrayToPass');
 
-    var studentsArray;
+    let studentsArray;
     if (allStudents.length === 0) {
         studentsArray = new Array();
     } else {
@@ -116,7 +115,6 @@
     }
     console.log(studentsArray);
 
-    localStorage.removeItem('arrayToPass');
 </script>
 
 <footer class="footer">

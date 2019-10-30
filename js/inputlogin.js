@@ -1,6 +1,6 @@
-var allStudents = localStorage.getItem('arrayToPass');
+let allStudents = localStorage.getItem('arrayToPass');
     
-var studentsArray;
+let studentsArray;
 if (allStudents.length === 0) {
     studentsArray = new Array();
 } else {
@@ -12,9 +12,9 @@ function check(form) { //function to check personCode
 let code = Number(form.personCode.value);
 
     if(studentsArray.includes(code)){
-    var form = document.getElementById("studentForm");
+    let form = document.getElementById("studentForm");
     form.addEventListener("reset", function(){
-    var personCode = document.getElementById('personCode').value;
+    let personCode = document.getElementById('personCode').value;
     localStorage.setItem( 'objectToPass', personCode );
         
     window.location = 'student.html'; //pass person code input value to student dashboard page
