@@ -17,7 +17,7 @@ let code = Number(form.personCode.value);
     var personCode = document.getElementById('personCode').value;
     localStorage.setItem( 'objectToPass', personCode );
         
-    window.location = 'http://nicolasleivab.github.io/Interactive-Dashboard/student.html'; //pass person code input value to student dashboard page
+    window.location = 'student.html'; //pass person code input value to student dashboard page
     });  
     }
     else {

@@ -2,13 +2,18 @@
 <html>
 
 <head>
+    <meta charset="utf-8">
+    <meta name="description" content="Robo3 Dashboard">
+    <meta name="author" content="Nicolás Leiva Büchi">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robo3 Dashboard</title>
+    <!-- Style-->
     <link rel="stylesheet" href="css/login.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.4.3/tabletop.js"></script>
-    <script src="js/d3.min.js"></script>
+
 </head>
 
 <body>
-<div class="loader"></div>
+    <div class="loader"></div>
     <script>
         //** tabletop init function **//
         function init() {
@@ -30,7 +35,11 @@
         window.addEventListener('DOMContentLoaded', init)
 
         setTimeout(function() {
-            window.location = "http://nicolasleivab.github.io/Interactive-Dashboard/login.html";
+            window.location = "login.html";
         }, 2000);
     </script>
+
+    <!-- Libraries-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.4.3/tabletop.js"></script>
+    <script src="js/d3.min.js"></script>
 </body>

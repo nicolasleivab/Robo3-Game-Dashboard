@@ -1,6 +1,6 @@
 # Interactive Dashboard for Robo3 game
 
-This project's aim is the design, development and implementation of a visualization system as an interactive webapp dashboard for the game [Robo3](), which is an applied game for teaching introductory programming.
+This project's aim is the design, development and implementation of a visualization system as an interactive WebApp dashboard for the game Robo3, which is an applied game for teaching introductory programming. You can see the [software development report](https://github.com/nicolasleivab/Robo3-Game-Dashboard/blob/master/Software_Development_Report.pdf) for more details, as well as a live [Demo](https://robo3-dashboard.netlify.com).
 
 The goal of the interactive dashboard is to collect and process the data from each student performance from a remote game log and display it to two types of users: students and the instructor in charge. In order to achieve this, several procedures are needed:
 
@@ -18,21 +18,22 @@ The goal of the interactive dashboard is to collect and process the data from ea
 
 * **Documentation and fixes**
 
+## Built With
 
+* [D3.js](https://d3js.org) is used for the data visualization, to create the graphs and the interactive functionalities.
+* [tabletop.js](https://github.com/jsoma/tabletop) is used to fetch the data from the game log in a google sheet.
+* [Bootstrap](https://getbootstrap.com/docs/4.3/getting-started/introduction/) is used for the layout and the responsive design.
+* [Jest](https://jestjs.io/docs/en/getting-started) is used to perform some unit and integration tests.
 
-## Languages & tools
-
-### JavaScript 
-
-* [D3.js](https://d3js.org) is used for the actual data visualization, to create the graphs and the interactive functionalities.
-* [tabletop.js](https://github.com/jsoma/tabletop) is used to fetch the data from the game log. 
-* [Jest](https://jestjs.io/docs/en/getting-started) is used to perform unit and integration tests.
-
-### HTML and CSS
-
-* HTML and CSS are used for the web structure and the styling of the graphs.
-
-### Git
+## Versioning
 
 * [Git](https://git-scm.com) is used for version control.
+
+## Authors
+
+* **Nicolás Leiva Büchi** - [nicolasleivab](https://github.com/nicolasleivab)
+
+## License
+
+This project is licensed under the GNU General Public License - see the [LICENSE](LICENSE.md) file for details.
 

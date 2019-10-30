@@ -4,7 +4,6 @@
 function init() {     
   Tabletop.init( { key: '10g_TGtruCriERlXJurPZQk76pvk30U0pkWgbbfzPrjA', //google sheet key
                    callback: function(data, tabletop) { 
-                       console.log(data)
 
 // Set dimensions and append svg to div #histogram
 const svg = d3.select("#histogram"),
@@ -34,6 +33,7 @@ data.forEach(function(d) {
 });
 
 var data = data.filter(function(d){return d["Success Probability"] > 0;}); //filter all data by succesful rounds
+console.log(data);
 
 // Filter values
 const allInstructions = ['Cycles','Instructions', 'PickDrop', 'Movement', 'Functions', 'Loops']; //get Product columns for the filter
