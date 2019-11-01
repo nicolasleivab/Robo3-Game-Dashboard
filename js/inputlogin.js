@@ -16,3 +16,12 @@ let code = Number(form.personCode.value);
     alert("Invalid Person Code")/*displays error message*/  
     }
 }
+
+//in case the user clears data storage
+$(document).ready(function() {
+    $('input').click(function() {
+        if(localStorage.getItem("allStudents") || localStorage.getItem("data1") || localStorage.getItem("data2") == null){
+            window.location.href = "index.html";
+        }
+    });
+});
