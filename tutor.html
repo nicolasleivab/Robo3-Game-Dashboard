@@ -22,7 +22,7 @@
         <a href="#">Overview</a>
         <a href="#successprob">Probability of Success</a>
         <a href="#solutions">Solutions</a>
-        <a href="index.html">Logout</a>
+        <a href="login.html">Logout</a>
         <a class="disabled" href="http://home.deib.polimi.it/loiacono/robo3/" rel="noopener noreferrer" target="_blank" class="imgh"><img class="image1" src="./img/logo.png" border="0" alt="filter applied" />
         </a>
     </div>
@@ -78,9 +78,12 @@
             </div>
         </div>
         <div class="row">
+            <form onsubmit="return false">
             <span class="label label-default" style="font-size: 14px" ;>Student filter:</span>
             <input id="filterID" type="number" placeholder="Person code: 10574525" />
             <button id="filter">Filter</button>
+        </form>
+
         </div>
         <div class="row">
             <div id="drop2" class="col-sm-4" data-toggle="tooltip" title="Select instruction"><span class="label label-default" style="font-size: 14px" ;>Instruction:</span></div>
@@ -105,14 +108,9 @@
 
 <script>
     let personCode;
-    let allStudents = localStorage.getItem('arrayToPass');
-
-    let studentsArray;
-    if (allStudents.length === 0) {
-        studentsArray = new Array();
-    } else {
-        studentsArray = allStudents.replace(/, +/g, ",").split(",").map(Number); //convert stored string to array of integers
-    }
+    let studentsArray = JSON.parse(localStorage.getItem('allStudents'));
+    let data2 = JSON.parse(localStorage.getItem('data2'));
+    console.log(data2);
     console.log(studentsArray);
 
 </script>

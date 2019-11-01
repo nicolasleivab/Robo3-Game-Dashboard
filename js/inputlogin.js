@@ -1,12 +1,4 @@
-let allStudents = localStorage.getItem('arrayToPass');
-    
-let studentsArray;
-if (allStudents.length === 0) {
-    studentsArray = new Array();
-} else {
-    studentsArray = allStudents.replace(/, +/g, ",").split(",").map(Number); //convert stored string to array of integers
-}
-console.log(studentsArray);
+let studentsArray = JSON.parse(localStorage.getItem('allStudents'));
 
 function check(form) { //function to check personCode
 let code = Number(form.personCode.value);
