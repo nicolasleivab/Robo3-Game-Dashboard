@@ -22,7 +22,7 @@
         <a href="#">Overview</a>
         <a href="#successprob">Probability of Success</a>
         <a href="#solutions">Solutions</a>
-        <a href="login.html">Logout</a>
+        <a href="login.html" onclick="clicked(); return false;">Logout</a>
         <a class="disabled" href="http://home.deib.polimi.it/loiacono/robo3/" rel="noopener noreferrer" target="_blank" class="imgh"><img class="image1" src="./img/logo.png" border="0" alt="filter applied" />
         </a>
     </div>
@@ -109,9 +109,19 @@
 <script>
     let personCode;
     let studentsArray = JSON.parse(localStorage.getItem('allStudents'));
+    let data1 = JSON.parse(localStorage.getItem('data1'));
     let data2 = JSON.parse(localStorage.getItem('data2'));
     console.log(data2);
+    console.log(data1);
     console.log(studentsArray);
+    //in case the user clears data storage
+    function clicked(){
+        if(localStorage.getItem("allStudents") && localStorage.getItem("data1") && localStorage.getItem("data2") != null){
+            window.location.href = "login.html";
+        }else{
+            window.location.href = "index.html";
+        }
+    };
 
 </script>
 

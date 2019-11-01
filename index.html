@@ -15,6 +15,7 @@
 <body>
     <div class="loader"></div>
     <script>
+        let i = 0; //counter
         //** tabletop init function **//
         function init() {
             Tabletop.init({
@@ -26,12 +27,30 @@
                     }).keys();
                     let allStudents = students.map(Number);
                     localStorage.setItem('allStudents', JSON.stringify(allStudents)); //save students list in local storage
+                    i++;
+                    if(i > 1){ //load login.html only if data from both googlesheets is ready
                     window.location = "login.html";
+                    }
                 },
                 simpleSheet: true
             })
         }
         window.addEventListener('DOMContentLoaded', init)
+        //second googlesheet file
+        function init2() {
+            Tabletop.init({
+                key: '10g_TGtruCriERlXJurPZQk76pvk30U0pkWgbbfzPrjA', //google sheet key
+                callback: function(data, tabletop) {
+                    localStorage.setItem('data1', JSON.stringify(data)); //store data in local storage
+                    i++;
+                    if(i > 1){
+                    window.location = "login.html";
+                    }
+                },
+                simpleSheet: true
+            })
+        }
+        window.addEventListener('DOMContentLoaded', init2)
 
     </script>
 
