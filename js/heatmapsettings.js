@@ -1,19 +1,8 @@
 //** Cal-heatmap library settings **//
-//** tabletop init function **//
-function init() {     
-    Tabletop.init( { key: '10g_TGtruCriERlXJurPZQk76pvk30U0pkWgbbfzPrjA', //google sheet key
-                     callback: function(data, tabletop) { 
 
 const parseDate = d3.timeParse("%m/%d/%Y");
-// Format data
-data.forEach(function(d) {
-	d["Success Probability"] = +d["Success Probability"];
-	d.ID = +d.ID;
-	d.date = parseDate(d.date);
-    });
-
 personCode = Number(personCode);
-let newData = data.filter(function(d){return d.ID == personCode;});
+const mapFilteredData = data1.filter(function(d){return d.ID == personCode;});
 
 function sumAll(arr) {
 	let sums = {}, value = [], mapDate;
@@ -31,24 +20,24 @@ function sumAll(arr) {
 		return value; //return array of objects
 }
 
-let newData2 = sumAll(newData);
+const mapData = sumAll(mapFilteredData);
 			
-var parser = function(data) { //calheatmap parser function
+const parser = function(arr) { //calheatmap parser function
 	var stats = {};
-		for (var d in data) {
-			stats[data[d].date] = data[d].value;
+		for (var d in arr) {
+			stats[arr[d].date] = arr[d].value;
 			}
 	return stats;
 };
 
-var data2 = parser(newData2);
+const formattedMapData = parser(mapData);
 
-   var calendar = new CalHeatMap();
+   const calendar = new CalHeatMap();
     calendar.init({	
 
     start: new Date(2019, 2),
 	id : "graph_k",
-	data: data2,
+	data: formattedMapData,
 	domain : "month",
 	subDomain : "x_day",
 	range : 12,
@@ -60,9 +49,3 @@ var data2 = parser(newData2);
 	scale: [40, 60, 80, 100]
 
 });
-
-},
-simpleSheet: true } )
-}
-window.addEventListener('DOMContentLoaded', init)
-//** end of tabletop init function **//

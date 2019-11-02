@@ -1,66 +1,46 @@
-/*main js*/
-
-//** tabletop init function **//
-function init() {     
-  Tabletop.init( { key: '10g_TGtruCriERlXJurPZQk76pvk30U0pkWgbbfzPrjA', //google sheet key
-                   callback: function(data, tabletop) { 
-                       
+/*Overview Student*/
                        
 //** D3 js script **//
-var margin = { left:90, right:20, top:50, bottom:100 };
+const margin = { left:90, right:20, top:50, bottom:100 };
 
-var width = 700 - margin.left - margin.right,
+const width = 700 - margin.left - margin.right,
     height = 350 - margin.top - margin.bottom;
 
 // Filter the data for the dropdown selector
-var columns = ['Playtime (min)', 'Rounds', 'Instructions'];
-var selection = columns[0];
+const columns = ['Playtime (min)', 'Rounds', 'Instructions'];
+let selection = columns[0];
 
-// Clean data
-data.forEach(function(d) {
-    d.Rounds = +d.Rounds;
-    d["Playtime (min)"] = +d["Playtime (min)"];
-    d.Instructions = +d.Instructions;
-    d.Functions = +d.Functions;
-    d.Loops = +d.Loops;
-    d.Movement = +d.Movement;
-    d.PickDrop = +d.PickDrop;
-    d["Success Probability"] = +d["Success Probability"];
-    d.Cycles = +d.Cycles;
-    d.ID = +d.ID;
-});
-
-let data2 = data.filter(function(d){return d["Success Probability"] > 0;}); //filter all data by succesful rounds
+const filteredData = data1.filter(function(d){return d["Success Probability"] > 0;}); //filter all data by succesful rounds
 personCode = Number(personCode);
 console.log(personCode);
 
 // filter user ID
-let newData = data2.filter(function(d){return d.ID == personCode;});
+const newData = filteredData.filter(function(d){return d.ID == personCode;});
 console.log(newData);
 
-var t = d3.transition().duration(750);
+const t = d3.transition().duration(750);
     
-var g = d3.select("#chart-area")
+const g = d3.select("#chart-area")
     .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
     .append("g")
         .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
 
-var xApp = g.append("g")
+const xApp = g.append("g")
     .attr("class", "x axis")
     .attr("transform", "translate(0," + height +")");
 
-var yApp = g.append("g")
+const yApp = g.append("g")
     .attr("class", "y axis");
 
 // X Scale
-var x = d3.scaleBand()
+const x = d3.scaleBand()
     .range([0, width])
     .padding(0.35);
 
 // Y Scale
-var y = d3.scaleLinear()
+const y = d3.scaleLinear()
     .range([height, 0]);
 
 // X Label
@@ -73,7 +53,7 @@ g.append("text")
     .text("Level");
 
 // Y Label
-var yLabel = g.append("text")
+const yLabel = g.append("text")
     .attr("y", -60)
     .attr("x", -(height / 2))
     .attr("font-size", "20px")
@@ -85,10 +65,10 @@ var yLabel = g.append("text")
 //update function    
 function update(newData) {
 
-var t = d3.transition().duration(500);
+const t = d3.transition().duration(500);
 
 // JOIN new data with old elements.
-var rects = g.selectAll("rect")
+const rects = g.selectAll("rect")
     .data(newData, function(d){
         return d.level;
         });
@@ -136,7 +116,7 @@ x.domain(newData.map(function(d){ return d.level }));
 y.domain([0, d3.max(newData, function(d){return d[selection.value] || d[selection];})]);
 
 // X Axis call
-var xCall = d3.axisBottom(x);
+const xCall = d3.axisBottom(x);
     xApp.transition(t).call(xCall).selectAll("text") 
         .style("text-anchor", "end")
         .attr("dx", "-.8em")
@@ -146,12 +126,12 @@ var xCall = d3.axisBottom(x);
         );;;
 
 // Y Axis call
-var yCall = d3.axisLeft(y)
+const yCall = d3.axisLeft(y)
         .tickFormat(function(d){ return d; });
         yApp.transition(t).call(yCall).selectAll("text").attr("font-size", "12px");
 
 
-var selector = d3.select("#drop") //dropdown change selection
+const selector = d3.select("#drop") //dropdown change selection
     .append("select")
     .attr("id","dropdown")
     .on("change", function(d){
@@ -272,14 +252,5 @@ let progress = startPercent;
       setTimeout(loops, 10);
   }
 })();
-
-
-            //** end of D3 script **//
-
-                   },
-                   simpleSheet: true } )
-}
-window.addEventListener('DOMContentLoaded', init)
-//** end of tabletop init function **//
 
 

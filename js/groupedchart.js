@@ -1,16 +1,8 @@
 /* Grouped Bar Chart JS */
 
-//** tabletop init function **//
-function init() {     
-  Tabletop.init( { key: '1evjoQPchLR8iUhjQQ8i56hy6Df5z7K_eVSWs8yVugC4', //google sheet key
-                   callback: function(data, tabletop) { 
-                       
-
-//** D3.js code **//
-
 //* Filter and format data *//
 
-    data.forEach(function(d) {
+    data2.forEach(function(d) {
         d.ID = +d.ID;
         d.Functions = +d.Functions;
         d.Loops = +d.Loops;
@@ -40,115 +32,110 @@ if (personCode != null && personCode != undefined){
   personCode = 10574525;
 }
 // filter user ID
-let newData = data.filter(function(d){return d.ID == personCode;});
+const groupData = data2.filter(function(d){return d.ID == personCode;});
 
-console.log(newData)
+console.log(groupData)
 
-var solution = ['Functions', 'Loops', 'Cycles', 'Movement', 'PickDrop', 'Instructions'];
+const solution = ['Functions', 'Loops', 'Cycles', 'Movement', 'PickDrop', 'Instructions'];
 
-var selected = solution[0];
+let selected = solution[0];
 
 //*Chart code*//
 
-var svg = d3.select("#groupedchart"),
-    margin = {top: 20, right: 120, bottom: 100, left: 100},
-    width = 1200 - margin.left - margin.right,
-    height = 350 - margin.top - margin.bottom,
-    g = svg.append("svg").attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+const svg3 = d3.select("#groupedchart"),
+    margin3 = {top: 20, right: 120, bottom: 100, left: 100},
+    width3 = 1200 - margin3.left - margin3.right,
+    height3 = 350 - margin3.top - margin3.bottom,
+    g3 = svg3.append("svg").attr("width", width3 + margin3.left + margin3.right)
+        .attr("height", height3 + margin3.top + margin3.bottom)
         .append("g")
-        .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
+        .attr("transform", "translate(" + margin3.left + ", " + margin3.top + ")");
 
 //Append and class for each axis to reuse later
 
-var xAxisApp = g.append("g")
+const xAxisApp = g3.append("g")
     .attr("class", "x axis")
-    .attr("transform", "translate(0," + height +")");
+    .attr("transform", "translate(0," + height3 +")");
 
-var yAxisApp = g.append("g")
+const yAxisApp = g3.append("g")
     .attr("class", "y2 axis");
 
 //X and Y scales
-var x0 = d3.scaleBand()
-    .range([0, width])
+const x0 = d3.scaleBand()
+    .range([0, width3])
     .padding(0.2);
 
-var x1 = d3.scaleBand()
+const x1 = d3.scaleBand()
     .range([0, x0.bandwidth() - 5])
     .padding(0.2);
 
-var y2 = d3.scaleLinear()
-    .range([height, 0]);
+const y2 = d3.scaleLinear()
+    .range([height3, 0]);
 
 // Color scheme
-var z = d3.scaleOrdinal().range(["#ccffcc","#ffb3b3", "#b3e6ff"])
-
-//Transition
-var t = d3.transition().duration(750);
-
+const z = d3.scaleOrdinal().range(["#ccffcc","#ffb3b3", "#b3e6ff"])
 
 // X and Y Labels
-
-var xLabel = g.append("text")
-    .attr("y", height + 50)
-    .attr("x", width / 2)
+const xLabel = g3.append("text")
+    .attr("y", height3 + 50)
+    .attr("x", width3 / 2)
     .attr("font-size", "20px")
     .attr("text-anchor", "middle")
-    .attr("transform", "translate(" + margin.left + ", " + margin.top +  ")")
+    .attr("transform", "translate(" + margin3.left + ", " + margin3.top +  ")")
     .text("Level");
 
-var yLabel2 = g.append("text")
+const yLabel2 = g3.append("text")
     .attr("y", -60)
-    .attr("x", -(height / 2))
+    .attr("x", -(height3 / 2))
     .attr("font-size", "20px")
     .attr("text-anchor", "middle")
     .attr("transform", "rotate(-90)")
     .text("Functions");
 
 
-var dropSelector = d3.select("#drop2") //dropdown change selection
+const dropSelector = d3.select("#drop2") //dropdown change selection
     .append("select")
     .attr("id","dropdown2");
 
 //*Update Function*//
 
-function update2(newData){
+function update2(groupData){
 
 dropSelector.on("change", function(d){
          selected = document.getElementById("dropdown2");
            
                 console.log(selected.value);
-            var xFilter = ['Loops', 'minL', 'avgL']; 
+            let xFilter = ['Loops', 'minL', 'avgL']; 
              //Filter for x1 variables and domain
             if(selected.value == 'Loops'){
-              var xFilter = ['Loops', 'minL', 'avgL']; 
+              xFilter = ['Loops', 'minL', 'avgL']; 
             }
             else if(selected.value == 'Functions'){
-              var xFilter = ['Functions', 'minF', 'avgF'];
+              xFilter = ['Functions', 'minF', 'avgF'];
             }
             else if(selected.value == 'Cycles'){
-              var xFilter = ['Cycles', 'minC', 'avgC'];
+              xFilter = ['Cycles', 'minC', 'avgC'];
             }
             else if(selected.value == 'PickDrop'){
-              var xFilter = ['PickDrop', 'minP', 'avgP'];
+              xFilter = ['PickDrop', 'minP', 'avgP'];
             }
             else if(selected.value == 'Movement'){
-              var xFilter = ['Movement', 'minM', 'avgM'];
+              xFilter = ['Movement', 'minM', 'avgM'];
             }
             else if(selected.value == 'Instructions'){
-              var xFilter = ['Instructions', 'minI', 'avgI'];
+              xFilter = ['Instructions', 'minI', 'avgI'];
             }
 
   
     x1.domain(xFilter).rangeRound([0, x0.bandwidth()]);
-    y2.domain([0, d3.max(newData, function(d) { return d3.max(xFilter, function(key) { return d[key]; }); })]).nice(); 
+    y2.domain([0, d3.max(groupData, function(d) { return d3.max(xFilter, function(key) { return d[key]; }); })]).nice(); 
 
 
 //* Actual D3 update func *//
 
 // Join new with old data.
-var rects = g.selectAll("rect")
-    .data(newData, function(d){
+const rects = g3.selectAll("rect")
+    .data(groupData, function(d){
         return d.level;
         });
 
@@ -161,9 +148,9 @@ rects.exit()
     .remove();
 
 // Enter new elements.
-g.append("g")
+g3.append("g")
             .selectAll("g")
-            .data(newData)
+            .data(groupData)
         rects.enter()
             .append("g")
             .attr("class","bar")
@@ -176,11 +163,11 @@ g.append("g")
             .attr("width", x1.bandwidth())
         .merge(rects)
             .transition(t)
-            .attr("height", function(d) { return height - y2(d.value); })
+            .attr("height", function(d) { return height3 - y2(d.value); })
             .attr("fill", function(d) { return z(d.key); })
             .attr("width", x1.bandwidth());
 
-console.log(newData);
+console.log(groupData);
 console.log(selected.value);
 
 
@@ -192,7 +179,7 @@ console.log(selected.value);
 
 //Legend
 
-var legend = g.append("g")
+const legend = g3.append("g")
             .attr("font-family", "sans-serif")
             .attr("font-size", 10)
             .attr("text-anchor", "end")
@@ -202,7 +189,7 @@ var legend = g.append("g")
             .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
         legend.append("rect")
-            .attr("x", width + 80)
+            .attr("x", width3 + 80)
             .attr("width", 15)
             .attr("height", 15)
             .attr("fill", z)
@@ -224,13 +211,13 @@ dropSelector.selectAll("option")
 
 //* Run default visualization *// 
 
-var keys = ['Functions', 'minF', 'avgF'];
-x0.domain(newData.map(function(d) { return d.level; }));
+const keys = ['Functions', 'minF', 'avgF'];
+x0.domain(groupData.map(function(d) { return d.level; }));
 x1.domain(keys).rangeRound([0, x0.bandwidth()]);
-y2.domain([0, d3.max(newData, function(d) { return d3.max(keys, function(key) { return d[key]; }); })]).nice(); 
+y2.domain([0, d3.max(groupData, function(d) { return d3.max(keys, function(key) { return d[key]; }); })]).nice(); 
 
 //Call X Axis
-var xAxisCall = d3.axisBottom(x0);
+const xAxisCall = d3.axisBottom(x0);
     xAxisApp.transition(t).call(xAxisCall).selectAll("text") 
             .style("text-anchor", "end")
             .attr("dx", "-.8em")
@@ -240,13 +227,13 @@ var xAxisCall = d3.axisBottom(x0);
                 );;;
 
 // Call Y Axis
-var yAxisCall2 = d3.axisLeft(y2)
+const yAxisCall2 = d3.axisLeft(y2)
         .tickFormat(function(d){ return d; });
         yAxisApp.transition(t).call(yAxisCall2).selectAll("text").attr("font-size", "15px");
 
-g.append("g")
+g3.append("g")
             .selectAll("g")
-            .data(newData)
+            .data(groupData)
             .enter().append("g")
             .attr("class","bar")
             .attr("transform", function(d) { return "translate(" + x0(d.level) + ",0)"; })
@@ -257,12 +244,12 @@ g.append("g")
             .attr("y", function(d) { return y2(d.value); })
             .transition(t)
             .attr("width", x1.bandwidth())
-            .attr("height", function(d) { return height - y2(d.value); })
+            .attr("height", function(d) { return height3 - y2(d.value); })
             .attr("fill", function(d) { return z(d.key); });
 
 //apend legend rects          
 legend.append("rect")
-    .attr("x", width + 80)
+    .attr("x", width3 + 80)
     .attr("width", 15)
     .attr("height", 15)
     .attr("fill", z)
@@ -271,8 +258,8 @@ legend.append("rect")
 }
 
 //Legend Default
-var keysl = ["Student's Solution", 'Min Solution', 'Average Solution']; 
-var legend = g.append("g")
+const keysl = ["Student's Solution", 'Min Solution', 'Average Solution']; 
+const legend = g3.append("g")
             .attr("font-family", "sans-serif")
             .attr("font-size", 10)
             .attr("text-anchor", "end")
@@ -282,13 +269,13 @@ var legend = g.append("g")
             .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
 legend.append("text")
-    .attr("x", width + 75)
+    .attr("x", width3 + 75)
     .attr("y", 9.5)
     .attr("dy", "0.32em")
     .text(function(d) { return d; });
 
 //Run visualization for the first time
-update2(newData);
+update2(groupData);
 
 //student filter
 function filterStudent(){
@@ -297,8 +284,8 @@ function filterStudent(){
     console.log(studentID);
 
     if(studentsArray.includes(studentID)){
-      g.selectAll("rect")       //removing old rects
-      .data(data, function(d){
+      g3.selectAll("rect")       //removing old rects
+      .data(data2, function(d){
           return d.level;
           }).exit()
       .attr("fill", 'none')
@@ -307,18 +294,13 @@ function filterStudent(){
       .attr("height", 0)
       .attr('text')
       .remove();
-      update2(data.filter(function(d){return d.ID == studentID;})) //enter new rects for the new filtered student 
+      update2(data2.filter(function(d){return d.ID == studentID;})) //enter new rects for the new filtered student 
 
       } else {
       alert("'Please input a valid Person Code (10574525, 11111111, 10101010 or 12341234)'")//error message and list of students  
       }
 };
+//event listener for tutor.html
+if(personCode == undefined){
 document.getElementById('filter').addEventListener('click', filterStudent);
-
-//** end of D3.js code **//
-
-                   },
-                   simpleSheet: true } )
 }
-window.addEventListener('DOMContentLoaded', init)
-//** end of tabletop init function **//

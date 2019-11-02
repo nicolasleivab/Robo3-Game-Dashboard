@@ -22,7 +22,7 @@
         <a class="disabled">ROBO3 DASHBOARD</a>
         <a href="#">Overview</a>
         <a href="#second">Solutions</a>
-        <a href="login.html" onclick="clicked(); return false;">Logout</a>
+        <a href="index.html">Logout</a>
         <a class="disabled" href="http://home.deib.polimi.it/loiacono/robo3/" rel="noopener noreferrer" target="_blank" class="imgh"><img class="image1" src="./img/logo.png" border="0" alt="filter applied" />
         </a>
     </div>
@@ -97,28 +97,14 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/d3.min.js"></script>
     <script src="js/d3v3.min.js"></script>
+    <script src="js/cal-heatmap.min.js"></script>
     <!-- Custom JS -->
     <script src="js/leaderboard.js"></script>
     <script src="js/overview_Student.js"></script>
     <script src="js/groupedchart.js"></script>
-    <script src="js/cal-heatmap.min.js"></script>
     <script src="js/heatmapsettings.js"></script>
 </body>
 
-<script>
-    let personCode = localStorage.getItem('objectToPass');
-    let data1 = JSON.parse(localStorage.getItem('data1'));
-    let data2 = JSON.parse(localStorage.getItem('data2'));
-    
-    //in case the user clears data storage
-    function clicked(){
-    if(localStorage.getItem("allStudents") && localStorage.getItem("data1") && localStorage.getItem("data2") != null){
-        window.location.href = "login.html";
-    }else{
-        window.location.href = "index.html";
-    }
-    };
-</script>
 <footer class="footer">
     <div class="container">
         <p>&copy; 2019 Nicolás Leiva Büchi</p>

@@ -1,17 +1,12 @@
 /*Leaderboard js*/
+let personCode = localStorage.getItem('objectToPass');
+let data1 = JSON.parse(localStorage.getItem('data1'));
+let data2 = JSON.parse(localStorage.getItem('data2'));
 
-//** tabletop init function **//
-function init() {     
-  Tabletop.init( { key: '1evjoQPchLR8iUhjQQ8i56hy6Df5z7K_eVSWs8yVugC4', //google sheet key
-                   callback: function(data, tabletop) { 
-                       console.log(data)
-
-//** Leaderboard script **//
-
- // Clean data
-data.forEach(function(d) {
+ // Format data
+data1.forEach(function(d) {
     d.Rounds = +d.Rounds;
-    d.Playtime = +d.Playtime;
+    d["Playtime (min)"] = +d["Playtime (min)"];
     d.Instructions = +d.Instructions;
     d.Functions = +d.Functions;
     d.Loops = +d.Loops;
@@ -19,13 +14,13 @@ data.forEach(function(d) {
     d.PickDrop = +d.PickDrop;
     d["Success Probability"] = +d["Success Probability"];
     d.Cycles = +d.Cycles;
-   
+    d.ID = +d.ID;
 });
 
 /*Filter students and get only the ones that have completed every level
 const completedLevels = d3.map(donutData, function(d){return(d.level)}).keys(); //get each level
-data.forEach((player) => if(completedLevels.length < 11){ return player.exclude = 1} // boolean property for the filer
-let boardData = data.filter(function(d){return d.exclude < 1;}); //filter in progress students
+data1.forEach((player) => if(completedLevels.length < 11){ return player.exclude = 1} // boolean property for the filer
+let boardData = data1.filter(function(d){return d.exclude < 1;}); //filter in progress students
 */
     
 personCode = Number(personCode);
@@ -47,7 +42,7 @@ function sumAll(arr) {
     return value; //return array of objects
 }
       
-const sumPlayers = sumAll(data);
+const sumPlayers = sumAll(data1);
       
 const sortedPlayers = sumPlayers.sort((aPlayer, bPlayer) => aPlayer.Score - bPlayer.Score); //sorts the players by score (ascending)
 
@@ -83,12 +78,3 @@ $(document).ready(function() {
     }
     });
 });
-
-
-            //** end of Leaderboard script **//
-
-                   },
-                   simpleSheet: true } )
-}
-window.addEventListener('DOMContentLoaded', init)
-//** end of tabletop init function **//
