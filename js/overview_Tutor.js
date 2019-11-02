@@ -1,9 +1,9 @@
 /* Histogram JS */
 
-//** tabletop init function **//
-function init() {     
-  Tabletop.init( { key: '10g_TGtruCriERlXJurPZQk76pvk30U0pkWgbbfzPrjA', //google sheet key
-                   callback: function(data, tabletop) { 
+let personCode;
+let studentsArray = JSON.parse(localStorage.getItem('allStudents'));
+let data1 = JSON.parse(localStorage.getItem('data1'));
+let data2 = JSON.parse(localStorage.getItem('data2'));
 
 // Set dimensions and append svg to div #histogram
 const svg = d3.select("#histogram"),
@@ -19,9 +19,9 @@ const parseDate = d3.timeParse("%m/%d/%Y");
 const formatTime = d3.timeFormat("%d/%m/%Y");
 
 // Format Data
-data.forEach(function(d) {
+ data1.forEach(function(d) {
   d.Rounds = +d.Rounds;
-  d['Playtime (min)'] = +d['Playtime (min)'];
+  d["Playtime (min)"] = +d["Playtime (min)"];
   d.Instructions = +d.Instructions;
   d.Functions = +d.Functions;
   d.Loops = +d.Loops;
@@ -29,16 +29,17 @@ data.forEach(function(d) {
   d.PickDrop = +d.PickDrop;
   d["Success Probability"] = +d["Success Probability"];
   d.Cycles = +d.Cycles;
+  d.ID = +d.ID;
   d.date = parseDate(d.date);
 });
 
-var data = data.filter(function(d){return d["Success Probability"] > 0;}); //filter all data by succesful rounds
-console.log(data);
+var filteredData = data1.filter(function(d){return d["Success Probability"] > 0;}); //filter all data by succesful rounds
+console.log(filteredData);
 
 // Filter values
 const allInstructions = ['Cycles','Instructions', 'PickDrop', 'Movement', 'Functions', 'Loops']; //get Product columns for the filter
 let selection = allInstructions[0];
-let levels = d3.map(data, function(d){return(d.level)}).keys(); //get levels
+let levels = d3.map(filteredData, function(d){return(d.level)}).keys(); //get levels
 const allLevels = [...levels, 'All Levels'];
 let selection2 = allLevels[0];
 console.log(allLevels);
@@ -64,7 +65,7 @@ const yApp = g.append("g")
 let t = d3.transition().duration(500);
 
   // X Label
-let xLabel = g.append("text")
+let xLabelHist = g.append("text")
   .attr("y", height + 60)
   .attr("x", width / 2)
   .attr("font-size", "20px")
@@ -138,11 +139,11 @@ d3.select("g.x.axis")  //changing from selectAll to select fixed the conflict be
     .transition()
     .call(xCall).selectAll("text").attr("font-size", "12px");
     
-xLabel.text(selection.value || selection);
+xLabelHist.text(selection.value || selection);
 }
 
-const minDate = d3.min(data, function(d) { return d.date; }); //min and max date for the date slider
-const maxDate = d3.max(data, function(d) { return d.date; });
+const minDate = d3.min(filteredData, function(d) { return d.date; }); //min and max date for the date slider
+const maxDate = d3.max(filteredData, function(d) { return d.date; });
 
 //jQuery UI slider
 $("#dateSlider").slider({
@@ -155,14 +156,14 @@ $("#dateSlider").slider({
       $("#dateLabel1").text(formatTime(new Date(ui.values[0])));
       $("#dateLabel2").text(formatTime(new Date(ui.values[1])));
       if (selection2.value != 'All Levels'){
-      update(data.filter(function(d){return ((d.date >= ui.values[0]) && (d.date <= ui.values[1]) && (d.level == [selection2.value] || d.level == [selection2]));}));
-      updateDate(data.filter(function(d){return ((d.date >= ui.values[0]) && (d.date <= ui.values[1]) && (d.level == [selection2.value] || d.level == [selection2]));}));
+      update(filteredData.filter(function(d){return ((d.date >= ui.values[0]) && (d.date <= ui.values[1]) && (d.level == [selection2.value] || d.level == [selection2]));}));
+      updateDate(filteredData.filter(function(d){return ((d.date >= ui.values[0]) && (d.date <= ui.values[1]) && (d.level == [selection2.value] || d.level == [selection2]));}));
       console.log(ui.values[0]);
-      console.log(data);
+      console.log(filteredData);
       }
       else{
-      update(data.filter(function(d){return ((d.date >= ui.values[0]) && (d.date <= ui.values[1]));}));
-      updateDate(data.filter(function(d){return ((d.date >= ui.values[0]) && (d.date <= ui.values[1]));}));
+      update(filteredData.filter(function(d){return ((d.date >= ui.values[0]) && (d.date <= ui.values[1]));}));
+      updateDate(filteredData.filter(function(d){return ((d.date >= ui.values[0]) && (d.date <= ui.values[1]));}));
       }
   }
 });
@@ -183,24 +184,24 @@ const levelSelector = d3.select("#drop4") //dropdown change selection
     selection2 = document.getElementById("dropdown4");
     console.log([selection2.value]);
     if (selection2.value != 'All Levels'){
-    update(data.filter(function(d){return d.level == [selection2.value];}));
-    updatePie(data.filter(function(d){return d.level == [selection2.value];}), "level");
+    update(filteredData.filter(function(d){return d.level == [selection2.value];}));
+    updatePie(filteredData.filter(function(d){return d.level == [selection2.value];}), "level");
     resetSlider();
         instructionSelector.on("change", function(d){ // Column Filter
             selection = document.getElementById("dropdown3");
             console.log([selection.value]);
-            update(data.filter(function(d){return d.level == [selection2.value];}));
+            update(filteredData.filter(function(d){return d.level == [selection2.value];}));
             resetSlider();
         });
     }
     else {
-      update(data);
-      updatePie(data, 'level');
+      update(filteredData);
+      updatePie(filteredData, 'level');
       resetSlider();
           instructionSelector.on("change", function(d){ // Column Filter
               selection = document.getElementById("dropdown3");
               console.log([selection.value]);
-              update(data);
+              update(filteredData);
               resetSlider();
           });
     }
@@ -224,7 +225,7 @@ const instructionSelector = d3.select("#drop3") //dropdown change selection
 .on("change", function(d){ //default run for column filter
     selection = document.getElementById("dropdown3");
     console.log([selection.value]);
-    update(data.filter(function(d){return d.level == [selection2];}));
+    update(filteredData.filter(function(d){return d.level == [selection2];}));
     resetSlider();
      });
 
@@ -250,7 +251,7 @@ const yCall = d3.axisLeft(y)
 yApp.transition(t).call(yCall).selectAll("text").attr("font-size", "12px");
 
 // Render first viz
-update(data.filter(function(d){return d.level == [selection2];}));
+update(filteredData.filter(function(d){return d.level == [selection2];}));
 
 
 /* Pie Chart */
@@ -286,7 +287,7 @@ function arcTween(a) {
 }
 
 //Legend
-var resultLegend = [data.reduce((acc, n) => {    //loop through data array objects and sum objects properties
+var resultLegend = [filteredData.reduce((acc, n) => {    //loop through data array objects and sum objects properties
   for (var prop in n) {
     if (acc.hasOwnProperty(prop)) acc[prop] += n[prop];
     else acc[prop] = n[prop];
@@ -300,11 +301,11 @@ var legendData = (resultLegend.map(function(d){return [
   {"Instruction": "Movement", "count": d.Movement}, 
   {"Instruction": "PickDrop", "count": d.PickDrop} ];}))[0];
   
-const legend = d3.select("#donut").append("svg")
+const donutLegend = d3.select("#donut").append("svg")
   .attr("class", "legend")
   .selectAll("g");
   
-legend.data(legendData)
+donutLegend.data(legendData)
 .enter().append("g")
 .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; }).append("text")
   .attr("x", 115)
@@ -312,7 +313,7 @@ legend.data(legendData)
   .attr("dy", ".35em")
   .text(function(d) { return d.Instruction; });
 
-legend.data(legendData)
+donutLegend.data(legendData)
 .enter().append("g")
 .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; }).append("rect")
   .attr("x", 90)
@@ -374,10 +375,10 @@ const sum = function(arr, prop){
   }, 0);
 };
 
-const totalInstructions = sum(data, 'Instructions');
+const totalInstructions = sum(filteredData, 'Instructions');
 
 //apend new text (percentages)
-legend
+donutLegend
     .data(pie(pieData[val]))
     .enter().append("g")
     .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; }).append("text")
@@ -388,12 +389,4 @@ legend
 
 }
 
-updatePie(data.filter(function(d){return d.level == [selection2];}), "level");
-
-            //** end of D3 script **//
-
-                   },
-                   simpleSheet: true } )
-}
-window.addEventListener('DOMContentLoaded', init)
-//** end of tabletop init function **//
+updatePie(filteredData.filter(function(d){return d.level == [selection2];}), "level");

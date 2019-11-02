@@ -25,7 +25,7 @@ localStorage.setItem('data1', JSON.stringify(formattedData)); //store data in lo
 }).catch()
 
 /*Get data from the second googlesheet*/
-request('GET', 'https://sheets.googleapis.com/v4/spreadsheets/1evjoQPchLR8iUhjQQ8i56hy6Df5z7K_eVSWs8yVugC4/values/Sheet1?key=AIzaSyArugq6TlxJTJHM-qWEe420k2xH3U0obxg')
+request('GET', 'https://sheets.googleapis.com/v4/spreadsheets/1evjoQPchLR8iUhjQQ8i56hy6Df5z7K_eVSWs8yVugC4/values/Sheet1?key=AIzaSyArugq6TlxJTJHM-qWEe420k2xH3U0obxg')//restricted key
 .then((response) => {
     const data = JSON.parse(response.target.responseText);
     const values = data.values;//array of arrays with ROWS

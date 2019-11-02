@@ -1,59 +1,42 @@
 /*Barchart tutor js*/
-
-//** tabletop init function **//
-function init() {     
-    Tabletop.init( { key: '10g_TGtruCriERlXJurPZQk76pvk30U0pkWgbbfzPrjA', //google sheet key
-                     callback: function(data, tabletop) { 
-                         
-                         
+                      
 //** D3 js script **//
-const margin = { left:90, right:20, top:30, bottom:100 };
+const margin4 = { left:90, right:20, top:30, bottom:100 };
   
-const width = 800 - margin.left - margin.right,
-      height = 400 - margin.top - margin.bottom;
-    
-const parseDate = d3.timeParse("%m/%d/%Y");
-const formatTime = d3.timeFormat("%d/%m/%Y");
-
-// Format data
-data.forEach(function(d) {
-    d["Success Probability"] = +d["Success Probability"];
-    d.date = parseDate(d.date);
-    d.Instructions = +d.Instructions
-    });
- 
-let t = d3.transition().duration(750);
+const width4 = 800 - margin4.left - margin4.right,
+      height4 = 400 - margin4.top - margin4.bottom;
+  
       
 const g2 = d3.select("#barchart_tutor")
       .append("svg")
-          .attr("width", width + margin.left + margin.right)
-          .attr("height", height + margin.top + margin.bottom)
+          .attr("width", width4 + margin4.left + margin4.right)
+          .attr("height", height4 + margin4.top + margin4.bottom)
       .append("g")
-          .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
+          .attr("transform", "translate(" + margin4.left + ", " + margin4.top + ")");
   
 const xApp2 = g2.append("g")
       .attr("class", "x2 axis")
-      .attr("transform", "translate(0," + height +")");
+      .attr("transform", "translate(0," + height4 +")");
   
 const yApp2 = g2.append("g")
       .attr("class", "y3 axis");
   
 // X Scale
 const x2 = d3.scaleBand()
-      .range([0, width])
+      .range([0, width4])
       .padding(0.5);
   
 // Y Scale
 const y3 = d3.scaleLinear()
-      .range([height, 0]);
+      .range([height4, 0]);
   
   // X Label
 g2.append("text")
-      .attr("y", height + 60)
-      .attr("x", width / 2)
+      .attr("y", height4 + 60)
+      .attr("x", width4 / 2)
       .attr("font-size", "20px")
       .attr("text-anchor", "end")
-      .attr("transform", "translate(" + margin.left + ", " + margin.top +  ")")
+      .attr("transform", "translate(" + margin4.left + ", " + margin4.top +  ")")
       .text("Level");
   
   // Y Label
@@ -121,7 +104,7 @@ rects.enter()
                 .attr("x", function(d){ return x2(d.level) })
                 .attr("width", x2.bandwidth)
                 .attr("y", function(d){ return y3(d.average); })
-                .attr("height", function(d){ return height - y3(d.average); });
+                .attr("height", function(d){ return height4 - y3(d.average); });
   
   // axis update
 d3.select("g.y3.axis")  
@@ -135,7 +118,7 @@ d3.select("g.x2.axis")
 }
 
 //xy domain
-x2.domain(data.map(function(d){ return d.level }));
+x2.domain(data1.map(function(d){ return d.level }));
 
 // X Axis call
 const xCall2 = d3.axisBottom(x2);
@@ -154,31 +137,23 @@ const yCall2 = d3.axisLeft(y3)
   
 
 // Run the vis for the first time
-update3(data);
+update3(data1);
 
-const minDate = d3.min(data, function(d) { return d.date; }); //min and max date for the date slider
-const maxDate = d3.max(data, function(d) { return d.date; });
+const minDate2 = d3.min(data1, function(d) { return d.date; }); //min and max date for the date slider
+const maxDate2 = d3.max(data1, function(d) { return d.date; });
 
 //jQuery UI slider
 $("#dateSlider2").slider({
   range: true,
-  max: maxDate.getTime(),
-  min: minDate.getTime(),
+  max: maxDate2.getTime(),
+  min: minDate2.getTime(),
   step: 86400000, //for each day
-  values: [minDate.getTime(), maxDate.getTime()],
+  values: [minDate2.getTime(), maxDate2.getTime()],
   slide: function(event, ui){
       $("#dateLabel3").text(formatTime(new Date(ui.values[0])));
       $("#dateLabel4").text(formatTime(new Date(ui.values[1])));
-      update3(data.filter(function(d){return ((d.date >= ui.values[0]) && (d.date <= ui.values[1]));}));
+      update3(data1.filter(function(d){return ((d.date >= ui.values[0]) && (d.date <= ui.values[1]));}));
   }
 });
-
-              //** end of D3 script **//
-  
-                    },
-                    simpleSheet: true } )
-}
-window.addEventListener('DOMContentLoaded', init)
-  //** end of tabletop init function **//
   
   

@@ -301,6 +301,4 @@ function filterStudent(){
       }
 };
 //event listener for tutor.html
-if(personCode == undefined){
 document.getElementById('filter').addEventListener('click', filterStudent);
-}
