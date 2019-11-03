@@ -1,7 +1,5 @@
 //** Cal-heatmap library settings **//
 
-const parseDate = d3.timeParse("%m/%d/%Y");
-personCode = Number(personCode);
 const mapFilteredData = data1.filter(function(d){return d.ID == personCode;});
 
 function sumAll(arr) {
@@ -32,10 +30,10 @@ const parser = function(arr) { //calheatmap parser function
 
 const formattedMapData = parser(mapData);
 
-   const calendar = new CalHeatMap();
+   let calendar = new CalHeatMap();
     calendar.init({	
 
-    start: new Date(2019, 2),
+    start: new Date(2019, 1),
 	id : "graph_k",
 	data: formattedMapData,
 	domain : "month",
@@ -46,6 +44,9 @@ const formattedMapData = parser(mapData);
 	cellradius: 15,
 	domainGutter: 15,
 	weekStartOnMonday: 0,
-	scale: [40, 60, 80, 100]
+	scale: [40, 60, 80, 100],
+	itemSelector: "#cal-heatmap",
+	nextSelector: "#domainDynamicDimension-next",
+	previousSelector: "#domainDynamicDimension-previous"
 
 });

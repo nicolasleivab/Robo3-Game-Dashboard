@@ -2,6 +2,7 @@
 let personCode = localStorage.getItem('objectToPass');
 let data1 = JSON.parse(localStorage.getItem('data1'));
 let data2 = JSON.parse(localStorage.getItem('data2'));
+let parseDate = d3.timeParse("%m/%d/%Y");
 
  // Format data
 data1.forEach(function(d) {
@@ -15,6 +16,7 @@ data1.forEach(function(d) {
     d["Success Probability"] = +d["Success Probability"];
     d.Cycles = +d.Cycles;
     d.ID = +d.ID;
+    d.date = parseDate(d.date);
 });
 
 data2.forEach(function(d) {

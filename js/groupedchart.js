@@ -297,7 +297,7 @@ function filterStudent(){
       update2(data2.filter(function(d){return d.ID == studentID;})) //enter new rects for the new filtered student 
 
       } else {
-      alert("'Please input a valid Person Code (10574525, 11111111, 10101010 or 12341234)'")//error message and list of students  
+      alert("'Please input a valid Person Code (10574525, 11336789, 15678900 or 12341234)'")//error message and list of students  
       }
 };
 //event listener for tutor.html

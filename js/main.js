@@ -47,12 +47,11 @@ localStorage.setItem('data2', JSON.stringify(formattedData)); //store data in lo
 let students = formattedData.map(function(d){
     return +d.ID;
 });
+
 //get unique values
-function uniqueValues(arr) {
-    var result = Array.from(new Set(arr));
-    return result    
-  }
-allStudents = uniqueValues(students);
+allStudents = students.filter(function(item, pos){
+    return students.indexOf(item)== pos; 
+  });
 
 console.log(students);
 console.log(allStudents);

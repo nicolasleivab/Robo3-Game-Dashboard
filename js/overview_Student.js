@@ -11,7 +11,6 @@ const columns = ['Playtime (min)', 'Rounds', 'Instructions'];
 let selection = columns[0];
 
 const filteredData = data1.filter(function(d){return d["Success Probability"] > 0;}); //filter all data by succesful rounds
-personCode = Number(personCode);
 console.log(personCode);
 
 // filter user ID

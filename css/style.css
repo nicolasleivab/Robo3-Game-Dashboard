@@ -131,7 +131,6 @@ img {
 table {
     border-collapse: collapse;
 }
-
 th,
 td {
     border: 1px solid #aaa;
@@ -170,17 +169,27 @@ font-size: 22px;
 }
 
 .focus {
-    background-color: #C0C0C0;
-}
-/*
-.row tr:nth-child(2) td{
-    background-color: #C0C0C0;
+    background-color: #d1d1e0;
 }
 
-.row tr:nth-child(3) td {
-    background-color: #cd7f32;
+.btn-black{
+  height: 28px;
+  min-width: 120px;
+  font-size: 15px;
+  color:#FFF;
+  background-color: #555;
+  border: solid #555 1.5px;
+  border-radius: 5px;
+  margin-right: 5px;
 }
-*/
+.btn-black:hover{
+  transform: translate(-1.5px, -1.5px);
+  box-shadow: 3px 3px 10px #555;
+  color:#FFF;
+}
+.btn-black:focus{
+  color: #FFF;
+}
 
 /*Media Queries*/
 
