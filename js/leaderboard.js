@@ -67,7 +67,10 @@ displayLeaderboard(topPlayers);
 $(document).ready(function() {
     $('span').click(function() {
         if(topPlayers.some(student => student.ID == personCode)){
-            //if the current student is already in the leaderboard do nothing
+            //if the current student is already in the leaderboard add class
+            document.querySelector('.row tr:nth-child(1) td:nth-child(1)').classList.add('focus');
+            document.querySelector('.row tr:nth-child(1) td:nth-child(2)').classList.add('focus');
+            document.querySelector('.row tr:nth-child(1) td:nth-child(3)').classList.add('focus');
     }else{
         let currentStudent = sortedPlayers.find( student => student.ID == personCode );
         topPlayers.push(currentStudent);

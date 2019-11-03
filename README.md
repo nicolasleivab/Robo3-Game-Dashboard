@@ -21,7 +21,7 @@ The goal of the interactive dashboard is to collect and process the data from ea
 ## Built With
 
 * [D3.js](https://d3js.org) is used for the data visualization, to create the graphs and the interactive functionalities.
-* [tabletop.js](https://github.com/jsoma/tabletop) is used to fetch the data from the game log in a google sheet.
+* Native XMLHttpRequest (XHR) object is used to request data from different google sheets using [Google Sheets API](https://developers.google.com/sheets/api)
 * [jQuery](https://jquery.com/) is used for the date range sliders.
 * [Bootstrap](https://getbootstrap.com/docs/4.3/getting-started/introduction/) is used for the layout and the responsive design.
 * [Jest](https://jestjs.io/docs/en/getting-started) is used to perform some unit and integration tests.

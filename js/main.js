@@ -1,7 +1,7 @@
 /* Main JS: get and store data */
 let allStudents = [];
 
-/*Get data from the googlesheet using Googlesheets API */
+/*Get data from the googlesheet using Googlesheets API (restricted api key)*/
 request('GET', 'https://sheets.googleapis.com/v4/spreadsheets/10g_TGtruCriERlXJurPZQk76pvk30U0pkWgbbfzPrjA/values/Sheet1?key=AIzaSyArugq6TlxJTJHM-qWEe420k2xH3U0obxg')
 .then((response) => {
     const data = JSON.parse(response.target.responseText);
@@ -101,3 +101,23 @@ function check(form) { //function to check personCode
     }
     };
     document.getElementById('tutorSubmit').addEventListener('click', checkTutor);
+
+/* Submit Behaviour */
+
+const bindsArray1 = ["tutorUser", "tutorPass", "personCode", "studentPass"];
+const bindsArray2 = ["tutorSubmit", "tutorSubmit", "studentSubmit", "studentSubmit"];
+const bindsArray3 = ["input1", "input2", "input3", "input4"];
+
+for(let i=0; i<4; i++){
+bindsArray3[i] = document.getElementById(bindsArray1[i]);
+// trigger submit button when pressing enter key
+bindsArray3[i].addEventListener("keyup", function(event) {
+  // 13 = enter key
+  if (event.keyCode === 13) {
+    // cancel default action
+    event.preventDefault();
+    // trigger button element
+    document.getElementById(bindsArray2[i]).click();
+  }
+});
+}
