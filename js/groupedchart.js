@@ -2,28 +2,28 @@
 
 //* Filter and format data *//
 
-    data2.forEach(function(d) {
-        d.ID = +d.ID;
-        d.Functions = +d.Functions;
-        d.Loops = +d.Loops;
-        d.Movement = +d.Movement;
-        d.PickDrop = +d.PickDrop;
-        d.Cycles = +d.Cycles;
-        d.Instructions = +d.Instructions;
-        d.minL = +d.minL;
-        d.avgL = +d.avgL;
-        d.minF = +d.minF;
-        d.avgF = +d.avgF;
-        d.minC = +d.minC;
-        d.avgC = +d.avgC; 
-        d.minP = +d.minP;
-        d.avgP = +d.avgP;
-        d.minM = +d.minM;
-        d.avgM = +d.avgM;	
-        d.minI = +d.minI;
-        d.avgI = +d.avgI;
+data2.forEach(function(d) {
+    d.ID = +d.ID;
+    d.Functions = +d.Functions;
+    d.Loops = +d.Loops;
+    d.Movement = +d.Movement;
+    d.PickDrop = +d.PickDrop;
+    d.Cycles = +d.Cycles;
+    d.Instructions = +d.Instructions;
+    d.minL = +d.minL;
+    d.avgL = +d.avgL;
+    d.minF = +d.minF;
+    d.avgF = +d.avgF;
+    d.minC = +d.minC;
+    d.avgC = +d.avgC; 
+    d.minP = +d.minP;
+    d.avgP = +d.avgP;
+    d.minM = +d.minM;
+    d.avgM = +d.avgM;	
+    d.minI = +d.minI;
+    d.avgI = +d.avgI;
 
-    });
+});
 
 //load default personCode for the tutor page
 if (personCode != null && personCode != undefined){

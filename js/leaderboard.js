@@ -17,10 +17,33 @@ data1.forEach(function(d) {
     d.ID = +d.ID;
 });
 
+data2.forEach(function(d) {
+    d.ID = +d.ID;
+    d.Functions = +d.Functions;
+    d.Loops = +d.Loops;
+    d.Movement = +d.Movement;
+    d.PickDrop = +d.PickDrop;
+    d.Cycles = +d.Cycles;
+    d.Instructions = +d.Instructions;
+    d.minL = +d.minL;
+    d.avgL = +d.avgL;
+    d.minF = +d.minF;
+    d.avgF = +d.avgF;
+    d.minC = +d.minC;
+    d.avgC = +d.avgC; 
+    d.minP = +d.minP;
+    d.avgP = +d.avgP;
+    d.minM = +d.minM;
+    d.avgM = +d.avgM;	
+    d.minI = +d.minI;
+    d.avgI = +d.avgI;
+
+});
+
 /*Filter students and get only the ones that have completed every level
 const completedLevels = d3.map(donutData, function(d){return(d.level)}).keys(); //get each level
-data1.forEach((player) => if(completedLevels.length < 11){ return player.exclude = 1} // boolean property for the filer
-let boardData = data1.filter(function(d){return d.exclude < 1;}); //filter in progress students
+data2.forEach((player) => if(completedLevels.length < 11){ return player.exclude = 1} // boolean property for the filer
+let boardData = data2.filter(function(d){return d.exclude < 1;}); //filter in progress students
 */
     
 personCode = Number(personCode);
@@ -42,7 +65,7 @@ function sumAll(arr) {
     return value; //return array of objects
 }
       
-const sumPlayers = sumAll(data1);
+const sumPlayers = sumAll(data2);
       
 const sortedPlayers = sumPlayers.sort((aPlayer, bPlayer) => aPlayer.Score - bPlayer.Score); //sorts the players by score (ascending)
 
@@ -66,12 +89,23 @@ displayLeaderboard(topPlayers);
 //JQuery show ranking func
 $(document).ready(function() {
     $('span').click(function() {
+        //if the current student is already in the leaderboard add class
         if(topPlayers.some(student => student.ID == personCode)){
-            //if the current student is already in the leaderboard add class
+            //add first place class, then second, then third...
+            if(topPlayers[0].ID == personCode){
             document.querySelector('.row tr:nth-child(1) td:nth-child(1)').classList.add('focus');
             document.querySelector('.row tr:nth-child(1) td:nth-child(2)').classList.add('focus');
             document.querySelector('.row tr:nth-child(1) td:nth-child(3)').classList.add('focus');
-    }else{
+            }else if(topPlayers[1].ID == personCode){
+            document.querySelector('.row tr:nth-child(2) td:nth-child(1)').classList.add('focus');
+            document.querySelector('.row tr:nth-child(2) td:nth-child(2)').classList.add('focus');
+            document.querySelector('.row tr:nth-child(2) td:nth-child(3)').classList.add('focus');
+            }else if(topPlayers[2].ID == personCode){
+            document.querySelector('.row tr:nth-child(3) td:nth-child(1)').classList.add('focus');
+            document.querySelector('.row tr:nth-child(3) td:nth-child(2)').classList.add('focus');
+            document.querySelector('.row tr:nth-child(3) td:nth-child(3)').classList.add('focus');
+            }
+    }else{//append new player
         let currentStudent = sortedPlayers.find( student => student.ID == personCode );
         topPlayers.push(currentStudent);
         console.log(topPlayers);
