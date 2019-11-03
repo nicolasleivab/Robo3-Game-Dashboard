@@ -80,7 +80,10 @@
         <div class="row">
             <form onsubmit="return false">
             <span class="label label-default" style="font-size: 14px" ;>Student filter:</span>
-            <input id="filterID" type="number" placeholder="Person code: 10574525" />
+            <input id="filterID" type="number" placeholder="Person code: 10574525" list="datalist" onkeyup="autoComplete(this.value)" />
+            <datalist id="datalist"> 
+                <option value=10574525></option> 
+            </datalist>
             <button id="filter" class="btn-black">Filter</button>
         </form>
 
@@ -103,6 +106,7 @@
     <script src="js/overview_Tutor.js"></script>
     <script src="js/groupedchart.js"></script>
     <script src="js/barchart_tutor.js"></script>
+    <script src="js/autocomplete.js"></script>
 </body>
 
 <footer class="footer">
