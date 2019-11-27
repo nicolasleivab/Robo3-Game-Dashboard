@@ -170,10 +170,10 @@ $("#dateSlider").slider({
 
 //Reset slider func
 function resetSlider() {
-  $("#dateSlider").slider("values", 0, parseDate("1/01/2019").getTime());
-  $("#dateSlider").slider("values", 1, parseDate("8/07/2019").getTime());
-  $("#dateLabel1").text("1/01/2019");
-  $("#dateLabel2").text("8/07/2019");
+  $("#dateSlider").slider("values", 0, parseDate(formatTime(minDate)).getTime());
+  $("#dateSlider").slider("values", 1, parseDate(formatTime(maxDate)).getTime());
+  $("#dateLabel1").text(formatTime(minDate));
+  $("#dateLabel2").text(formatTime(maxDate));
 }
 
 // Filters
