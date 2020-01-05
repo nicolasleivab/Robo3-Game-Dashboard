@@ -3,12 +3,12 @@ import ReactApexChart from "react-apexcharts";
 import styles from './GroupedChart.module.css';
 
 // data template
-const sheetsData = [];
+
 
 class GroupedChart extends React.Component {
 
 state = {
-
+    sheetsData: [],
     series: [{
         name: 'Net Profit',
         data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
@@ -61,6 +61,67 @@ state = {
 
 
 };
+
+// Fetch Google Sheets data (restricted api key)
+componentWillMount(){
+    fetch("https://sheets.googleapis.com/v4/spreadsheets/1evjoQPchLR8iUhjQQ8i56hy6Df5z7K_eVSWs8yVugC4/values/Sheet1?key=AIzaSyArugq6TlxJTJHM-qWEe420k2xH3U0obxg")
+        .then(res => res.json())
+        .then(
+            (result) => {
+                const rawData = result.values;
+                const formattedData = [];
+                let prop, value;
+                //nested loops-> convert array of arrays to array of objects
+                for(let i = 1; i < rawData.length; i++) { //first row (0) contains each column key(prop)
+                    let obj = {};
+                    for (let j = 0; j < rawData[i].length; j++) {
+                        prop = rawData[0][j];
+                        value = rawData[i][j];
+                        obj[prop] = value;
+                    }
+                    formattedData.push(obj);
+                }
+
+                const sheetsData = [...formattedData] 
+                //format data
+                sheetsData.forEach(function (d) {
+                    d.ID = +d.ID;
+                    d.Functions = +d.Functions;
+                    d.Loops = +d.Loops;
+                    d.Movement = +d.Movement;
+                    d.PickDrop = +d.PickDrop;
+                    d.Cycles = +d.Cycles;
+                    d.Instructions = +d.Instructions;
+                    d.minL = +d.minL;
+                    d.avgL = +d.avgL;
+                    d.minF = +d.minF;
+                    d.avgF = +d.avgF;
+                    d.minC = +d.minC;
+                    d.avgC = +d.avgC;
+                    d.minP = +d.minP;
+                    d.avgP = +d.avgP;
+                    d.minM = +d.minM;
+                    d.avgM = +d.avgM;
+                    d.minI = +d.minI;
+                    d.avgI = +d.avgI;
+
+                });
+
+                console.log(sheetsData);
+                this.setState({
+                    sheetsData: sheetsData
+                })
+            },
+
+            (error) => {
+                this.setState({
+                    isLoaded: true,
+                    error
+                });
+            }
+        )
+        
+}
 
 render() {
     return (
