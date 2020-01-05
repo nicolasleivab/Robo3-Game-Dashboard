@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import ReactApexChart from "react-apexcharts";
 import styles from './GroupedChart.module.css';
+import DropdownUI from '../DropdownUI/DropdownUI';
+import Auxiliar from '../../hoc/Auxiliar';
 
 // data template
 
@@ -9,6 +11,7 @@ class GroupedChart extends React.Component {
 
 state = {
     sheetsData: [],
+    filteredData: [],
     series: [{
         name: "Student's Solution",
         data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
@@ -140,9 +143,10 @@ componentWillMount(){
                     data: thirdColumn
                 }]
                 console.log(firstColumn);
-                
+
                 this.setState({
-                    sheetsData: filteredData,
+                    sheetsData : sheetsData,
+                    filteredData: filteredData,
                     series: newSeries,
                     options: {xaxis:{ categories: newCategories}}
                 })
@@ -160,10 +164,12 @@ componentWillMount(){
 
 render() {
     return (
-
+        <Auxiliar>
+        <DropdownUI/>
         <div id="chart" className={styles.GroupedChart}>
             <ReactApexChart options={this.state.options} series={this.state.series} type="bar" height={350} />
         </div>
+        </Auxiliar>
     );
   }
 }
