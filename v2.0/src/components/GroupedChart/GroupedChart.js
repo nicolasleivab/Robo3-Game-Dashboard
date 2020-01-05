@@ -10,13 +10,13 @@ class GroupedChart extends React.Component {
 state = {
     sheetsData: [],
     series: [{
-        name: 'Net Profit',
+        name: "Student's Solution",
         data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
     }, {
-        name: 'Revenue',
+        name: 'Best Solution',
         data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
     }, {
-        name: 'Free Cash Flow',
+        name: 'Average Solution',
         data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
     }],
     options: {
@@ -44,7 +44,7 @@ state = {
         },
         yaxis: {
             title: {
-                text: '$ (thousands)'
+                text: 'Cycles'
             }
         },
         fill: {
@@ -52,8 +52,8 @@ state = {
         },
         tooltip: {
             y: {
-                formatter: function (val) {
-                    return "$ " + val + " thousands"
+                formatter: function (y) {
+                    return y 
                 }
             }
         }
@@ -107,9 +107,44 @@ componentWillMount(){
 
                 });
 
-                console.log(sheetsData);
+                
+                const filteredData = sheetsData.filter(word => word.ID == 10574525);
+                console.log(filteredData);
+    
+                const firstColumn = [];
+                const secondColumn = [];
+                const thirdColumn = [];
+                filteredData.forEach(function (d) {
+                    firstColumn.push(d.Cycles);
+                });
+                filteredData.forEach(function (d) {
+                    secondColumn.push(d.avgC);
+                });
+                filteredData.forEach(function (d) {
+                    thirdColumn.push(d.minC);
+                });
+
+                const newCategories = [];
+                filteredData.forEach(function(d){
+                    newCategories.push(d.level);
+                });
+
+                const newSeries = [{
+                    name: "Student's Solution",
+                    data: firstColumn
+                }, {
+                    name: 'Best Solution',
+                    data: secondColumn
+                }, {
+                    name: 'Average Solution',
+                    data: thirdColumn
+                }]
+                console.log(firstColumn);
+                
                 this.setState({
-                    sheetsData: sheetsData
+                    sheetsData: filteredData,
+                    series: newSeries,
+                    options: {xaxis:{ categories: newCategories}}
                 })
             },
 
