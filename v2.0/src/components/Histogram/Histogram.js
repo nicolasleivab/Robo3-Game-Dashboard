@@ -1,25 +1,25 @@
 import React, { Component } from 'react';
 import ReactApexChart from "react-apexcharts";
-import styles from './BarChart.module.css';
+import styles from './Histogram.module.css';
 
-class BarChart extends React.Component {
+class Histogram extends React.Component {
 
 state = {
     sheetsData: [],
     filteredData: [],
     series: [{
-        name: "",
-        data: []
+        name: "asd",
+        data: [4, 5, 6, 4, 5, 1, 7, 14, 15, 17, 17, 17, 25, 25, 30, 10, 11, 11, 11]
     }],
     options: {
         chart: {
-            type: 'bar',
+            type: 'histogram',
             height: 350
         },
         plotOptions: {
             bar: {
                 horizontal: false,
-                columnWidth: '55%',
+                columnWidth: '95%',
                 endingShape: 'rounded'
             },
         },
@@ -32,15 +32,17 @@ state = {
             colors: ['transparent']
         },
         xaxis: {
-            categories: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7],
+            categories: [5, 10, 15, 20, 25, 30, 35],
         },
         yaxis: {
             title: {
-                text: 'Success Probability'
+                text: 'Abosulute Frequency'
             }
         },
         fill: {
-            opacity: 1
+            opacity: 1,
+            colors: ['#00e68a']
+
         },
         tooltip: {
             y: {
@@ -56,14 +58,14 @@ state = {
 
 render() {
     return (
-        <div className={styles.BarChart}>
+        <div className={styles.Histogram}>
             <ReactApexChart 
-            options={{...this.state.options, ...this.props.categories}} 
-            series={this.props.barChartSeries} 
-            type="bar" height={350} />
+            options={this.state.options} 
+            series={this.state.series} 
+            type="histogram" height={350} />
         </div>
     );
   }
 }
 
-export default BarChart;
+export default Histogram;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import GroupedChart from '../../components/GroupedChart/GroupedChart';
 import BarChart from '../../components/BarChart/BarChart';
+import Histogram from '../../components/Histogram/Histogram';
 
 class Dashboard extends Component {
     state = {
@@ -48,6 +49,7 @@ componentWillMount(){
                     d.ID = +d.ID;
                     d.date = new Date(d.date);
                 });
+
                 //average for each level formula
                 function averageProb(arr) {
                     let sums = {}, counts = {}, averages = [], name;
@@ -97,6 +99,7 @@ componentWillMount(){
 
     render(){
     return <div>
+    <Histogram/>
     <BarChart
         barChartSeries={this.state.barChartSeries}
         categories={this.state.options}
