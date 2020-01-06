@@ -6,9 +6,7 @@ class AutocompleteUI extends Component {
 
 keySubmit = (e)=>{
     if (e.keyCode == 13) {
-    let inputCode = document.getElementById("crypto-autocomplete").value;
-    console.log(inputCode);
-    //call some parent method
+    this.props.filterByStudent();
     }
 }
 
@@ -16,9 +14,9 @@ render() {
     return (
         <div>
             <Autocomplete
-                id="crypto-autocomplete"
-                options={[{ID: '10574525'}, {ID: '12341234'}, {ID: '10101010'}]}
-                getOptionLabel={option => option.ID}
+                id="student-autocomplete"
+                options={this.props.students}
+                getOptionLabel={option => option}
                 style={{ width: 350 }}
                 onKeyDown={this.keySubmit}
                 renderInput={params => (

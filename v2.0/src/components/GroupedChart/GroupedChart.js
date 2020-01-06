@@ -12,6 +12,10 @@ class GroupedChart extends React.Component {
 state = {
     sheetsData: [],
     filteredData: [],
+    allStudents: [],
+    currentFilter: 'Cycles',
+    avgFilter: 'avgC',
+    minFilter: 'avgC',
     series: [{
         name: "Student's Solution",
         data: []
@@ -88,7 +92,6 @@ componentWillMount(){
                 const sheetsData = [...formattedData] 
                 //format data
                 sheetsData.forEach(function (d) {
-                    d.ID = +d.ID;
                     d.Functions = +d.Functions;
                     d.Loops = +d.Loops;
                     d.Movement = +d.Movement;
@@ -110,7 +113,14 @@ componentWillMount(){
 
                 });
 
-                
+                const students = sheetsData.map(function (d) { //create new array with students
+                    return d.ID;
+                })
+                const allStudents = students.filter(function (item, pos) { //get unique values
+                    return students.indexOf(item) == pos;
+                });
+
+                console.log(allStudents);
                 const filteredData = sheetsData.filter(word => word.ID == 10574525);
                 console.log(filteredData);
     
@@ -119,11 +129,7 @@ componentWillMount(){
                 const thirdColumn = [];
                 filteredData.forEach(function (d) {
                     firstColumn.push(d.Cycles);
-                });
-                filteredData.forEach(function (d) {
                     secondColumn.push(d.avgC);
-                });
-                filteredData.forEach(function (d) {
                     thirdColumn.push(d.minC);
                 });
 
@@ -146,6 +152,7 @@ componentWillMount(){
 
                 this.setState({
                     sheetsData : sheetsData,
+                    allStudents: allStudents,
                     filteredData: filteredData,
                     series: newSeries,
                     options: {xaxis:{ categories: newCategories}}
@@ -171,11 +178,7 @@ cyclesDataHandler = ()=>{
 
     filteredData.forEach(function (d) {
         firstColumn.push(d.Cycles);
-    });
-    filteredData.forEach(function (d) {
         secondColumn.push(d.avgC);
-    });
-    filteredData.forEach(function (d) {
         thirdColumn.push(d.minC);
     });
 
@@ -192,7 +195,10 @@ cyclesDataHandler = ()=>{
 
     this.setState({
         options: { yaxis: { title: { text: 'Cycles' } } },
-        series: newSeries
+        series: newSeries,
+        currentFilter: 'Cycles',
+        avgFilter: 'avgC',
+        minFilter: 'minC'
     });
 }
 instructionsDataHandler = ()=>{
@@ -204,11 +210,7 @@ instructionsDataHandler = ()=>{
 
     filteredData.forEach(function (d) {
         firstColumn.push(d.Instructions);
-    });
-    filteredData.forEach(function (d) {
         secondColumn.push(d.avgI);
-    });
-    filteredData.forEach(function (d) {
         thirdColumn.push(d.minI);
     });
 
@@ -225,7 +227,10 @@ instructionsDataHandler = ()=>{
 
     this.setState({
         options: { yaxis: { title: { text: 'Instructions' } } },
-        series: newSeries
+        series: newSeries,
+        currentFilter: 'Instructions',
+        avgFilter: 'avgI',
+        minFilter: 'minI'
     });
 }
 functionsDataHandler = ()=>{
@@ -237,11 +242,7 @@ functionsDataHandler = ()=>{
 
     filteredData.forEach(function (d) {
         firstColumn.push(d.Functions);
-    });
-    filteredData.forEach(function (d) {
         secondColumn.push(d.avgF);
-    });
-    filteredData.forEach(function (d) {
         thirdColumn.push(d.minF);
     });
 
@@ -258,7 +259,10 @@ functionsDataHandler = ()=>{
 
     this.setState({
         options: { yaxis: { title: { text: 'Functions' } } },
-        series: newSeries
+        series: newSeries,
+        currentFilter: 'Functions',
+        avgFilter: 'avgF',
+        minFilter: 'minF'
     });
 }
 loopsDataHandler = ()=>{
@@ -270,11 +274,7 @@ loopsDataHandler = ()=>{
 
     filteredData.forEach(function (d) {
         firstColumn.push(d.Loops);
-    });
-    filteredData.forEach(function (d) {
         secondColumn.push(d.avgL);
-    });
-    filteredData.forEach(function (d) {
         thirdColumn.push(d.minL);
     });
 
@@ -291,7 +291,10 @@ loopsDataHandler = ()=>{
 
     this.setState({
         options: { yaxis: { title: { text: 'Loops' } } },
-        series: newSeries
+        series: newSeries,
+        currentFilter: 'Loops',
+        avgFilter: 'avgL',
+        minFilter: 'minL'
     });
 }
 pickdropDataHandler = ()=>{
@@ -303,11 +306,7 @@ pickdropDataHandler = ()=>{
 
     filteredData.forEach(function (d) {
         firstColumn.push(d.PickDrop);
-    });
-    filteredData.forEach(function (d) {
         secondColumn.push(d.avgP);
-    });
-    filteredData.forEach(function (d) {
         thirdColumn.push(d.minP);
     });
 
@@ -324,7 +323,10 @@ pickdropDataHandler = ()=>{
 
     this.setState({
         options: { yaxis: { title: { text: 'PickDrop' } } },
-        series: newSeries
+        series: newSeries,
+        currentFilter: 'PickDrop',
+        avgFilter: 'avgP',
+        minFilter: 'minP'
     });
 }
 movementDataHandler = ()=>{
@@ -336,11 +338,7 @@ movementDataHandler = ()=>{
 
     filteredData.forEach(function (d) {
         firstColumn.push(d.Movement);
-    });
-    filteredData.forEach(function (d) {
         secondColumn.push(d.avgM);
-    });
-    filteredData.forEach(function (d) {
         thirdColumn.push(d.minM);
     });
 
@@ -357,14 +355,61 @@ movementDataHandler = ()=>{
 
     this.setState({
         options: { yaxis: { title: { text: 'Movement' } } },
-        series: newSeries
+        series: newSeries,
+        currentFilter: 'Movement',
+        avgFilter: 'avgM',
+        minFilter: 'minM'
     });
+}
+
+filterByStudent = ()=>{
+    const currentStudent = document.getElementById('student-autocomplete').value;
+    const sheetsData = [...this.state.sheetsData];
+    const selectedData = sheetsData.filter(word => word.ID == currentStudent);
+    
+    const firstColumn = [];
+    const secondColumn = [];
+    const thirdColumn = [];
+    const currentFilter = this.state.currentFilter;
+    const avgFilter = this.state.avgFilter;
+    const minFilter = this.state.minFilter;
+
+    selectedData.forEach(function (d) {
+        firstColumn.push(d[currentFilter]);
+        secondColumn.push(d[avgFilter]);
+        thirdColumn.push(d[minFilter]);
+    });
+
+    const newSeries = [{
+        name: "Student's Solution",
+        data: firstColumn
+    }, {
+        name: 'Best Solution',
+        data: secondColumn
+    }, {
+        name: 'Average Solution',
+        data: thirdColumn
+    }]
+
+    const newCategories = [];
+    selectedData.forEach(function (d) {
+        newCategories.push(d.level);
+    });
+
+    this.setState({
+        filteredData: selectedData,
+        series: newSeries,
+        options: { xaxis: { categories: newCategories } }
+    })
 }
 
 render() {
     return (
         <div className={styles.GroupedChart}>
-        <AutocompleteUI/>
+        <AutocompleteUI
+            students={this.state.allStudents}
+            filterByStudent={this.filterByStudent}
+        />
         <DropdownUI
                 cyclesDataHandler={this.cyclesDataHandler}
                 instructionsDataHandler={this.instructionsDataHandler}
