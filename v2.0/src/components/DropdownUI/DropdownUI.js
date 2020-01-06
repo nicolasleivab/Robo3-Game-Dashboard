@@ -28,6 +28,19 @@ export default function DropdownUI(props) {
 
     const handleChange = event => {
         setInstruction(event.target.value);
+        if (event.target.value == 'Cycles') {
+            props.cyclesDataHandler();
+        } else if (event.target.value == 'Instructions') {
+            props.instructionsDataHandler();
+        } else if (event.target.value == 'Functions') {
+            props.functionsDataHandler();
+        } else if (event.target.value == 'Loops') {
+            props.loopsDataHandler();
+        } else if (event.target.value == 'PickDrop') {
+            props.pickdropDataHandler();
+        } else if (event.target.value == 'Movement') {
+            props.movementDataHandler();
+        }
     };
 
     return (
@@ -44,7 +57,7 @@ export default function DropdownUI(props) {
                     labelWidth={labelWidth}
                 >
                     <MenuItem value={'Cycles'}>Cycles</MenuItem>
-                    <MenuItem value={'Instructions'}>instructions</MenuItem>
+                    <MenuItem value={'Instructions'}>Instructions</MenuItem>
                     <MenuItem value={'Functions'}>Functions</MenuItem>
                     <MenuItem value={'Loops'}>Loops</MenuItem>
                     <MenuItem value={'PickDrop'}>PickDrop</MenuItem>

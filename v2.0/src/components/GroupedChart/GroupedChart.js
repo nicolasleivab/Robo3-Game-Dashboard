@@ -162,10 +162,54 @@ componentWillMount(){
         
 }
 
+cyclesDataHandler = ()=>{
+
+    this.setState({
+        options: { yaxis: { title: { text: 'Cycles' } } }
+    });
+}
+instructionsDataHandler = ()=>{
+
+    this.setState({
+        options: { yaxis: { title: { text: 'Instructions' } } }
+    });
+}
+functionsDataHandler = ()=>{
+
+    this.setState({
+        options: { yaxis: { title: { text: 'Functions' } } }
+    });
+}
+loopsDataHandler = ()=>{
+
+    this.setState({
+        options: { yaxis: { title: { text: 'Loops' } } }
+    });
+}
+pickdropDataHandler = ()=>{
+
+    this.setState({
+        options: { yaxis: { title: { text: 'PickDrop' } } }
+    });
+}
+movementDataHandler = ()=>{
+
+    this.setState({
+        options: { yaxis: { title: { text: 'Movement' } } }
+    });
+}
+
 render() {
     return (
         <Auxiliar>
-        <DropdownUI/>
+        <DropdownUI
+                cyclesDataHandler={this.cyclesDataHandler}
+                instructionsDataHandler={this.instructionsDataHandler}
+                functionsDataHandler={this.functionsDataHandler}
+                loopsDataHandler={this.loopsDataHandler}
+                pickdropDataHandler={this.pickdropDataHandler}
+                movementDataHandler={this.movementDataHandler}
+        />
         <div id="chart" className={styles.GroupedChart}>
             <ReactApexChart options={this.state.options} series={this.state.series} type="bar" height={350} />
         </div>
