@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
 import GroupedChart from '../../components/GroupedChart/GroupedChart';
+import BarChart from '../../components/BarChart/BarChart';
 
 class Dashboard extends Component {
     state = {
-        sheetsData: []
+        sheetsData: [],
+        barChartSeries: [],
+        options: {
+            xaxis: {
+                categories: []
+            }
+        },
     };
 // Fetch Google Sheets data 1 (restricted api key)
 componentWillMount(){
@@ -41,9 +48,40 @@ componentWillMount(){
                     d.ID = +d.ID;
                     d.date = new Date(d.date);
                 });
-                console.log(sheetsData);
+                //average for each level formula
+                function averageProb(arr) {
+                    let sums = {}, counts = {}, averages = [], name;
+                    for (var i = 0; i < arr.length; i++) { //loop through array
+                        name = arr[i].level;
+                        if (!(name in sums)) {
+                            sums[name] = 0;
+                            counts[name] = 0;
+                        }
+                        sums[name] += arr[i]['Success Probability'];
+                        counts[name]++;
+                    }
+                    for (name in sums) {
+                        averages.push({ level: name, average: sums[name] / counts[name] }); //push elements to new array with averages per level
+                    }
+                    return averages;
+                }
+
+                const averagePerLevel = averageProb(sheetsData);
+                //sort alphabetically
+                const sortedList = averagePerLevel.sort(function (a, b) {
+                    if (a.level < b.level) { return -1; }
+                    if (a.level > b.level) { return 1; }
+                    return 0;
+                })
+
+                const barChartSeries = sortedList.map(obj => obj.average);
+                const categories = sortedList.map(obj => obj.level);
+                //set new state
+                console.log(sortedList);
                 this.setState({
-                    sheetsData: sheetsData
+                    sheetsData: sheetsData,
+                    barChartSeries:[{ name: 'Sucess Probability', data: barChartSeries}],
+                    options:{ xaxis:{ categories: categories}}
                 });
             },
 
@@ -58,7 +96,13 @@ componentWillMount(){
 }
 
     render(){
-    return <GroupedChart/>
+    return <div>
+    <BarChart
+        barChartSeries={this.state.barChartSeries}
+        categories={this.state.options}
+    />
+    <GroupedChart/>
+    </div>
     }
 }
 
