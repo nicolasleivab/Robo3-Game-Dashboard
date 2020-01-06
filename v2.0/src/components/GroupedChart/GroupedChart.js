@@ -4,9 +4,6 @@ import styles from './GroupedChart.module.css';
 import DropdownUI from '../DropdownUI/DropdownUI';
 import AutocompleteUI from '../AutocompleteUI/AutocompleteUI';
 
-// data template
-
-
 class GroupedChart extends React.Component {
 
 state = {
@@ -16,6 +13,7 @@ state = {
     currentFilter: 'Cycles',
     avgFilter: 'avgC',
     minFilter: 'avgC',
+    personFilter: '10574525',
     series: [{
         name: "Student's Solution",
         data: []
@@ -69,7 +67,7 @@ state = {
 
 };
 
-// Fetch Google Sheets data (restricted api key)
+// Fetch Google Sheets data 2 (restricted api key)
 componentWillMount(){
     fetch("https://sheets.googleapis.com/v4/spreadsheets/1evjoQPchLR8iUhjQQ8i56hy6Df5z7K_eVSWs8yVugC4/values/Sheet1?key=AIzaSyArugq6TlxJTJHM-qWEe420k2xH3U0obxg")
         .then(res => res.json())
@@ -119,11 +117,11 @@ componentWillMount(){
                 const allStudents = students.filter(function (item, pos) { //get unique values
                     return students.indexOf(item) == pos;
                 });
-
-                console.log(allStudents);
-                const filteredData = sheetsData.filter(word => word.ID == 10574525);
+                //get default person code
+                const personFilter = this.state.personFilter;
+                const filteredData = sheetsData.filter(word => word.ID == personFilter);
                 console.log(filteredData);
-    
+                //new series by column
                 const firstColumn = [];
                 const secondColumn = [];
                 const thirdColumn = [];
@@ -132,7 +130,7 @@ componentWillMount(){
                     secondColumn.push(d.avgC);
                     thirdColumn.push(d.minC);
                 });
-
+                //get categories of filtered data
                 const newCategories = [];
                 filteredData.forEach(function(d){
                     newCategories.push(d.level);
@@ -149,7 +147,7 @@ componentWillMount(){
                     data: thirdColumn
                 }]
                 console.log(firstColumn);
-
+                //set new state
                 this.setState({
                     sheetsData : sheetsData,
                     allStudents: allStudents,
@@ -399,7 +397,8 @@ filterByStudent = ()=>{
     this.setState({
         filteredData: selectedData,
         series: newSeries,
-        options: { xaxis: { categories: newCategories } }
+        options: { xaxis: { categories: newCategories } },
+        personFilter: currentStudent
     })
 }
 
@@ -409,6 +408,7 @@ render() {
         <AutocompleteUI
             students={this.state.allStudents}
             filterByStudent={this.filterByStudent}
+            currentStudent={this.state.personFilter}
         />
         <DropdownUI
                 cyclesDataHandler={this.cyclesDataHandler}

@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.module.css';
 import Layout from './components/Layout/Layout';
-import GroupedChart from './components/GroupedChart/GroupedChart';
+import Dashboard from './containers/Dashboard/Dashboard';
 
 function App() {
   return (
     <div>
       <Layout>
-          <GroupedChart/>
+          <Dashboard/>
       </Layout>
     </div>
   );

@@ -17,7 +17,8 @@ render() {
                 id="student-autocomplete"
                 options={this.props.students}
                 getOptionLabel={option => option}
-                style={{ width: 350 }}
+                value={this.props.currentStudent}
+                style={{ width: 130 }}
                 onKeyDown={this.keySubmit}
                 renderInput={params => (
                     <TextField {...params} label="Filter by Person Code" variant="outlined" fullWidth />
