@@ -5,6 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import styles from './DropdownUI.module.css';
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -44,7 +45,7 @@ export default function DropdownUI(props) {
     };
 
     return (
-        <div>
+        <div className={styles.DropdownUI}>
             <FormControl variant="outlined" className={classes.formControl}>
                 <InputLabel ref={inputLabel} id="demo-simple-select-outlined-label">
                     Instruction

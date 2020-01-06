@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactApexChart from "react-apexcharts";
 import styles from './GroupedChart.module.css';
 import DropdownUI from '../DropdownUI/DropdownUI';
-import Auxiliar from '../../hoc/Auxiliar';
+import AutocompleteUI from '../AutocompleteUI/AutocompleteUI';
 
 // data template
 
@@ -14,13 +14,13 @@ state = {
     filteredData: [],
     series: [{
         name: "Student's Solution",
-        data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
+        data: []
     }, {
         name: 'Best Solution',
-        data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
+        data: []
     }, {
         name: 'Average Solution',
-        data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
+        data: []
     }],
     options: {
         chart: {
@@ -43,7 +43,7 @@ state = {
             colors: ['transparent']
         },
         xaxis: {
-            categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+            categories: [],
         },
         yaxis: {
             title: {
@@ -363,7 +363,8 @@ movementDataHandler = ()=>{
 
 render() {
     return (
-        <Auxiliar>
+        <div className={styles.GroupedChart}>
+        <AutocompleteUI/>
         <DropdownUI
                 cyclesDataHandler={this.cyclesDataHandler}
                 instructionsDataHandler={this.instructionsDataHandler}
@@ -372,10 +373,10 @@ render() {
                 pickdropDataHandler={this.pickdropDataHandler}
                 movementDataHandler={this.movementDataHandler}
         />
-        <div id="chart" className={styles.GroupedChart}>
+        <div id="chart">
             <ReactApexChart options={this.state.options} series={this.state.series} type="bar" height={350} />
         </div>
-        </Auxiliar>
+        </div>
     );
   }
 }
