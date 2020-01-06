@@ -164,38 +164,200 @@ componentWillMount(){
 
 cyclesDataHandler = ()=>{
 
+    const firstColumn = [];
+    const secondColumn = [];
+    const thirdColumn = [];
+    const filteredData = [...this.state.filteredData];
+
+    filteredData.forEach(function (d) {
+        firstColumn.push(d.Cycles);
+    });
+    filteredData.forEach(function (d) {
+        secondColumn.push(d.avgC);
+    });
+    filteredData.forEach(function (d) {
+        thirdColumn.push(d.minC);
+    });
+
+    const newSeries = [{
+        name: "Student's Solution",
+        data: firstColumn
+    }, {
+        name: 'Best Solution',
+        data: secondColumn
+    }, {
+        name: 'Average Solution',
+        data: thirdColumn
+    }]
+
     this.setState({
-        options: { yaxis: { title: { text: 'Cycles' } } }
+        options: { yaxis: { title: { text: 'Cycles' } } },
+        series: newSeries
     });
 }
 instructionsDataHandler = ()=>{
 
+    const firstColumn = [];
+    const secondColumn = [];
+    const thirdColumn = [];
+    const filteredData = [...this.state.filteredData];
+
+    filteredData.forEach(function (d) {
+        firstColumn.push(d.Instructions);
+    });
+    filteredData.forEach(function (d) {
+        secondColumn.push(d.avgI);
+    });
+    filteredData.forEach(function (d) {
+        thirdColumn.push(d.minI);
+    });
+
+    const newSeries = [{
+        name: "Student's Solution",
+        data: firstColumn
+    }, {
+        name: 'Best Solution',
+        data: secondColumn
+    }, {
+        name: 'Average Solution',
+        data: thirdColumn
+    }]
+
     this.setState({
-        options: { yaxis: { title: { text: 'Instructions' } } }
+        options: { yaxis: { title: { text: 'Instructions' } } },
+        series: newSeries
     });
 }
 functionsDataHandler = ()=>{
 
+    const firstColumn = [];
+    const secondColumn = [];
+    const thirdColumn = [];
+    const filteredData = [...this.state.filteredData];
+
+    filteredData.forEach(function (d) {
+        firstColumn.push(d.Functions);
+    });
+    filteredData.forEach(function (d) {
+        secondColumn.push(d.avgF);
+    });
+    filteredData.forEach(function (d) {
+        thirdColumn.push(d.minF);
+    });
+
+    const newSeries = [{
+        name: "Student's Solution",
+        data: firstColumn
+    }, {
+        name: 'Best Solution',
+        data: secondColumn
+    }, {
+        name: 'Average Solution',
+        data: thirdColumn
+    }]
+
     this.setState({
-        options: { yaxis: { title: { text: 'Functions' } } }
+        options: { yaxis: { title: { text: 'Functions' } } },
+        series: newSeries
     });
 }
 loopsDataHandler = ()=>{
 
+    const firstColumn = [];
+    const secondColumn = [];
+    const thirdColumn = [];
+    const filteredData = [...this.state.filteredData];
+
+    filteredData.forEach(function (d) {
+        firstColumn.push(d.Loops);
+    });
+    filteredData.forEach(function (d) {
+        secondColumn.push(d.avgL);
+    });
+    filteredData.forEach(function (d) {
+        thirdColumn.push(d.minL);
+    });
+
+    const newSeries = [{
+        name: "Student's Solution",
+        data: firstColumn
+    }, {
+        name: 'Best Solution',
+        data: secondColumn
+    }, {
+        name: 'Average Solution',
+        data: thirdColumn
+    }]
+
     this.setState({
-        options: { yaxis: { title: { text: 'Loops' } } }
+        options: { yaxis: { title: { text: 'Loops' } } },
+        series: newSeries
     });
 }
 pickdropDataHandler = ()=>{
 
+    const firstColumn = [];
+    const secondColumn = [];
+    const thirdColumn = [];
+    const filteredData = [...this.state.filteredData];
+
+    filteredData.forEach(function (d) {
+        firstColumn.push(d.PickDrop);
+    });
+    filteredData.forEach(function (d) {
+        secondColumn.push(d.avgP);
+    });
+    filteredData.forEach(function (d) {
+        thirdColumn.push(d.minP);
+    });
+
+    const newSeries = [{
+        name: "Student's Solution",
+        data: firstColumn
+    }, {
+        name: 'Best Solution',
+        data: secondColumn
+    }, {
+        name: 'Average Solution',
+        data: thirdColumn
+    }]
+
     this.setState({
-        options: { yaxis: { title: { text: 'PickDrop' } } }
+        options: { yaxis: { title: { text: 'PickDrop' } } },
+        series: newSeries
     });
 }
 movementDataHandler = ()=>{
 
+    const firstColumn = [];
+    const secondColumn = [];
+    const thirdColumn = [];
+    const filteredData = [...this.state.filteredData];
+
+    filteredData.forEach(function (d) {
+        firstColumn.push(d.Movement);
+    });
+    filteredData.forEach(function (d) {
+        secondColumn.push(d.avgM);
+    });
+    filteredData.forEach(function (d) {
+        thirdColumn.push(d.minM);
+    });
+
+    const newSeries = [{
+        name: "Student's Solution",
+        data: firstColumn
+    }, {
+        name: 'Best Solution',
+        data: secondColumn
+    }, {
+        name: 'Average Solution',
+        data: thirdColumn
+    }]
+
     this.setState({
-        options: { yaxis: { title: { text: 'Movement' } } }
+        options: { yaxis: { title: { text: 'Movement' } } },
+        series: newSeries
     });
 }
 
