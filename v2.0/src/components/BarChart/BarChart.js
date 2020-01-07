@@ -16,6 +16,7 @@ state = {
             type: 'bar',
             height: 350
         },
+        colors: ['#00e68a'],
         plotOptions: {
             bar: {
                 horizontal: false,

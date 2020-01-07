@@ -67,7 +67,7 @@ componentWillMount(){
                     }
                     return averages;
                 }
-
+                localStorage.setItem('sheetsData1', JSON.stringify(sheetsData));
                 const averagePerLevel = averageProb(sheetsData);
                 //sort alphabetically
                 const sortedList = averagePerLevel.sort(function (a, b) {
