@@ -11,6 +11,7 @@ class Histogram extends Component {
 state = {
     sheetsData: [],
     filteredData: [],
+    lastFilter: 'Cycles',
     series: [{
         name: 'Frequency',
         data: [0, 0, 0, 0, 0, 0]
@@ -126,17 +127,19 @@ componentDidMount() {
                 }
                 console.log(newCategories)
                 const newSeries = [{
-                    name: "Cycles Frequency",
+                    name: "Frequency",
                     data: groupedCycles
                 }];
                 //copy options object to change state in an immutable fashion
                 const newOptions = { ...this.state.options };
                 newOptions.xaxis.categories = newCategories;
-                console.log(newOptions);
+                console.log(sheetsData);
 
                 console.log(groupedCycles);
                 this.setState({
                     sheetsData: sheetsData,
+                    filteredData: sheetsData,
+                    lastFilter: 'Cycles',
                     series: newSeries,
                     options: newOptions
 
@@ -152,10 +155,10 @@ componentDidMount() {
         )
 
 }
-/* Instructions Data Filter Handlers */
+/* Instruction Data Filter Handlers */
 cyclesDataHandler = ()=>{
     const cyclesArray = [];
-    const sheetsData = [...this.state.sheetsData];
+    const sheetsData = [...this.state.filteredData];
     sheetsData.forEach(function (d) {
         cyclesArray.push(d.Cycles)
     })
@@ -182,7 +185,7 @@ cyclesDataHandler = ()=>{
     }
     console.log(newCategories)
     const newSeries = [{
-        name: "Cycles Frequency",
+        name: "Frequency",
         data: groupedCycles
     }];
     //copy options object to change state in an immutable fashion
@@ -191,13 +194,14 @@ cyclesDataHandler = ()=>{
 
     this.setState({
         series: newSeries,
-        options: newOptions
+        options: newOptions,
+        lastFilter: 'Cycles'
 
     })
 }
 instructionsDataHandler = ()=>{
     const instructionsArray = [];
-    const sheetsData = [...this.state.sheetsData];
+    const sheetsData = [...this.state.filteredData];
     sheetsData.forEach(function (d) {
         instructionsArray.push(d.Instructions)
     })
@@ -224,7 +228,7 @@ instructionsDataHandler = ()=>{
     }
     console.log(newCategories)
     const newSeries = [{
-        name: "Cycles Frequency",
+        name: "Frequency",
         data: groupedInstructions
     }];
     //copy options object to change state in an immutable fashion
@@ -233,13 +237,14 @@ instructionsDataHandler = ()=>{
 
     this.setState({
         series: newSeries,
-        options: newOptions
+        options: newOptions,
+        lastFilter: 'Instructions'
 
     })
 }
 functionsDataHandler = ()=>{
     const functiosnArray = [];
-    const sheetsData = [...this.state.sheetsData];
+    const sheetsData = [...this.state.filteredData];
     sheetsData.forEach(function (d) {
         functiosnArray.push(d.Functions)
     })
@@ -266,7 +271,7 @@ functionsDataHandler = ()=>{
     }
     console.log(newCategories)
     const newSeries = [{
-        name: "Cycles Frequency",
+        name: "Frequency",
         data: groupedFunctions
     }];
     //copy options object to change state in an immutable fashion
@@ -275,13 +280,14 @@ functionsDataHandler = ()=>{
 
     this.setState({
         series: newSeries,
-        options: newOptions
+        options: newOptions,
+        lastFilter: 'Functions'
 
     })
 }
 loopsDataHandler = ()=>{
     const loopsArray = [];
-    const sheetsData = [...this.state.sheetsData];
+    const sheetsData = [...this.state.filteredData];
     sheetsData.forEach(function (d) {
         loopsArray.push(d.Loops)
     })
@@ -308,7 +314,7 @@ loopsDataHandler = ()=>{
     }
     console.log(newCategories)
     const newSeries = [{
-        name: "Cycles Frequency",
+        name: "Frequency",
         data: groupedLoops
     }];
     //copy options object to change state in an immutable fashion
@@ -317,13 +323,14 @@ loopsDataHandler = ()=>{
 
     this.setState({
         series: newSeries,
-        options: newOptions
+        options: newOptions,
+        lastFilter: 'Loops'
 
     })
 }
 pickdropDataHandler = ()=>{
     const pdArray = [];
-    const sheetsData = [...this.state.sheetsData];
+    const sheetsData = [...this.state.filteredData];
     sheetsData.forEach(function (d) {
         pdArray.push(d.PickDrop)
     })
@@ -350,7 +357,7 @@ pickdropDataHandler = ()=>{
     }
     console.log(newCategories)
     const newSeries = [{
-        name: "Cycles Frequency",
+        name: "Frequency",
         data: groupedPD
     }];
     //copy options object to change state in an immutable fashion
@@ -359,13 +366,14 @@ pickdropDataHandler = ()=>{
 
     this.setState({
         series: newSeries,
-        options: newOptions
+        options: newOptions,
+        lastFilter: 'PickDrop'
 
     })
 }
 movementDataHandler = ()=>{
     const movArray = [];
-    const sheetsData = [...this.state.sheetsData];
+    const sheetsData = [...this.state.filteredData];
     sheetsData.forEach(function (d) {
         movArray.push(d.Movement)
     })
@@ -392,7 +400,7 @@ movementDataHandler = ()=>{
     }
     console.log(newCategories)
     const newSeries = [{
-        name: "Cycles Frequency",
+        name: "Frequency",
         data: groupedMov
     }];
     //copy options object to change state in an immutable fashion
@@ -401,47 +409,296 @@ movementDataHandler = ()=>{
 
     this.setState({
         series: newSeries,
-        options: newOptions
+        options: newOptions,
+        lastFilter: 'Movement'
 
     })
 }
 
-/* Levels Data Filter Handlers */
+/* Level Data Filter Handlers */
 allLevelsHandler= ()=>{
-
+    const filteredData = [...this.state.sheetsData];
+   
+    this.setState({
+        filteredData: filteredData,
+    }, function () { this.cyclesDataHandler() }.bind(this))
+    
 }
 level1Handler= ()=>{
-    
+    const sheetsData = [...this.state.sheetsData];
+    const filteredData = sheetsData.filter( function(obj){
+        return obj.level == 'Hello, world!!!'
+    })
+
+    console.log(filteredData)
+    this.setState({
+        filteredData: filteredData,
+    }, function () { 
+        if(this.state.lastFilter === 'Cycles'){
+            this.cyclesDataHandler()
+        }else if(this.state.lastFilter === 'Instructions'){
+            this.instructionsDataHandler()
+        }else if (this.state.lastFilter === 'Functions') {
+            this.functionsDataHandler()
+        }else if (this.state.lastFilter === 'Loops') {
+            this.loopsDataHandler()
+        }else if (this.state.lastFilter === 'PickDrop') {
+            this.pickdropDataHandler()
+        }else if (this.state.lastFilter === 'Movement') {
+            this.movementDataHandler()
+        }}.bind(this)
+        ) 
 }
 level2Handler= ()=>{
-    
+    const sheetsData = [...this.state.sheetsData];
+    const filteredData = sheetsData.filter(function (obj) {
+        return obj.level == 'Inverti'
+    })
+
+    this.setState({
+        filteredData: filteredData
+    }, function () {
+        if (this.state.lastFilter === 'Cycles') {
+            this.cyclesDataHandler()
+        } else if (this.state.lastFilter === 'Instructions') {
+            this.instructionsDataHandler()
+        } else if (this.state.lastFilter === 'Functions') {
+            this.functionsDataHandler()
+        } else if (this.state.lastFilter === 'Loops') {
+            this.loopsDataHandler()
+        } else if (this.state.lastFilter === 'PickDrop') {
+            this.pickdropDataHandler()
+        } else if (this.state.lastFilter === 'Movement') {
+            this.movementDataHandler()
+        }
+    }.bind(this)
+    )
 }
 level3Handler= ()=>{
-    
+    const sheetsData = [...this.state.sheetsData];
+    const filteredData = sheetsData.filter(function (obj) {
+        return obj.level == 'Inverti i Pari'
+    })
+
+    this.setState({
+        filteredData: filteredData
+    }, function () {
+        if (this.state.lastFilter === 'Cycles') {
+            this.cyclesDataHandler()
+        } else if (this.state.lastFilter === 'Instructions') {
+            this.instructionsDataHandler()
+        } else if (this.state.lastFilter === 'Functions') {
+            this.functionsDataHandler()
+        } else if (this.state.lastFilter === 'Loops') {
+            this.loopsDataHandler()
+        } else if (this.state.lastFilter === 'PickDrop') {
+            this.pickdropDataHandler()
+        } else if (this.state.lastFilter === 'Movement') {
+            this.movementDataHandler()
+        }
+    }.bind(this)
+    )
 }
 level4Handler= ()=>{
-    
+    const sheetsData = [...this.state.sheetsData];
+    const filteredData = sheetsData.filter(function (obj) {
+        return obj.level == 'Concatena'
+    })
+
+    this.setState({
+        filteredData: filteredData
+    }, function () {
+        if (this.state.lastFilter === 'Cycles') {
+            this.cyclesDataHandler()
+        } else if (this.state.lastFilter === 'Instructions') {
+            this.instructionsDataHandler()
+        } else if (this.state.lastFilter === 'Functions') {
+            this.functionsDataHandler()
+        } else if (this.state.lastFilter === 'Loops') {
+            this.loopsDataHandler()
+        } else if (this.state.lastFilter === 'PickDrop') {
+            this.pickdropDataHandler()
+        } else if (this.state.lastFilter === 'Movement') {
+            this.movementDataHandler()
+        }
+    }.bind(this)
+    )
 }
 level5Handler= ()=>{
-    
+    const sheetsData = [...this.state.sheetsData];
+    const filteredData = sheetsData.filter(function (obj) {
+        return obj.level == 'Filtro Rosso'
+    })
+
+    this.setState({
+        filteredData: filteredData
+    }, function () {
+        if (this.state.lastFilter === 'Cycles') {
+            this.cyclesDataHandler()
+        } else if (this.state.lastFilter === 'Instructions') {
+            this.instructionsDataHandler()
+        } else if (this.state.lastFilter === 'Functions') {
+            this.functionsDataHandler()
+        } else if (this.state.lastFilter === 'Loops') {
+            this.loopsDataHandler()
+        } else if (this.state.lastFilter === 'PickDrop') {
+            this.pickdropDataHandler()
+        } else if (this.state.lastFilter === 'Movement') {
+            this.movementDataHandler()
+        }
+    }.bind(this)
+    )
 }
 level6Handler= ()=>{
-    
+    const sheetsData = [...this.state.sheetsData];
+    const filteredData = sheetsData.filter(function (obj) {
+        return obj.level == 'Filtro Doppio Rosso'
+    })
+
+    this.setState({
+        filteredData: filteredData
+    }, function () {
+        if (this.state.lastFilter === 'Cycles') {
+            this.cyclesDataHandler()
+        } else if (this.state.lastFilter === 'Instructions') {
+            this.instructionsDataHandler()
+        } else if (this.state.lastFilter === 'Functions') {
+            this.functionsDataHandler()
+        } else if (this.state.lastFilter === 'Loops') {
+            this.loopsDataHandler()
+        } else if (this.state.lastFilter === 'PickDrop') {
+            this.pickdropDataHandler()
+        } else if (this.state.lastFilter === 'Movement') {
+            this.movementDataHandler()
+        }
+    }.bind(this)
+    )
 }
 level7Handler= ()=>{
-    
+    const sheetsData = [...this.state.sheetsData];
+    const filteredData = sheetsData.filter(function (obj) {
+        return obj.level == 'Filtra Tutti I Rossi'
+    })
+    console.log(filteredData)
+    this.setState({
+        filteredData: filteredData
+    }, function () {
+        if (this.state.lastFilter === 'Cycles') {
+            this.cyclesDataHandler()
+        } else if (this.state.lastFilter === 'Instructions') {
+            this.instructionsDataHandler()
+        } else if (this.state.lastFilter === 'Functions') {
+            this.functionsDataHandler()
+        } else if (this.state.lastFilter === 'Loops') {
+            this.loopsDataHandler()
+        } else if (this.state.lastFilter === 'PickDrop') {
+            this.pickdropDataHandler()
+        } else if (this.state.lastFilter === 'Movement') {
+            this.movementDataHandler()
+        }
+    }.bind(this)
+    )
+
 }
 level8Handler= ()=>{
-    
+    const sheetsData = [...this.state.sheetsData];
+    const filteredData = sheetsData.filter(function (obj) {
+        return obj.level == 'Copia'
+    })
+
+    this.setState({
+        filteredData: filteredData
+    }, function () {
+        if (this.state.lastFilter === 'Cycles') {
+            this.cyclesDataHandler()
+        } else if (this.state.lastFilter === 'Instructions') {
+            this.instructionsDataHandler()
+        } else if (this.state.lastFilter === 'Functions') {
+            this.functionsDataHandler()
+        } else if (this.state.lastFilter === 'Loops') {
+            this.loopsDataHandler()
+        } else if (this.state.lastFilter === 'PickDrop') {
+            this.pickdropDataHandler()
+        } else if (this.state.lastFilter === 'Movement') {
+            this.movementDataHandler()
+        }
+    }.bind(this)
+    )
 }
 level9Handler= ()=>{
-    
+    const sheetsData = [...this.state.sheetsData];
+    const filteredData = sheetsData.filter(function (obj) {
+        return obj.level == 'Cattura il Cubo'
+    })
+
+    this.setState({
+        filteredData: filteredData
+    }, function () {
+        if (this.state.lastFilter === 'Cycles') {
+            this.cyclesDataHandler()
+        } else if (this.state.lastFilter === 'Instructions') {
+            this.instructionsDataHandler()
+        } else if (this.state.lastFilter === 'Functions') {
+            this.functionsDataHandler()
+        } else if (this.state.lastFilter === 'Loops') {
+            this.loopsDataHandler()
+        } else if (this.state.lastFilter === 'PickDrop') {
+            this.pickdropDataHandler()
+        } else if (this.state.lastFilter === 'Movement') {
+            this.movementDataHandler()
+        }
+    }.bind(this)
+    ) 
 }
 level10Handler= ()=>{
-    
+    const sheetsData = [...this.state.sheetsData];
+    const filteredData = sheetsData.filter(function (obj) {
+        return obj.level == 'Scatter'
+    })
+
+    this.setState({
+        filteredData: filteredData
+    }, function () {
+        if (this.state.lastFilter === 'Cycles') {
+            this.cyclesDataHandler()
+        } else if (this.state.lastFilter === 'Instructions') {
+            this.instructionsDataHandler()
+        } else if (this.state.lastFilter === 'Functions') {
+            this.functionsDataHandler()
+        } else if (this.state.lastFilter === 'Loops') {
+            this.loopsDataHandler()
+        } else if (this.state.lastFilter === 'PickDrop') {
+            this.pickdropDataHandler()
+        } else if (this.state.lastFilter === 'Movement') {
+            this.movementDataHandler()
+        }
+    }.bind(this)
+    )
 }
 level11Handler= ()=>{
-    
+    const sheetsData = [...this.state.sheetsData];
+    const filteredData = sheetsData.filter(function (obj) {
+        return obj.level == 'Alterna'
+    })
+
+    this.setState({
+        filteredData: filteredData
+    }, function () {
+        if (this.state.lastFilter === 'Cycles') {
+            this.cyclesDataHandler()
+        } else if (this.state.lastFilter === 'Instructions') {
+            this.instructionsDataHandler()
+        } else if (this.state.lastFilter === 'Functions') {
+            this.functionsDataHandler()
+        } else if (this.state.lastFilter === 'Loops') {
+            this.loopsDataHandler()
+        } else if (this.state.lastFilter === 'PickDrop') {
+            this.pickdropDataHandler()
+        } else if (this.state.lastFilter === 'Movement') {
+            this.movementDataHandler()
+        }
+    }.bind(this)
+    )
 }
 
 render() {
