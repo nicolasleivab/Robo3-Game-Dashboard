@@ -14,7 +14,7 @@ class Dashboard extends Component {
         },
     };
 // Fetch Google Sheets data 1 (restricted api key)
-componentWillMount(){
+componentDidMount(){
     fetch("https://sheets.googleapis.com/v4/spreadsheets/10g_TGtruCriERlXJurPZQk76pvk30U0pkWgbbfzPrjA/values/Sheet1?key=AIzaSyArugq6TlxJTJHM-qWEe420k2xH3U0obxg")
         .then(res => res.json())
         .then(

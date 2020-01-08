@@ -4,7 +4,7 @@ import styles from './GroupedChart.module.css';
 import DropdownUI from '../DropdownUI/DropdownUI';
 import AutocompleteUI from '../AutocompleteUI/AutocompleteUI';
 
-class GroupedChart extends React.Component {
+class GroupedChart extends Component {
 
 state = {
     sheetsData: [],
@@ -68,7 +68,7 @@ state = {
 };
 
 // Fetch Google Sheets data 2 (restricted api key)
-componentWillMount(){
+componentDidMount(){
     fetch("https://sheets.googleapis.com/v4/spreadsheets/1evjoQPchLR8iUhjQQ8i56hy6Df5z7K_eVSWs8yVugC4/values/Sheet1?key=AIzaSyArugq6TlxJTJHM-qWEe420k2xH3U0obxg")
         .then(res => res.json())
         .then(

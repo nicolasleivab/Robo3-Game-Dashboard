@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactApexChart from "react-apexcharts";
 import styles from './BarChart.module.css';
 
-class BarChart extends React.Component {
+class BarChart extends Component {
 
 state = {
     sheetsData: [],
