@@ -3,6 +3,7 @@ import ReactApexChart from "react-apexcharts";
 import styles from './Histogram.module.css';
 import DropdownUI from '../DropdownUI/DropdownUI';
 import DropdownLevel from '../DropdownLevel/DropdownLevel';
+import PieChart from '../PieChart/PieChart';
 
 //let sheetsData = JSON.parse(localStorage.getItem('sheetsData1'));
 
@@ -770,6 +771,7 @@ render() {
             options={this.state.options} 
             series={this.state.series} 
             type="histogram" height={350} />
+            <PieChart/>
         </div>
     );
   }
