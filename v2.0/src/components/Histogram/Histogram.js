@@ -12,6 +12,7 @@ class Histogram extends Component {
 state = {
     sheetsData: [],
     filteredData: [],
+    pieSeries: [],
     lastFilter: 'Cycles',
     series: [{
         name: 'Frequency',
@@ -135,14 +136,24 @@ componentDidMount() {
                 const newOptions = { ...this.state.options };
                 newOptions.xaxis.categories = newCategories;
                 console.log(sheetsData);
-
-                console.log(groupedCycles);
+                //Pie data series
+                const pieData = [];
+                let sumFunc = 0, sumLoops = 0, sumPD = 0, sumMov = 0;
+                for(let i=0; i<sheetsData.length; i++){
+                    sumFunc = sumFunc + sheetsData[i]['Functions'];
+                    sumLoops = sumLoops + sheetsData[i]['Loops'];
+                    sumPD = sumPD + sheetsData[i]['PickDrop'];
+                    sumMov = sumMov + sheetsData[i]['Movement'];
+                }
+                pieData.push(sumFunc, sumLoops, sumPD, sumMov);
+                console.log(pieData);
                 this.setState({
                     sheetsData: sheetsData,
                     filteredData: sheetsData,
                     lastFilter: 'Cycles',
                     series: newSeries,
-                    options: newOptions
+                    options: newOptions,
+                    pieSeries: pieData
 
                 })
             },
@@ -442,6 +453,20 @@ movementDataHandler = ()=>{
     })
 }
 
+//calculate pie series func
+sumPieData = (filteredData)=>{
+const pieData = [];
+let sumFunc = 0, sumLoops = 0, sumPD = 0, sumMov = 0;
+for (let i = 0; i < filteredData.length; i++) {
+    sumFunc = sumFunc + filteredData[i]['Functions'];
+    sumLoops = sumLoops + filteredData[i]['Loops'];
+    sumPD = sumPD + filteredData[i]['PickDrop'];
+    sumMov = sumMov + filteredData[i]['Movement'];
+}
+pieData.push(sumFunc, sumLoops, sumPD, sumMov);
+return pieData;
+}
+
 /* Level Data Filter Handlers */
 allLevelsHandler= ()=>{
     const filteredData = [...this.state.sheetsData];
@@ -470,10 +495,12 @@ level1Handler= ()=>{
     const filteredData = sheetsData.filter( function(obj){
         return obj.level == 'Hello, world!!!'
     })
-
-    console.log(filteredData)
+    //Pie data series
+    const pieData = this.sumPieData(filteredData);
+    
     this.setState({
         filteredData: filteredData,
+        pieSeries: pieData
     }, function () { 
         if(this.state.lastFilter === 'Cycles'){
             this.cyclesDataHandler()
@@ -495,9 +522,12 @@ level2Handler= ()=>{
     const filteredData = sheetsData.filter(function (obj) {
         return obj.level == 'Inverti'
     })
+    //Pie data series
+    const pieData = this.sumPieData(filteredData);
 
     this.setState({
-        filteredData: filteredData
+        filteredData: filteredData,
+        pieSeries: pieData
     }, function () {
         if (this.state.lastFilter === 'Cycles') {
             this.cyclesDataHandler()
@@ -520,9 +550,12 @@ level3Handler= ()=>{
     const filteredData = sheetsData.filter(function (obj) {
         return obj.level == 'Inverti i Pari'
     })
+    //Pie data series
+    const pieData = this.sumPieData(filteredData);
 
     this.setState({
-        filteredData: filteredData
+        filteredData: filteredData,
+        pieSeries: pieData
     }, function () {
         if (this.state.lastFilter === 'Cycles') {
             this.cyclesDataHandler()
@@ -545,9 +578,12 @@ level4Handler= ()=>{
     const filteredData = sheetsData.filter(function (obj) {
         return obj.level == 'Concatena'
     })
+    //Pie data series
+    const pieData = this.sumPieData(filteredData);
 
     this.setState({
-        filteredData: filteredData
+        filteredData: filteredData,
+        pieSeries: pieData
     }, function () {
         if (this.state.lastFilter === 'Cycles') {
             this.cyclesDataHandler()
@@ -570,9 +606,12 @@ level5Handler= ()=>{
     const filteredData = sheetsData.filter(function (obj) {
         return obj.level == 'Filtro Rosso'
     })
+    //Pie data series
+    const pieData = this.sumPieData(filteredData);
 
     this.setState({
-        filteredData: filteredData
+        filteredData: filteredData,
+        pieSeries: pieData
     }, function () {
         if (this.state.lastFilter === 'Cycles') {
             this.cyclesDataHandler()
@@ -595,9 +634,12 @@ level6Handler= ()=>{
     const filteredData = sheetsData.filter(function (obj) {
         return obj.level == 'Filtro Doppio Rosso'
     })
+    //Pie data series
+    const pieData = this.sumPieData(filteredData);
 
     this.setState({
-        filteredData: filteredData
+        filteredData: filteredData,
+        pieSeries: pieData
     }, function () {
         if (this.state.lastFilter === 'Cycles') {
             this.cyclesDataHandler()
@@ -620,9 +662,12 @@ level7Handler= ()=>{
     const filteredData = sheetsData.filter(function (obj) {
         return obj.level == 'Filtra Tutti I Rossi'
     })
-    console.log(filteredData)
+    //Pie data series
+    const pieData = this.sumPieData(filteredData);
+
     this.setState({
-        filteredData: filteredData
+        filteredData: filteredData,
+        pieSeries: pieData
     }, function () {
         if (this.state.lastFilter === 'Cycles') {
             this.cyclesDataHandler()
@@ -646,9 +691,12 @@ level8Handler= ()=>{
     const filteredData = sheetsData.filter(function (obj) {
         return obj.level == 'Copia'
     })
+    //Pie data series
+    const pieData = this.sumPieData(filteredData);
 
     this.setState({
-        filteredData: filteredData
+        filteredData: filteredData,
+        pieSeries: pieData
     }, function () {
         if (this.state.lastFilter === 'Cycles') {
             this.cyclesDataHandler()
@@ -671,9 +719,12 @@ level9Handler= ()=>{
     const filteredData = sheetsData.filter(function (obj) {
         return obj.level == 'Cattura il Cubo'
     })
+    //Pie data series
+    const pieData = this.sumPieData(filteredData);
 
     this.setState({
-        filteredData: filteredData
+        filteredData: filteredData,
+        pieSeries: pieData
     }, function () {
         if (this.state.lastFilter === 'Cycles') {
             this.cyclesDataHandler()
@@ -696,9 +747,12 @@ level10Handler= ()=>{
     const filteredData = sheetsData.filter(function (obj) {
         return obj.level == 'Scatter'
     })
+    //Pie data series
+    const pieData = this.sumPieData(filteredData);
 
     this.setState({
-        filteredData: filteredData
+        filteredData: filteredData,
+        pieSeries: pieData
     }, function () {
         if (this.state.lastFilter === 'Cycles') {
             this.cyclesDataHandler()
@@ -721,9 +775,12 @@ level11Handler= ()=>{
     const filteredData = sheetsData.filter(function (obj) {
         return obj.level == 'Alterna'
     })
+    //Pie data series
+    const pieData = this.sumPieData(filteredData);
 
     this.setState({
-        filteredData: filteredData
+        filteredData: filteredData,
+        pieSeries: pieData
     }, function () {
         if (this.state.lastFilter === 'Cycles') {
             this.cyclesDataHandler()
@@ -771,7 +828,9 @@ render() {
             options={this.state.options} 
             series={this.state.series} 
             type="histogram" height={350} />
-            <PieChart/>
+            <PieChart
+                series={this.state.pieSeries}
+            />
         </div>
     );
   }

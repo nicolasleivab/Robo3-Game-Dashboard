@@ -33,7 +33,7 @@ render() {
     return (
 
     <div id="chart">
-        <ReactApexChart options={this.state.options} series={this.state.series} type="pie" width={380} />
+        <ReactApexChart options={this.state.options} series={this.props.series} type="pie" width={380} />
     </div>
 
     );
