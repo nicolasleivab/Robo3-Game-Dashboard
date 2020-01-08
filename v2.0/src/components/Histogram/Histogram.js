@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactApexChart from "react-apexcharts";
 import styles from './Histogram.module.css';
 import DropdownUI from '../DropdownUI/DropdownUI';
+import DropdownLevel from '../DropdownLevel/DropdownLevel';
 
 //let sheetsData = JSON.parse(localStorage.getItem('sheetsData1'));
 
@@ -37,9 +38,6 @@ state = {
             axisBorder: {
                 show: false
             },
-            axisTicks: {
-                show: false
-            }, 
             labels: {
                 offsetX: 16,
                 offsetY: -5
@@ -66,7 +64,7 @@ state = {
 };
 
 // Fetch Google Sheets data 2 (restricted api key)
-componentWillMount() {
+componentDidMount() {
     fetch("https://sheets.googleapis.com/v4/spreadsheets/10g_TGtruCriERlXJurPZQk76pvk30U0pkWgbbfzPrjA/values/Sheet1?key=AIzaSyArugq6TlxJTJHM-qWEe420k2xH3U0obxg")
         .then(res => res.json())
         .then(
@@ -154,7 +152,7 @@ componentWillMount() {
         )
 
 }
-
+/* Instructions Data Filter Handlers */
 cyclesDataHandler = ()=>{
     const cyclesArray = [];
     const sheetsData = [...this.state.sheetsData];
@@ -408,9 +406,13 @@ movementDataHandler = ()=>{
     })
 }
 
+/* Levels Data Filter Handlers */
+
+
 render() {
     return (
         <div className={styles.Histogram}>
+            <DropdownLevel></DropdownLevel>
             <DropdownUI
                 cyclesDataHandler={this.cyclesDataHandler}
                 instructionsDataHandler={this.instructionsDataHandler}
