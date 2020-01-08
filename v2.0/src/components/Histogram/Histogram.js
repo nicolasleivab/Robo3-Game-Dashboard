@@ -3,6 +3,8 @@ import ReactApexChart from "react-apexcharts";
 import styles from './Histogram.module.css';
 import DropdownUI from '../DropdownUI/DropdownUI';
 
+//let sheetsData = JSON.parse(localStorage.getItem('sheetsData1'));
+
 class Histogram extends Component {
 
 state = {
@@ -10,7 +12,7 @@ state = {
     filteredData: [],
     series: [{
         name: 'Frequency',
-        data: [0, 0, 0, 0, 0, 0, 0]
+        data: [0, 0, 0, 0, 0, 0]
     }],
     options : {
         chart: {
@@ -31,7 +33,7 @@ state = {
             }
         },
         xaxis: {
-            categories: [0, 10, 20, 30, 40, 50, 60],
+            categories: [0, 10, 20, 30, 40, 50],
             axisBorder: {
                 show: false
             },
@@ -39,7 +41,7 @@ state = {
                 show: false
             }, 
             labels: {
-                offsetX: 15,
+                offsetX: 16,
                 offsetY: -5
             }
         },
@@ -64,7 +66,7 @@ state = {
 };
 
 // Fetch Google Sheets data 2 (restricted api key)
-componentDidMount() {
+componentWillMount() {
     fetch("https://sheets.googleapis.com/v4/spreadsheets/10g_TGtruCriERlXJurPZQk76pvk30U0pkWgbbfzPrjA/values/Sheet1?key=AIzaSyArugq6TlxJTJHM-qWEe420k2xH3U0obxg")
         .then(res => res.json())
         .then(
@@ -106,7 +108,7 @@ componentDidMount() {
                 //calculate the range of each bin
                 const minR = Math.min(...cyclesArray);
                 const maxR = Math.max(...cyclesArray);
-                const rangeSize = Math.ceil((maxR - minR) / 7);
+                const rangeSize = Math.ceil((maxR - minR) / 6);
                 console.log(rangeSize);
                 const groupedCycles = [];
                 const newCategories = [];
@@ -132,7 +134,7 @@ componentDidMount() {
                 //copy options object to change state in an immutable fashion
                 const newOptions = { ...this.state.options };
                 newOptions.xaxis.categories = newCategories;
-                console.log(newCategories);
+                console.log(newOptions);
 
                 console.log(groupedCycles);
                 this.setState({
@@ -154,22 +156,256 @@ componentDidMount() {
 }
 
 cyclesDataHandler = ()=>{
-    console.log('cyc')
+    const cyclesArray = [];
+    const sheetsData = [...this.state.sheetsData];
+    sheetsData.forEach(function (d) {
+        cyclesArray.push(d.Cycles)
+    })
+    //calculate the range of each bin
+    const minR = Math.min(...cyclesArray);
+    const maxR = Math.max(...cyclesArray);
+    const rangeSize = Math.ceil((maxR - minR) / 6);
+   
+    const groupedCycles = [];
+    const newCategories = [];
+    //first loop for ranges
+    for (let i = minR; i <= maxR; i = i + rangeSize) {
+        let limit = i + rangeSize;
+        let n = 0;
+        //get each new category
+        newCategories.push(limit);
+        //nested loop for pushing the counter for each range
+        for (let j = 0; j < cyclesArray.length; j++) {
+            if (cyclesArray[j] >= i && cyclesArray[j] < limit) {
+                n = n + 1;
+            }
+        }
+        groupedCycles.push(n);
+    }
+    console.log(newCategories)
+    const newSeries = [{
+        name: "Cycles Frequency",
+        data: groupedCycles
+    }];
+    //copy options object to change state in an immutable fashion
+    const newOptions = { ...this.state.options };
+    newOptions.xaxis.categories = newCategories;
+
+    this.setState({
+        series: newSeries,
+        options: newOptions
+
+    })
 }
 instructionsDataHandler = ()=>{
-    console.log('inst')
+    const instructionsArray = [];
+    const sheetsData = [...this.state.sheetsData];
+    sheetsData.forEach(function (d) {
+        instructionsArray.push(d.Instructions)
+    })
+    //calculate the range of each bin
+    const minR = Math.min(...instructionsArray);
+    const maxR = Math.max(...instructionsArray);
+    const rangeSize = Math.ceil((maxR - minR) / 6);
+
+    const groupedInstructions = [];
+    const newCategories = [];
+    //first loop for ranges
+    for (let i = minR; i <= maxR; i = i + rangeSize) {
+        let limit = i + rangeSize;
+        let n = 0;
+        //get each new category
+        newCategories.push(limit);
+        //nested loop for pushing the counter for each range
+        for (let j = 0; j < instructionsArray.length; j++) {
+            if (instructionsArray[j] >= i && instructionsArray[j] < limit) {
+                n = n + 1;
+            }
+        }
+        groupedInstructions.push(n);
+    }
+    console.log(newCategories)
+    const newSeries = [{
+        name: "Cycles Frequency",
+        data: groupedInstructions
+    }];
+    //copy options object to change state in an immutable fashion
+    const newOptions = { ...this.state.options };
+    newOptions.xaxis.categories = newCategories;
+
+    this.setState({
+        series: newSeries,
+        options: newOptions
+
+    })
 }
 functionsDataHandler = ()=>{
-    console.log('func')
+    const functiosnArray = [];
+    const sheetsData = [...this.state.sheetsData];
+    sheetsData.forEach(function (d) {
+        functiosnArray.push(d.Functions)
+    })
+    //calculate the range of each bin
+    const minR = Math.min(...functiosnArray);
+    const maxR = Math.max(...functiosnArray);
+    const rangeSize = Math.ceil((maxR - minR) / 6);
+
+    const groupedFunctions = [];
+    const newCategories = [];
+    //first loop for ranges
+    for (let i = minR; i <= maxR; i = i + rangeSize) {
+        let limit = i + rangeSize;
+        let n = 0;
+        //get each new category
+        newCategories.push(limit);
+        //nested loop for pushing the counter for each range
+        for (let j = 0; j < functiosnArray.length; j++) {
+            if (functiosnArray[j] >= i && functiosnArray[j] < limit) {
+                n = n + 1;
+            }
+        }
+        groupedFunctions.push(n);
+    }
+    console.log(newCategories)
+    const newSeries = [{
+        name: "Cycles Frequency",
+        data: groupedFunctions
+    }];
+    //copy options object to change state in an immutable fashion
+    const newOptions = { ...this.state.options };
+    newOptions.xaxis.categories = newCategories;
+
+    this.setState({
+        series: newSeries,
+        options: newOptions
+
+    })
 }
 loopsDataHandler = ()=>{
-    console.log('loops')
+    const loopsArray = [];
+    const sheetsData = [...this.state.sheetsData];
+    sheetsData.forEach(function (d) {
+        loopsArray.push(d.Loops)
+    })
+    //calculate the range of each bin
+    const minR = Math.min(...loopsArray);
+    const maxR = Math.max(...loopsArray);
+    const rangeSize = Math.ceil((maxR - minR) / 6);
+
+    const groupedLoops = [];
+    const newCategories = [];
+    //first loop for ranges
+    for (let i = minR; i <= maxR; i = i + rangeSize) {
+        let limit = i + rangeSize;
+        let n = 0;
+        //get each new category
+        newCategories.push(limit);
+        //nested loop for pushing the counter for each range
+        for (let j = 0; j < loopsArray.length; j++) {
+            if (loopsArray[j] >= i && loopsArray[j] < limit) {
+                n = n + 1;
+            }
+        }
+        groupedLoops.push(n);
+    }
+    console.log(newCategories)
+    const newSeries = [{
+        name: "Cycles Frequency",
+        data: groupedLoops
+    }];
+    //copy options object to change state in an immutable fashion
+    const newOptions = { ...this.state.options };
+    newOptions.xaxis.categories = newCategories;
+
+    this.setState({
+        series: newSeries,
+        options: newOptions
+
+    })
 }
 pickdropDataHandler = ()=>{
-    console.log('pick')
+    const pdArray = [];
+    const sheetsData = [...this.state.sheetsData];
+    sheetsData.forEach(function (d) {
+        pdArray.push(d.PickDrop)
+    })
+    //calculate the range of each bin
+    const minR = Math.min(...pdArray);
+    const maxR = Math.max(...pdArray);
+    const rangeSize = Math.ceil((maxR - minR) / 6);
+
+    const groupedPD = [];
+    const newCategories = [];
+    //first loop for ranges
+    for (let i = minR; i <= maxR; i = i + rangeSize) {
+        let limit = i + rangeSize;
+        let n = 0;
+        //get each new category
+        newCategories.push(limit);
+        //nested loop for pushing the counter for each range
+        for (let j = 0; j < pdArray.length; j++) {
+            if (pdArray[j] >= i && pdArray[j] < limit) {
+                n = n + 1;
+            }
+        }
+        groupedPD.push(n);
+    }
+    console.log(newCategories)
+    const newSeries = [{
+        name: "Cycles Frequency",
+        data: groupedPD
+    }];
+    //copy options object to change state in an immutable fashion
+    const newOptions = { ...this.state.options };
+    newOptions.xaxis.categories = newCategories;
+
+    this.setState({
+        series: newSeries,
+        options: newOptions
+
+    })
 }
 movementDataHandler = ()=>{
-    console.log('mov')
+    const movArray = [];
+    const sheetsData = [...this.state.sheetsData];
+    sheetsData.forEach(function (d) {
+        movArray.push(d.Movement)
+    })
+    //calculate the range of each bin
+    const minR = Math.min(...movArray);
+    const maxR = Math.max(...movArray);
+    const rangeSize = Math.ceil((maxR - minR) / 6);
+
+    const groupedMov = [];
+    const newCategories = [];
+    //first loop for ranges
+    for (let i = minR; i <= maxR; i = i + rangeSize) {
+        let limit = i + rangeSize;
+        let n = 0;
+        //get each new category
+        newCategories.push(limit);
+        //nested loop for pushing the counter for each range
+        for (let j = 0; j < movArray.length; j++) {
+            if (movArray[j] >= i && movArray[j] < limit) {
+                n = n + 1;
+            }
+        }
+        groupedMov.push(n);
+    }
+    console.log(newCategories)
+    const newSeries = [{
+        name: "Cycles Frequency",
+        data: groupedMov
+    }];
+    //copy options object to change state in an immutable fashion
+    const newOptions = { ...this.state.options };
+    newOptions.xaxis.categories = newCategories;
+
+    this.setState({
+        series: newSeries,
+        options: newOptions
+
+    })
 }
 
 render() {
