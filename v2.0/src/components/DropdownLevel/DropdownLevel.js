@@ -9,7 +9,7 @@ import styles from './DropdownLevel.module.css';
 const useStyles = makeStyles(theme => ({
     formControl: {
         margin: theme.spacing(1),
-        minWidth: 120,
+        minWidth: 150,
     },
     selectEmpty: {
         marginTop: theme.spacing(2),
@@ -56,7 +56,7 @@ export default function DropdownLevel(props) {
     };
 
     return (
-        <div className={styles.DropdownUI}>
+        <div className={styles.DropdownLevel}>
             <FormControl variant="outlined" className={classes.formControl}>
                 <InputLabel ref={inputLabel} id="demo-simple-select-outlined-label">
                     Level

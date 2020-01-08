@@ -1,4 +1,23 @@
 .Histogram{
-    width: 75rem;
-    margin: 5rem auto;
+    width: 40rem;
+    margin: 11rem 0 0 8rem;
+}
+.PieChart{
+    margin: 10rem 0 0 10rem;
+}
+.Wrapper{
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media only screen and (max-width: 1024px) {
+    .Wrapper{
+        display: inline;
+        margin: auto;
+    }
+    .PieChart{
+        margin: 1rem 0 0 20rem;
+    }
 }

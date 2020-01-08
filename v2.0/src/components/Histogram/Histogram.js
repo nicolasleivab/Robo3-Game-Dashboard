@@ -801,6 +801,7 @@ level11Handler= ()=>{
 
 render() {
     return (
+        <div className={styles.Wrapper}>
         <div className={styles.Histogram}>
             <DropdownLevel
                 allLevelsHandler={this.allLevelsHandler}
@@ -827,10 +828,14 @@ render() {
             <ReactApexChart 
             options={this.state.options} 
             series={this.state.series} 
-            type="histogram" height={350} />
+            type="histogram" height={350} 
+            />
+            </div>
+            <div className={styles.PieChart}>
             <PieChart
                 series={this.state.pieSeries}
             />
+        </div>
         </div>
     );
   }

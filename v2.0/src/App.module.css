@@ -11,10 +11,10 @@
 @import url('https://fonts.googleapis.com/css?family=Titillium+Web&display=swap');
 
 html{
-    font-size: 62.5%; /* 10px */
+    font-size: 90%;
 }
 
 body{
     font-family:  'Titillium Web' , sans-serif;
-    font-size: 1.6rem;
+    font-size: 1.1rem;
 }

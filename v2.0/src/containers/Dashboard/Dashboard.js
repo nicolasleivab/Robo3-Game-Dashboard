@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import GroupedChart from '../../components/GroupedChart/GroupedChart';
 import BarChart from '../../components/BarChart/BarChart';
 import Histogram from '../../components/Histogram/Histogram';
+import styles from './Dashboard.module.css';
 
 class Dashboard extends Component {
     state = {
@@ -100,11 +101,11 @@ componentDidMount(){
     render(){
     return <div>
     <Histogram/>
+    <GroupedChart/>
     <BarChart
         barChartSeries={this.state.barChartSeries}
         categories={this.state.options}
     />
-    <GroupedChart/>
     </div>
     }
 }

@@ -18,7 +18,7 @@ render() {
                 options={this.props.students}
                 getOptionLabel={option => option}
                 value={this.props.currentStudent}
-                style={{ width: 130 }}
+                style={{ width: 200 }}
                 onKeyDown={this.keySubmit}
                 renderInput={params => (
                     <TextField {...params} label="Filter by Person Code" variant="outlined" fullWidth />
