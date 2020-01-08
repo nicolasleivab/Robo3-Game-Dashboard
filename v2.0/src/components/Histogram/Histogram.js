@@ -245,9 +245,11 @@ instructionsDataHandler = ()=>{
 functionsDataHandler = ()=>{
     const functiosnArray = [];
     const sheetsData = [...this.state.filteredData];
+    if (sheetsData.some(e => e.Functions > 0)) {
     sheetsData.forEach(function (d) {
         functiosnArray.push(d.Functions)
     })
+
     //calculate the range of each bin
     const minR = Math.min(...functiosnArray);
     const maxR = Math.max(...functiosnArray);
@@ -277,17 +279,30 @@ functionsDataHandler = ()=>{
     //copy options object to change state in an immutable fashion
     const newOptions = { ...this.state.options };
     newOptions.xaxis.categories = newCategories;
-
+    
     this.setState({
         series: newSeries,
         options: newOptions,
         lastFilter: 'Functions'
 
     })
+    }else{
+        const newSeries = [{
+            name: "Frequency",
+            data: [0]
+        }];
+        this.setState({
+            series: newSeries,
+            lastFilter: 'Functions'
+
+        }) 
+    }
 }
 loopsDataHandler = ()=>{
     const loopsArray = [];
     const sheetsData = [...this.state.filteredData];
+
+    if (sheetsData.some(e => e.Loops > 0)) {
     sheetsData.forEach(function (d) {
         loopsArray.push(d.Loops)
     })
@@ -327,6 +342,17 @@ loopsDataHandler = ()=>{
         lastFilter: 'Loops'
 
     })
+    }else{
+        const newSeries = [{
+            name: "Frequency",
+            data: [0]
+        }];
+        this.setState({
+            series: newSeries,
+            lastFilter: 'Functions'
+
+        }) 
+    }
 }
 pickdropDataHandler = ()=>{
     const pdArray = [];
@@ -421,8 +447,22 @@ allLevelsHandler= ()=>{
    
     this.setState({
         filteredData: filteredData,
-    }, function () { this.cyclesDataHandler() }.bind(this))
-    
+    }, function () {
+        if (this.state.lastFilter === 'Cycles') {
+            this.cyclesDataHandler()
+        } else if (this.state.lastFilter === 'Instructions') {
+            this.instructionsDataHandler()
+        } else if (this.state.lastFilter === 'Functions') {
+            this.functionsDataHandler()
+        } else if (this.state.lastFilter === 'Loops') {
+            this.loopsDataHandler()
+        } else if (this.state.lastFilter === 'PickDrop') {
+            this.pickdropDataHandler()
+        } else if (this.state.lastFilter === 'Movement') {
+            this.movementDataHandler()
+        }
+    }.bind(this)
+    )   
 }
 level1Handler= ()=>{
     const sheetsData = [...this.state.sheetsData];
