@@ -2,3 +2,8 @@
     width: 60rem;
     margin: 5rem auto;
 }
+@media only screen and (max-width: 1024px) {
+    .BarChart{
+        width: 90%;
+    }
+}
