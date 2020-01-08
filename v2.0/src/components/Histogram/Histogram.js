@@ -407,12 +407,60 @@ movementDataHandler = ()=>{
 }
 
 /* Levels Data Filter Handlers */
+allLevelsHandler= ()=>{
 
+}
+level1Handler= ()=>{
+    
+}
+level2Handler= ()=>{
+    
+}
+level3Handler= ()=>{
+    
+}
+level4Handler= ()=>{
+    
+}
+level5Handler= ()=>{
+    
+}
+level6Handler= ()=>{
+    
+}
+level7Handler= ()=>{
+    
+}
+level8Handler= ()=>{
+    
+}
+level9Handler= ()=>{
+    
+}
+level10Handler= ()=>{
+    
+}
+level11Handler= ()=>{
+    
+}
 
 render() {
     return (
         <div className={styles.Histogram}>
-            <DropdownLevel></DropdownLevel>
+            <DropdownLevel
+                allLevelsHandler={this.allLevelsHandler}
+                level1Handler={this.level1Handler}
+                level2Handler={this.level2Handler}
+                level3Handler={this.level3Handler}
+                level4Handler={this.level4Handler}
+                level5Handler={this.level5Handler}
+                level6Handler={this.level6Handler}
+                level7Handler={this.level7Handler}
+                level8Handler={this.level8Handler}
+                level9Handler={this.level9Handler}
+                level10Handler={this.level10Handler}
+                level11Handler={this.level11Handler}
+                />
             <DropdownUI
                 cyclesDataHandler={this.cyclesDataHandler}
                 instructionsDataHandler={this.instructionsDataHandler}
