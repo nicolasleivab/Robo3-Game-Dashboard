@@ -4,25 +4,68 @@
   position: fixed;
   z-index: 99 !important;;
   left: 0;
+  top: 0;
+  color: #fff;
   background-color: #383838;
   border-right: solid #808080 1.5px;
   overflow-x: hidden;
-  padding-top: 20px;
   text-align: center;
   align-content: center;
 }
-
+.Nav a {
+  color: #FFF;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 2rem;
+}
+.Nav p{
+    margin: 2rem 0 0 0
+}
+.hoverBack{
+    width: 100px;
+}
+.hoverBack:hover {
+  background-color: #808080;
+}
+.Title{
+    visibility: hidden;
+}
 @media only screen and (max-width: 1200px) {
     .Nav {
+        display: flex; 
         height: 100px;
         width: 100%;
         position: fixed;
         z-index: 99 !important;;
         top: 0;
         overflow-x: hidden;
-        text-align: center;
-        align-content: center;
+        justify-content: center;
         border-right: 0px;
         border-bottom: solid #808080 1.5px;
+}
+    .hoverBack{
+        height: 100%;
+}
+    .Nav p{
+        margin: 2rem 0.5rem 0 0
+}
+}
+
+@media only screen and (max-width: 767px) {
+    .Nav {
+        height: 0;
+        width: 0;
+}
+    .hoverBack{
+        height: 100%;
+}
+    .Nav p{
+        margin: 2rem 0.5rem 0 0
+}
+    .Title{
+    visibility: visible;
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 1.5rem;
 }
 }

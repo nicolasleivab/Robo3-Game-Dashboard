@@ -57,7 +57,8 @@ state = {
 
 render() {
     return (
-        <div className={styles.BarChart}>
+        <div className={styles.BarChart} id='BarChart'>
+            <p>Success Probability</p>
             <ReactApexChart 
             options={{...this.state.options, ...this.props.categories}} 
             series={this.props.barChartSeries} 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import styles from './AutocompleteUI.module.css';
 
 class AutocompleteUI extends Component {
 
@@ -12,7 +13,7 @@ keySubmit = (e)=>{
 
 render() {
     return (
-        <div>
+        <div className={styles.AutocompleteUI}>
             <Autocomplete
                 id="student-autocomplete"
                 options={this.props.students}

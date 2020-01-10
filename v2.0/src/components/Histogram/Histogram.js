@@ -470,9 +470,12 @@ return pieData;
 /* Level Data Filter Handlers */
 allLevelsHandler= ()=>{
     const filteredData = [...this.state.sheetsData];
+    //Pie data series
+    const pieData = this.sumPieData(filteredData);
    
     this.setState({
         filteredData: filteredData,
+        pieSeries: pieData
     }, function () {
         if (this.state.lastFilter === 'Cycles') {
             this.cyclesDataHandler()
@@ -803,6 +806,8 @@ render() {
     return (
         <div className={styles.Wrapper}>
         <div className={styles.Histogram}>
+                <p>Distribution per Level</p>
+            <div className={styles.Container}>
             <DropdownLevel
                 allLevelsHandler={this.allLevelsHandler}
                 level1Handler={this.level1Handler}
@@ -825,6 +830,7 @@ render() {
                 pickdropDataHandler={this.pickdropDataHandler}
                 movementDataHandler={this.movementDataHandler}
             />
+            </div>
             <ReactApexChart 
             options={this.state.options} 
             series={this.state.series} 

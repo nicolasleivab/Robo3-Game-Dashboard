@@ -404,7 +404,9 @@ filterByStudent = ()=>{
 
 render() {
     return (
-        <div className={styles.GroupedChart}>
+        <div className={styles.GroupedChart} id='GroupedChart'>
+            <p>Solutions</p>
+        <div className={styles.Container}>
         <AutocompleteUI
             students={this.state.allStudents}
             filterByStudent={this.filterByStudent}
@@ -418,7 +420,8 @@ render() {
                 pickdropDataHandler={this.pickdropDataHandler}
                 movementDataHandler={this.movementDataHandler}
         />
-        <div id="chart">
+        </div>
+        <div>
             <ReactApexChart options={this.state.options} series={this.state.series} type="bar" height={350} />
         </div>
         </div>

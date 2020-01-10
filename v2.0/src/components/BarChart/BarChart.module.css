@@ -2,6 +2,10 @@
     width: 60rem;
     margin: 5rem auto;
 }
+.BarChart p{
+    font-size: 1.7rem;
+    margin-bottom: 1rem;
+}
 @media only screen and (max-width: 1024px) {
     .BarChart{
         width: 90%;
