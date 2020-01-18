@@ -1,10 +1,11 @@
 import React from 'react';
 import Auxiliar from '../../hoc/Auxiliar';
 import styles from './Layout.module.css';
+import MobileNav from '../MobileNav/MobileNav';
 
 const layout = ( props ) =>(
     <Auxiliar>
-        <div className={styles.Title}>Robo3 Dashboard</div>
+        <MobileNav/>
         <div className={styles.Nav}>
             <p>Robo 3 Dashboard</p>
             <div className={styles.hoverBack}>
