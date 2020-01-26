@@ -20,12 +20,13 @@ state = {
     }],
     options : {
         chart: {
-            type: "histogram",
+            type: "bar",
             height: 350,
             foreColor: "#999",
         },
         plotOptions: {
             bar: {
+                columnWidth: '99%',
                 dataLabels: {
                     enabled: false
                 }
@@ -42,7 +43,7 @@ state = {
                 show: false
             },
             labels: {
-                offsetX: 16,
+                offsetX: 14,
                 offsetY: -5
             }
         },
@@ -132,9 +133,7 @@ componentDidMount() {
                     name: "Frequency",
                     data: groupedCycles
                 }];
-                //copy options object to change state in an immutable fashion
-                const newOptions = { ...this.state.options };
-                newOptions.xaxis.categories = newCategories;
+
                 console.log(sheetsData);
                 //Pie data series
                 const pieData = [];
@@ -152,7 +151,7 @@ componentDidMount() {
                     filteredData: sheetsData,
                     lastFilter: 'Cycles',
                     series: newSeries,
-                    options: newOptions,
+                    options: { xaxis: { categories: newCategories } },
                     pieSeries: pieData
 
                 })
@@ -200,13 +199,10 @@ cyclesDataHandler = ()=>{
         name: "Frequency",
         data: groupedCycles
     }];
-    //copy options object to change state in an immutable fashion
-    const newOptions = { ...this.state.options };
-    newOptions.xaxis.categories = newCategories;
 
     this.setState({
         series: newSeries,
-        options: newOptions,
+        options: { xaxis: { categories: newCategories } },
         lastFilter: 'Cycles'
 
     })
@@ -243,13 +239,10 @@ instructionsDataHandler = ()=>{
         name: "Frequency",
         data: groupedInstructions
     }];
-    //copy options object to change state in an immutable fashion
-    const newOptions = { ...this.state.options };
-    newOptions.xaxis.categories = newCategories;
 
     this.setState({
         series: newSeries,
-        options: newOptions,
+        options: { xaxis: { categories: newCategories } },
         lastFilter: 'Instructions'
 
     })
@@ -288,13 +281,10 @@ functionsDataHandler = ()=>{
         name: "Frequency",
         data: groupedFunctions
     }];
-    //copy options object to change state in an immutable fashion
-    const newOptions = { ...this.state.options };
-    newOptions.xaxis.categories = newCategories;
     
     this.setState({
         series: newSeries,
-        options: newOptions,
+        options: { xaxis: { categories: newCategories } },
         lastFilter: 'Functions'
 
     })
@@ -339,21 +329,20 @@ loopsDataHandler = ()=>{
         }
         groupedLoops.push(n);
     }
-    console.log(newCategories)
+    
     const newSeries = [{
         name: "Frequency",
         data: groupedLoops
     }];
-    //copy options object to change state in an immutable fashion
-    const newOptions = { ...this.state.options };
-    newOptions.xaxis.categories = newCategories;
 
     this.setState({
         series: newSeries,
-        options: newOptions,
+        options: { xaxis: { categories: newCategories } },
         lastFilter: 'Loops'
 
     })
+        console.log(newCategories)
+        console.log(this.state.options.xaxis.categories)
     }else{
         const newSeries = [{
             name: "Frequency",
@@ -398,13 +387,10 @@ pickdropDataHandler = ()=>{
         name: "Frequency",
         data: groupedPD
     }];
-    //copy options object to change state in an immutable fashion
-    const newOptions = { ...this.state.options };
-    newOptions.xaxis.categories = newCategories;
 
     this.setState({
         series: newSeries,
-        options: newOptions,
+        options: { xaxis: { categories: newCategories } },
         lastFilter: 'PickDrop'
 
     })
@@ -441,13 +427,10 @@ movementDataHandler = ()=>{
         name: "Frequency",
         data: groupedMov
     }];
-    //copy options object to change state in an immutable fashion
-    const newOptions = { ...this.state.options };
-    newOptions.xaxis.categories = newCategories;
 
     this.setState({
         series: newSeries,
-        options: newOptions,
+        options: { xaxis: { categories: newCategories } },
         lastFilter: 'Movement'
 
     })
@@ -832,9 +815,9 @@ render() {
             />
             </div>
             <ReactApexChart 
-            options={this.state.options} 
-            series={this.state.series} 
-            type="histogram" height={350} 
+                options={{ ...this.state.options, ...this.state.options.xaxis.categories }} 
+                series={this.state.series} 
+                type="bar" height={350} 
             />
             </div>
             <div className={styles.PieChart}>
