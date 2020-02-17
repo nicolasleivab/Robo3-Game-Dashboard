@@ -8,12 +8,12 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 function App() {
   return (
     <Router>
-      <Layout>
-        <Switch>
-          <Route exact path='/' component={Login} />
+      <Switch>
+        <Route exact path='/' component={Login} />
+        <Layout>
           <Route path='/tutor' component={TutorDashboard} />
-        </Switch>
-      </Layout>
+        </Layout>
+      </Switch>
     </Router>
   );
 }
