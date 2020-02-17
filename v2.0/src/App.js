@@ -1,15 +1,20 @@
-import React from 'react';
-import './App.module.css';
-import Layout from './components/Layout/Layout';
-import Dashboard from './containers/Dashboard/Dashboard';
+import React from "react";
+import "./App.module.css";
+import Layout from "./components/Layout/Layout";
+import TutorDashboard from "./pages/TutorDashboard/TutorDashboard";
+import Login from "./pages/Login/Login";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div>
+    <Router>
       <Layout>
-          <Dashboard/>
+        <Switch>
+          <Route exact path='/' component={Login} />
+          <Route path='/tutor' component={TutorDashboard} />
+        </Switch>
       </Layout>
-    </div>
+    </Router>
   );
 }
 
