@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function MobileNav() {
+export default function MobileNav(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -75,13 +75,13 @@ export default function MobileNav() {
                 className={styles.navLinks}
               >
                 <MenuItem onClick={handleClose}>
-                  <a href='#'>Distribution</a>
+                  <a href='#'>{props.firstLink}</a>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
-                  <a href='#GroupedChart'>Solutions</a>
+                  <a href='#secondSection'>{props.secondLink}</a>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
-                  <a href='#BarChart'>Success Probability</a>
+                  <a href='#thirdSection'>{props.thirdLink}</a>
                 </MenuItem>
               </Menu>
             </IconButton>

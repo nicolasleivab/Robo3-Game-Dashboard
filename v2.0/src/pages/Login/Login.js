@@ -44,19 +44,33 @@ export default function Login() {
   const classes = useStyles();
   const [text, setText] = useState("");
   const [username, setUsername] = useState("");
+  const [errMsg, setErrMsg] = useState("");
 
   const textChange = e => {
     setText(e.target.value);
   };
 
   const submitUsername = () => {
+    setErrMsg("");
     setUsername(text);
-    if (username === "tutor") {
+    if (username === "tutor" || username === "10574525") {
       console.log(username);
+    } else {
+      setErrMsg("Invalid username");
     }
   };
+
+  const enterListener = e => {
+    if (e.key === "Enter") {
+      submitUsername();
+    }
+  };
+
   if (username === "tutor") {
     return <Redirect to='./tutor' />;
+  }
+  if (username === "10574525") {
+    return <Redirect to='./student' />;
   }
   return (
     <Container component='main' maxWidth='xs'>
@@ -79,6 +93,7 @@ export default function Login() {
             name='username'
             autoComplete='username'
             onChange={textChange}
+            onKeyDown={enterListener}
             autoFocus
           />
           <TextField
@@ -91,7 +106,9 @@ export default function Login() {
             type='password'
             id='password'
             autoComplete='current-password'
+            onKeyDown={enterListener}
           />
+          <p style={{ textAlign: "center", fontStyle: "italic" }}>{errMsg}</p>
           <FormControlLabel
             control={<Checkbox value='remember' color='primary' />}
             label='Remember me'

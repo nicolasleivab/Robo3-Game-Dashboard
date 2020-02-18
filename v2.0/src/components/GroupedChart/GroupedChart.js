@@ -444,7 +444,7 @@ class GroupedChart extends Component {
 
   render() {
     return (
-      <div className={styles.GroupedChart} id='GroupedChart'>
+      <div className={styles.GroupedChart} id='secondSection'>
         <p>Solutions</p>
         <div className={styles.Container}>
           <AutocompleteUI

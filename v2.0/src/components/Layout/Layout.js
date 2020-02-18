@@ -6,17 +6,21 @@ import { Link } from "react-router-dom";
 
 const layout = props => (
   <Auxiliar>
-    <MobileNav />
+    <MobileNav
+      firstLink={props.firstLink}
+      secondLink={props.secondLink}
+      thirdLink={props.thirdLink}
+    />
     <div className={styles.Nav}>
       <p>Robo 3 Dashboard</p>
       <div className={styles.hoverBack}>
-        <a href='#'>Distribution</a>
+        <a href='#'>{props.firstLink}</a>
       </div>
       <div className={styles.hoverBack}>
-        <a href='#GroupedChart'>Solutions</a>
+        <a href='#secondSection'>{props.secondLink}</a>
       </div>
       <div className={styles.hoverBack}>
-        <a href='#BarChart'>Success Prob.</a>
+        <a href='#thirdSection'>{props.thirdLink}</a>
       </div>
       <div className={styles.hoverBack}>
         <Link to='./'>Logout</Link>
