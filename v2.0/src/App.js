@@ -11,20 +11,30 @@ function App() {
     <Router>
       <Switch>
         <Route exact path='/' component={Login} />
-        <Layout
-          firstLink={"Distribution"}
-          secondLink={"Probability of Success"}
-          thirdLink={"Solutions"}
-        >
-          <Route path='/tutor' component={TutorDashboard} />
-        </Layout>
-        <Layout
-          firstLink={"Overview"}
-          secondLink={"Solutions"}
-          thirdLink={"Heatmap"}
-        >
-          <Route path='/student' component={StudentDashboard} />
-        </Layout>
+        <Route
+          path='/tutor'
+          render={props => (
+            <Layout
+              firstLink={"Distribution"}
+              secondLink={"Probability of Success"}
+              thirdLink={"Solutions"}
+            >
+              <TutorDashboard />
+            </Layout>
+          )}
+        />
+        <Route
+          path='/student'
+          render={props => (
+            <Layout
+              firstLink={"Overview"}
+              secondLink={"Solutions"}
+              thirdLink={"Heatmap"}
+            >
+              <StudentDashboard />
+            </Layout>
+          )}
+        />
       </Switch>
     </Router>
   );
