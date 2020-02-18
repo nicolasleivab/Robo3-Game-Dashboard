@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
+import { Link, Redirect } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -32,12 +32,32 @@ const useStyles = makeStyles(theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2)
+  },
+  btn: {
+    width: 500,
+    height: 50,
+    backgroundColor: "blue"
   }
 }));
 
 export default function Login() {
   const classes = useStyles();
+  const [text, setText] = useState("");
+  const [username, setUsername] = useState("");
 
+  const textChange = e => {
+    setText(e.target.value);
+  };
+
+  const submitUsername = () => {
+    setUsername(text);
+    if (username === "tutor") {
+      console.log(username);
+    }
+  };
+  if (username === "tutor") {
+    return <Redirect to='./tutor' />;
+  }
   return (
     <Container component='main' maxWidth='xs'>
       <CssBaseline />
@@ -54,10 +74,11 @@ export default function Login() {
             margin='normal'
             required
             fullWidth
-            id='email'
-            label='Email Address'
-            name='email'
-            autoComplete='email'
+            id='username'
+            label='Username'
+            name='username'
+            autoComplete='username'
+            onChange={textChange}
             autoFocus
           />
           <TextField
@@ -65,7 +86,7 @@ export default function Login() {
             margin='normal'
             required
             fullWidth
-            name='password'
+            //name='password'
             label='Password'
             type='password'
             id='password'
@@ -76,22 +97,22 @@ export default function Login() {
             label='Remember me'
           />
           <Button
-            type='submit'
             fullWidth
             variant='contained'
             color='primary'
+            onClick={submitUsername}
             className={classes.submit}
           >
             Sign In
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href='#' variant='body2'>
+              <Link to='./' href='#' variant='body2'>
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link href='#' variant='body2'>
+              <Link to='./' href='#' variant='body2'>
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
