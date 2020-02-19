@@ -1,47 +1,51 @@
-.Histogram{
-    width: 40rem;
-    margin: 1.5rem 0 0 8rem;
+.Histogram {
+  width: 40rem;
+  margin: 1.5rem 0 0 8rem;
 }
-.Histogram p{
-    font-size: 1.7rem;
-    margin-bottom: 1rem;
+.Histogram p {
+  font-size: 1.7rem;
+  margin-bottom: 1rem;
 }
-.PieChart{
-    margin: 10rem 0 0 10rem;
+.PieChart {
+  margin: 10rem 0 0 10rem;
 }
-.Wrapper{
+.Wrapper {
   height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.Container{
-   display: flex; 
+.Container {
+  display: flex;
 }
 
 @media only screen and (max-width: 1200px) {
-    .Histogram{
-        margin: 11rem 0 0 8rem;
-    }
+  .Histogram {
+    margin: 11rem 0 0 8rem;
+  }
 }
 
 @media only screen and (max-width: 1024px) {
-    .Wrapper{
-        display: inline;
-        margin: 0 auto;
-    }
-    .PieChart{
-        margin: 1rem 0 0 20%;
-        width: 100%;
-    }
-    .Histogram{
-        width: 80%;
-        margin: 11rem 15% 0 15%;
-    }
+  .Wrapper {
+    display: inline;
+    margin: 0 auto;
+  }
+  .PieChart {
+    margin: 1rem 0 0 20%;
+    width: 100%;
+  }
+  .Histogram {
+    width: 80%;
+    margin: 11rem 15% 0 15%;
+  }
 }
 @media only screen and (max-width: 767px) {
-    .Histogram{
-        width: 90%;
-        margin: 7rem 1.5rem 0 1.5rem;
-    }
+  .Histogram {
+    width: 90%;
+    margin: 7rem 1.5rem 0 1.5rem;
+  }
+  .PieChart {
+    margin: 1rem 0 0 20%;
+    width: 100%;
+  }
 }

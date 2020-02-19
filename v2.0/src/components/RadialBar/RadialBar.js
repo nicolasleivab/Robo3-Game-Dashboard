@@ -55,15 +55,13 @@ export default class RadialBar extends Component {
 
   render() {
     return (
-      <div>
-        <div id='RadialBar'>
-          <ReactApexChart
-            options={this.state.options}
-            series={[this.state.series]}
-            type='radialBar'
-            height={350}
-          />
-        </div>
+      <div id='RadialBar'>
+        <ReactApexChart
+          options={this.state.options}
+          series={[this.state.series]}
+          type='radialBar'
+          height={300}
+        />
       </div>
     );
   }

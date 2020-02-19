@@ -3,6 +3,8 @@ import axios from "axios";
 import GroupedBarChart from "../../components/GroupedChart/GroupedChart";
 import RadialBar from "../../components/RadialBar/RadialBar";
 import BarChart from "../../components/BarChart/BarChart";
+import LeaderBoard from "../../components/Leaderboard/Leaderboard";
+import styles from "./StudentDashboard.module.css";
 
 let googleAPIKey;
 let series = 0;
@@ -148,7 +150,10 @@ class StudentDashboard extends Component {
   render() {
     return (
       <Fragment>
-        <RadialBar series={this.state.currentStudentProgress} />
+        <div className={styles.Overview}>
+          <RadialBar series={this.state.currentStudentProgress} />
+          <LeaderBoard />
+        </div>
         <BarChart
           barChartSeries={this.state.barChartSeries}
           categories={this.state.options}
