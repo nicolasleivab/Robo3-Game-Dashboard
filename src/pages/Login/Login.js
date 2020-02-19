@@ -131,6 +131,20 @@ export default function Login() {
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
+        <div
+          style={{
+            width: 420,
+            textAlign: "justify",
+            color: "#555",
+            textJustify: "inner-word"
+          }}
+        >
+          <p>Demo credentials: </p>
+          <p>Tutor dashboard username: tutor</p>
+          <p>
+            Student dashboard username: 10574525, 12341234, 15678900 or 11336789
+          </p>
+        </div>
         <Typography component='h1' variant='h5'>
           Sign in
         </Typography>

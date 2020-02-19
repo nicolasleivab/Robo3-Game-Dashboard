@@ -3,13 +3,8 @@ import ReactApexChart from "react-apexcharts";
 import styles from "./GroupedChart.module.css";
 import DropdownUI from "../DropdownUI/DropdownUI";
 import AutocompleteUI from "../AutocompleteUI/AutocompleteUI";
-let googleAPIKey;
-
-if (process.env.NODE_ENV !== "production") {
-  googleAPIKey = process.env.REACT_APP_GOOGLEAPI_KEY;
-} else {
-  googleAPIKey = process.env.GOOGLEAPI_KEY;
-}
+const googleAPIKey = process.env.REACT_APP_GOOGLEAPI_KEY;
+const googleAPIKey2 = process.env.GOOGLEAPY_KEY;
 
 class GroupedChart extends Component {
   state = {
@@ -78,7 +73,8 @@ class GroupedChart extends Component {
   // Fetch Google Sheets data 2 (restricted api key)
   componentDidMount() {
     fetch(
-      `https://sheets.googleapis.com/v4/spreadsheets/1evjoQPchLR8iUhjQQ8i56hy6Df5z7K_eVSWs8yVugC4/values/Sheet1?key=${googleAPIKey}`
+      `https://sheets.googleapis.com/v4/spreadsheets/1evjoQPchLR8iUhjQQ8i56hy6Df5z7K_eVSWs8yVugC4/values/Sheet1?key=${googleAPIKey ||
+        googleAPIKey2}`
     )
       .then(res => res.json())
       .then(

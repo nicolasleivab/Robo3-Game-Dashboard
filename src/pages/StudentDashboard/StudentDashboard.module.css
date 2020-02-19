@@ -5,6 +5,11 @@
   align-items: center;
   margin-top: 50px;
 }
+.HeatMap {
+  width: 60%;
+  margin: 10px auto;
+  margin-bottom: 50px;
+}
 @media only screen and (max-width: 1200px) {
   .Overview {
     align-items: flex-end;
