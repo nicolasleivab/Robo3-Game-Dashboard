@@ -19,7 +19,7 @@ class GroupedChart extends Component {
     currentFilter: "Cycles",
     avgFilter: "avgC",
     minFilter: "avgC",
-    personFilter: "10574525",
+    personFilter: this.props.defaultStudent,
     series: [
       {
         name: "Student's Solution",
@@ -164,7 +164,7 @@ class GroupedChart extends Component {
               data: thirdColumn
             }
           ];
-          console.log(firstColumn);
+
           //set new state
           this.setState({
             sheetsData: sheetsData,
@@ -447,11 +447,15 @@ class GroupedChart extends Component {
       <div className={styles.GroupedChart} id='secondSection'>
         <p>Solutions</p>
         <div className={styles.Container}>
-          <AutocompleteUI
-            students={this.state.allStudents}
-            filterByStudent={this.filterByStudent}
-            currentStudent={this.state.personFilter}
-          />
+          {this.props.isTutor ? (
+            <AutocompleteUI
+              students={this.state.allStudents}
+              filterByStudent={this.filterByStudent}
+              currentStudent={this.state.personFilter}
+            />
+          ) : (
+            <div></div>
+          )}
           <DropdownUI
             cyclesDataHandler={this.cyclesDataHandler}
             instructionsDataHandler={this.instructionsDataHandler}

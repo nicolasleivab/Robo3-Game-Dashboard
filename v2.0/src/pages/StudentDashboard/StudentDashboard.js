@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import GroupedBarChart from "../../components/GroupedChart/GroupedChart";
 
 let googleAPIKey;
 
@@ -11,6 +12,8 @@ if (process.env.NODE_ENV !== "production") {
 
 class StudentDashboard extends Component {
   state = {
+    isTutor: false,
+    studentId: "",
     generalData: [],
     solutionsData: []
   };
@@ -53,13 +56,17 @@ class StudentDashboard extends Component {
 
     console.log(sheets1Data);
     this.setState({
-      generalData: sheets1Data
+      generalData: sheets1Data,
+      studentId: JSON.parse(localStorage.getItem("studentId"))
     });
   }
 
   render() {
     return (
-      <p style={{ marginTop: 300, marginLeft: 300 }}>Student Dashboard!</p>
+      <GroupedBarChart
+        isTutor={this.state.isTutor}
+        defaultStudent={JSON.parse(localStorage.getItem("studentId"))}
+      />
     );
   }
 }

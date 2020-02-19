@@ -13,6 +13,7 @@ if (process.env.NODE_ENV !== "production") {
 
 class TutorDashboard extends Component {
   state = {
+    isTutor: true,
     sheetsData: [],
     barChartSeries: [],
     options: {
@@ -124,7 +125,10 @@ class TutorDashboard extends Component {
     return (
       <div>
         <Histogram />
-        <GroupedChart />
+        <GroupedChart
+          isTutor={this.state.isTutor}
+          defaultStudent={"10574525"}
+        />
         <BarChart
           barChartSeries={this.state.barChartSeries}
           categories={this.state.options}

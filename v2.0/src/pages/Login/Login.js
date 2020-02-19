@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -13,7 +13,16 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Copyright from "../../components/Copyright/Copyright";
+import axios from "axios";
 //adapted from Material UI
+
+let googleAPIKey;
+
+if (process.env.NODE_ENV !== "production") {
+  googleAPIKey = process.env.REACT_APP_GOOGLEAPI_KEY;
+} else {
+  googleAPIKey = process.env.GOOGLEAPI_KEY;
+}
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -45,6 +54,44 @@ export default function Login() {
   const [text, setText] = useState("");
   const [username, setUsername] = useState("");
   const [errMsg, setErrMsg] = useState("");
+  const [studentsList, setStudents] = useState("");
+
+  useEffect(() => {
+    async function getStudents() {
+      const res = await axios.get(
+        `https://sheets.googleapis.com/v4/spreadsheets/1evjoQPchLR8iUhjQQ8i56hy6Df5z7K_eVSWs8yVugC4/values/Sheet1?key=${googleAPIKey}`
+      );
+      const rawData = res.data.values;
+
+      const formattedData = [];
+      let prop, value;
+      const studentsIds = [];
+      //nested loops-> convert array of arrays to array of objects
+      for (let i = 1; i < rawData.length; i++) {
+        //first row (0) contains each column key(prop)
+        let obj = {};
+        for (let j = 0; j < rawData[i].length; j++) {
+          prop = rawData[0][j];
+          value = rawData[i][j];
+          obj[prop] = value;
+        }
+        formattedData.push(obj);
+      }
+      console.log(formattedData.length);
+      for (let i = 0; i < formattedData.length; i++) {
+        const currentStudent = formattedData[i]["ID"];
+        studentsIds.push(currentStudent);
+      }
+      //get unique values
+      const uniqueStudents = studentsIds.filter(function(item, pos) {
+        return studentsIds.indexOf(item) == pos;
+      });
+
+      console.log(uniqueStudents);
+      setStudents(uniqueStudents);
+    }
+    getStudents();
+  }, []);
 
   const textChange = e => {
     setText(e.target.value);
@@ -52,9 +99,10 @@ export default function Login() {
 
   const submitUsername = () => {
     setErrMsg("");
-    setUsername(text);
-    if (username === "tutor" || username === "10574525") {
-      console.log(username);
+    if (text === "tutor" || studentsList.includes(text)) {
+      localStorage.removeItem("studentId");
+      localStorage.setItem("studentId", JSON.stringify(text));
+      setUsername(text);
     } else {
       setErrMsg("Invalid username");
     }
@@ -69,7 +117,11 @@ export default function Login() {
   if (username === "tutor") {
     return <Redirect to='./tutor' />;
   }
-  if (username === "10574525") {
+  if (
+    username !== "" &&
+    JSON.parse(localStorage.getItem("studentId")) !== null &&
+    JSON.parse(localStorage.getItem("studentId")) !== undefined
+  ) {
     return <Redirect to='./student' />;
   }
   return (
