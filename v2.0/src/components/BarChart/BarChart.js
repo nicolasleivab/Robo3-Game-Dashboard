@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactApexChart from "react-apexcharts";
 import styles from "./BarChart.module.css";
+import RadioButtonsGroup from "../../components/RadioButtons/RadioButtons";
 
 class BarChart extends Component {
   state = {
@@ -60,6 +61,14 @@ class BarChart extends Component {
     return (
       <div className={styles.BarChart} id='thirdSection'>
         <p>{this.props.title}</p>
+        {this.props.isTutor ? (
+          <div></div>
+        ) : (
+          <RadioButtonsGroup
+            roundsHandler={this.props.roundsHandler}
+            timeHandler={this.props.timeHandler}
+          />
+        )}
         <ReactApexChart
           options={{ ...this.state.options, ...this.props.categories }}
           series={this.props.barChartSeries}

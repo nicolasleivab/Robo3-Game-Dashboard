@@ -134,6 +134,7 @@ class TutorDashboard extends Component {
           barChartSeries={this.state.barChartSeries}
           categories={this.state.options}
           title={"Success Probability"}
+          isTutor={this.state.isTutor}
         />
       </div>
     );

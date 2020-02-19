@@ -18,6 +18,9 @@ class StudentDashboard extends Component {
     isTutor: false,
     studentId: "",
     generalData: [],
+    title: "",
+    rounds: [],
+    time: [],
     solutionsData: [],
     currentStudentProgress: 0,
     barChartSeries: [],
@@ -103,13 +106,16 @@ class StudentDashboard extends Component {
     const levels = [...this.state.options.xaxis.categories];
 
     for (let i = 0; i < levels.length; i++) {
-      const currentArray = [];
+      const currentArrayRounds = [];
+      const currentArrayTime = [];
       for (let j = 0; j < filteredData.length; j++) {
         if (filteredData[j]["level"] === levels[i]) {
-          currentArray.push(filteredData[j]["Rounds"]);
+          currentArrayRounds.push(filteredData[j]["Rounds"]);
+          currentArrayTime.push(filteredData[j]["Playtime (min)"]);
         }
       }
-      currentRounds.push(Math.max(...currentArray));
+      currentRounds.push(Math.max(...currentArrayRounds));
+      currentTime.push(Math.max(...currentArrayTime));
     }
     console.log(currentRounds);
 
@@ -117,9 +123,27 @@ class StudentDashboard extends Component {
       generalData: sheets1Data,
       studentId: currentStudent,
       currentStudentProgress: progressPercent * 100,
-      barChartSeries: [{ name: "Rounds", data: currentRounds }]
+      barChartSeries: [{ name: "Rounds", data: currentRounds }],
+      rounds: [currentRounds],
+      time: [currentTime],
+      title: "Gameplay"
     });
   }
+
+  roundsHandler = () => {
+    const currentRounds = [...this.state.rounds];
+    this.setState({
+      barChartSeries: [{ name: "Rounds", data: currentRounds[0] }]
+    });
+  };
+
+  timeHandler = () => {
+    const currentTime = [...this.state.time];
+    console.log(currentTime);
+    this.setState({
+      barChartSeries: [{ name: "Playtime (min)", data: currentTime[0] }]
+    });
+  };
 
   render() {
     return (
@@ -128,7 +152,10 @@ class StudentDashboard extends Component {
         <BarChart
           barChartSeries={this.state.barChartSeries}
           categories={this.state.options}
-          title={"Rounds"}
+          title={this.state.title}
+          isTutor={this.state.isTutor}
+          roundsHandler={this.roundsHandler}
+          timeHandler={this.timeHandler}
         />
         <GroupedBarChart
           isTutor={this.state.isTutor}
