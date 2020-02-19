@@ -2,6 +2,7 @@ import React, { Component, Fragment, Profiler } from "react";
 import axios from "axios";
 import GroupedBarChart from "../../components/GroupedChart/GroupedChart";
 import RadialBar from "../../components/RadialBar/RadialBar";
+import BarChart from "../../components/BarChart/BarChart";
 
 let googleAPIKey;
 let series = 0;
@@ -18,7 +19,25 @@ class StudentDashboard extends Component {
     studentId: "",
     generalData: [],
     solutionsData: [],
-    currentStudentProgress: 0
+    currentStudentProgress: 0,
+    barChartSeries: [],
+    options: {
+      xaxis: {
+        categories: [
+          "Alterna",
+          "Cattura il Cubo",
+          "Concatena",
+          "Copia",
+          "Filtra Tutti I Rossi",
+          "Filtro Doppio Rosso",
+          "Filtro Rosso",
+          "Hello, world!!!",
+          "Inverti",
+          "Inverti i Pari",
+          "Scatter"
+        ]
+      }
+    }
   };
   //fetch data from first sheet
   async componentDidMount() {
@@ -75,13 +94,17 @@ class StudentDashboard extends Component {
       //get unique values
       return completedLevels.indexOf(item) === pos;
     });
+    console.log(completedLevelsUnique);
     const progressPercent = completedLevelsUnique.length / 11;
     console.log(progressPercent);
 
     this.setState({
       generalData: sheets1Data,
       studentId: currentStudent,
-      currentStudentProgress: progressPercent * 100
+      currentStudentProgress: progressPercent * 100,
+      barChartSeries: [
+        { name: "Rounds", data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] }
+      ]
     });
   }
 
@@ -89,6 +112,11 @@ class StudentDashboard extends Component {
     return (
       <Fragment>
         <RadialBar series={this.state.currentStudentProgress} />
+        <BarChart
+          barChartSeries={this.state.barChartSeries}
+          categories={this.state.options}
+          title={"Rounds"}
+        />
         <GroupedBarChart
           isTutor={this.state.isTutor}
           defaultStudent={JSON.parse(localStorage.getItem("studentId"))}

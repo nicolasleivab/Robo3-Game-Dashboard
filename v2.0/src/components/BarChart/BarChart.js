@@ -34,11 +34,13 @@ class BarChart extends Component {
         colors: ["transparent"]
       },
       xaxis: {
-        categories: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7]
+        categories: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7],
+        tickAmount: 11,
+        tickPlacement: "between"
       },
       yaxis: {
         title: {
-          text: "Success Probability"
+          text: this.props.title
         }
       },
       fill: {

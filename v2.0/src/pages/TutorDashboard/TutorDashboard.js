@@ -101,6 +101,7 @@ class TutorDashboard extends Component {
 
           const barChartSeries = sortedList.map(obj => obj.average);
           const categories = sortedList.map(obj => obj.level);
+          console.log(categories);
           //set new state
           console.log(sortedList);
           this.setState({
@@ -132,6 +133,7 @@ class TutorDashboard extends Component {
         <BarChart
           barChartSeries={this.state.barChartSeries}
           categories={this.state.options}
+          title={"Success Probability"}
         />
       </div>
     );
