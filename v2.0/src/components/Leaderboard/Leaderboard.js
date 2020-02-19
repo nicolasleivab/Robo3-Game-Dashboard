@@ -69,6 +69,46 @@ export default function LeaderBoard(props) {
       });
 
       setData(sheets2Data);
+
+      function sumAll(arr) {
+        let sums = {},
+          value = [],
+          studentID;
+        for (var i = 0; i < arr.length; i++) {
+          //loop through array
+          studentID = arr[i].ID;
+          if (!(studentID in sums)) {
+            sums[studentID] = 0;
+          }
+          sums[studentID] += arr[i]["Cycles"];
+          sums[studentID] += arr[i]["Instructions"]; //sum Score (Cycles + Instructions)
+        }
+
+        for (studentID in sums) {
+          value.push({ rank: 0, id: studentID, score: sums[studentID] }); //push elements to new array students and score
+        }
+        return value; //return array of objects
+      }
+
+      const sumPlayers = sumAll(sheets2Data);
+
+      const sortedPlayers = sumPlayers.sort(
+        (aPlayer, bPlayer) => aPlayer.score - bPlayer.score
+      ); //sorts the players by score (ascending)
+
+      for (let i = 0; i < sortedPlayers.length; i++) {
+        sortedPlayers[i].rank = i + 1; //Add ranking
+      }
+      console.log(sortedPlayers);
+      setState({
+        columns: [
+          { title: "Rank", field: "rank" },
+          { title: "ID", field: "id" },
+          { title: "Score", field: "score" }
+        ],
+        data: sortedPlayers
+      });
+      console.log(state.data);
     }
     getData();
   }, []);
