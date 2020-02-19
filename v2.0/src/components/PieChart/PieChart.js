@@ -1,43 +1,59 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import ReactApexChart from "react-apexcharts";
-import styles from './PieChart.module.css';
+import styles from "./PieChart.module.css";
 
 class PieChart extends Component {
-
-state = {
-
+  state = {
     series: [44, 55, 13, 43],
     options: {
-        chart: {
-            width: 380,
-            type: 'pie',
-        },
-        labels: ['Functions', 'Loops', 'PickDrop', 'Movement'],
-        responsive: [{
-            breakpoint: 480,
-            options: {
-                chart: {
-                    width: 200
-                },
-                legend: {
-                    position: 'bottom'
-                }
+      chart: {
+        width: 380,
+        type: "pie"
+      },
+      labels: ["Functions", "Loops", "PickDrop", "Movement"],
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: "bottom"
             }
-        }]
-    },
+          }
+        }
+      ],
+      responsive: [
+        {
+          breakpoint: 500,
+          options: {
+            plotOptions: {
+              bar: {
+                horizontal: false
+              }
+            },
+            legend: {
+              position: "bottom"
+            }
+          }
+        }
+      ]
+    }
+  };
 
-
-};
-
-render() {
+  render() {
     return (
-
-    <div className={styles.PieChart}>
-        <ReactApexChart options={this.state.options} series={this.props.series} type="pie" width={380} />
-    </div>
-
+      <div className={styles.PieChart}>
+        <ReactApexChart
+          options={this.state.options}
+          series={this.props.series}
+          type='pie'
+          width={380}
+        />
+      </div>
     );
-}
+  }
 }
 
 export default PieChart;

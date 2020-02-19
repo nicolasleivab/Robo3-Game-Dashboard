@@ -7,7 +7,6 @@ import LeaderBoard from "../../components/Leaderboard/Leaderboard";
 import styles from "./StudentDashboard.module.css";
 
 let googleAPIKey;
-let series = 0;
 
 if (process.env.NODE_ENV !== "production") {
   googleAPIKey = process.env.REACT_APP_GOOGLEAPI_KEY;
