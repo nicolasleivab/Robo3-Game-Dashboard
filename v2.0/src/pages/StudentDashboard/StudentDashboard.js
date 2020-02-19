@@ -1,8 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, Fragment, Profiler } from "react";
 import axios from "axios";
 import GroupedBarChart from "../../components/GroupedChart/GroupedChart";
+import RadialBar from "../../components/RadialBar/RadialBar";
 
 let googleAPIKey;
+let series = 0;
 
 if (process.env.NODE_ENV !== "production") {
   googleAPIKey = process.env.REACT_APP_GOOGLEAPI_KEY;
@@ -15,7 +17,8 @@ class StudentDashboard extends Component {
     isTutor: false,
     studentId: "",
     generalData: [],
-    solutionsData: []
+    solutionsData: [],
+    currentStudentProgress: 0
   };
   //fetch data from first sheet
   async componentDidMount() {
@@ -50,23 +53,47 @@ class StudentDashboard extends Component {
       d.PickDrop = +d.PickDrop;
       d["Success Probability"] = +d["Success Probability"];
       d.Cycles = +d.Cycles;
-      d.ID = +d.ID;
       d.date = new Date(d.date);
     });
 
-    console.log(sheets1Data);
+    const filteredData = [];
+    const currentStudent = JSON.parse(localStorage.getItem("studentId"));
+    for (let i = 0; i < formattedData.length; i++) {
+      if (formattedData[i]["ID"] === currentStudent) {
+        filteredData.push(formattedData[i]);
+      }
+    }
+
+    const filterBySuccess = filteredData.filter(function(d) {
+      return d["Success Probability"] > 0;
+    }); //Filter completed levels
+
+    const completedLevels = filterBySuccess.map(function(d) {
+      return d.level;
+    }); //get each level name
+    const completedLevelsUnique = completedLevels.filter(function(item, pos) {
+      //get unique values
+      return completedLevels.indexOf(item) === pos;
+    });
+    const progressPercent = completedLevelsUnique.length / 11;
+    console.log(progressPercent);
+
     this.setState({
       generalData: sheets1Data,
-      studentId: JSON.parse(localStorage.getItem("studentId"))
+      studentId: currentStudent,
+      currentStudentProgress: progressPercent * 100
     });
   }
 
   render() {
     return (
-      <GroupedBarChart
-        isTutor={this.state.isTutor}
-        defaultStudent={JSON.parse(localStorage.getItem("studentId"))}
-      />
+      <Fragment>
+        <RadialBar series={this.state.currentStudentProgress} />
+        <GroupedBarChart
+          isTutor={this.state.isTutor}
+          defaultStudent={JSON.parse(localStorage.getItem("studentId"))}
+        />
+      </Fragment>
     );
   }
 }
