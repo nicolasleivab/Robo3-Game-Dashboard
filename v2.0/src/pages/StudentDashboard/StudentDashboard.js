@@ -96,15 +96,28 @@ class StudentDashboard extends Component {
     });
     console.log(completedLevelsUnique);
     const progressPercent = completedLevelsUnique.length / 11;
-    console.log(progressPercent);
+    console.log(filteredData);
+
+    const currentRounds = [];
+    const currentTime = [];
+    const levels = [...this.state.options.xaxis.categories];
+
+    for (let i = 0; i < levels.length; i++) {
+      const currentArray = [];
+      for (let j = 0; j < filteredData.length; j++) {
+        if (filteredData[j]["level"] === levels[i]) {
+          currentArray.push(filteredData[j]["Rounds"]);
+        }
+      }
+      currentRounds.push(Math.max(...currentArray));
+    }
+    console.log(currentRounds);
 
     this.setState({
       generalData: sheets1Data,
       studentId: currentStudent,
       currentStudentProgress: progressPercent * 100,
-      barChartSeries: [
-        { name: "Rounds", data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] }
-      ]
+      barChartSeries: [{ name: "Rounds", data: currentRounds }]
     });
   }
 

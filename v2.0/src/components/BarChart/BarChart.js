@@ -59,7 +59,7 @@ class BarChart extends Component {
   render() {
     return (
       <div className={styles.BarChart} id='thirdSection'>
-        <p>Success Probability</p>
+        <p>{this.props.title}</p>
         <ReactApexChart
           options={{ ...this.state.options, ...this.props.categories }}
           series={this.props.barChartSeries}
