@@ -16,13 +16,7 @@ import Copyright from "../../components/Copyright/Copyright";
 import axios from "axios";
 //adapted from Material UI
 
-let googleAPIKey;
-
-if (process.env.NODE_ENV !== "production") {
-  googleAPIKey = process.env.REACT_APP_GOOGLEAPI_KEY;
-} else {
-  googleAPIKey = process.env.GOOGLEAPI_KEY;
-}
+const googleAPIKey = process.env.REACT_APP_GOOGLEAPI_KEY;
 
 const useStyles = makeStyles(theme => ({
   paper: {

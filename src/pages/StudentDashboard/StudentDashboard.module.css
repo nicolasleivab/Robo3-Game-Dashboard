@@ -6,14 +6,19 @@
   margin-top: 50px;
 }
 .HeatMap {
-  width: 60%;
+  width: 45%;
+  min-width: 700px;
   margin: 10px auto;
   margin-bottom: 50px;
+  font-size: 1.7rem;
 }
 @media only screen and (max-width: 1200px) {
   .Overview {
     align-items: flex-end;
     margin-top: 100px;
+  }
+  .HeatMap {
+    min-width: 600px;
   }
 }
 @media only screen and (max-width: 767px) {
@@ -23,5 +28,8 @@
     justify-content: center;
     margin-top: 100px;
     width: 90%;
+  }
+  .HeatMap {
+    min-width: 500px;
   }
 }

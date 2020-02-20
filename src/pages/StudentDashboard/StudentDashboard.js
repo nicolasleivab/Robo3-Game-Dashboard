@@ -7,9 +7,9 @@ import LeaderBoard from "../../components/Leaderboard/Leaderboard";
 import styles from "./StudentDashboard.module.css";
 import CalendarHeatmap from "react-calendar-heatmap";
 import "react-calendar-heatmap/dist/styles.css";
+import ReactTooltip from "react-tooltip";
 
 const googleAPIKey = process.env.REACT_APP_GOOGLEAPI_KEY;
-const googleAPIKey2 = process.env.GOOGLEAPY_KEY;
 
 class StudentDashboard extends Component {
   state = {
@@ -43,8 +43,7 @@ class StudentDashboard extends Component {
   //fetch data from first sheet
   async componentDidMount() {
     const res = await axios.get(
-      `https://sheets.googleapis.com/v4/spreadsheets/10g_TGtruCriERlXJurPZQk76pvk30U0pkWgbbfzPrjA/values/Sheet1?key=${googleAPIKey ||
-        googleAPIKey2}`
+      `https://sheets.googleapis.com/v4/spreadsheets/10g_TGtruCriERlXJurPZQk76pvk30U0pkWgbbfzPrjA/values/Sheet1?key=${googleAPIKey}`
     );
     const rawData = res.data.values;
     const formattedData = [];
@@ -143,6 +142,13 @@ class StudentDashboard extends Component {
       barChartSeries: [{ name: "Playtime (min)", data: currentTime[0] }]
     });
   };
+  customTooltipDataAttrs = value =>
+    value["count"]
+      ? {
+          "data-tip":
+            "count: " + value["count"] + ", " + "date: " + value["date"]
+        }
+      : {};
 
   render() {
     return (
@@ -164,10 +170,12 @@ class StudentDashboard extends Component {
           defaultStudent={JSON.parse(localStorage.getItem("studentId"))}
         />
         <div className={styles.HeatMap}>
+          <p style={{ marginBottom: 30 }}>Heatmap</p>
           <CalendarHeatmap
             startDate={new Date("2019-03-01")}
             endDate={new Date("2020-03-01")}
             style={{ width: 50 }}
+            tooltipDataAttrs={this.customTooltipDataAttrs}
             values={[
               { date: "2020-01-01", count: 12 },
               { date: "2020-01-22", count: 122 },
@@ -180,6 +188,8 @@ class StudentDashboard extends Component {
               { date: "2020-01-30", count: 38 }
             ]}
           />
+
+          <ReactTooltip />
         </div>
       </Fragment>
     );

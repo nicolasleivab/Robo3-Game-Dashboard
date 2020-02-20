@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import MaterialTable from "material-table";
 import axios from "axios";
 const googleAPIKey = process.env.REACT_APP_GOOGLEAPI_KEY;
-const googleAPIKey2 = process.env.GOOGLEAPY_KEY;
 
 export default function LeaderBoard(props) {
   const [state, setState] = useState({
@@ -21,8 +20,7 @@ export default function LeaderBoard(props) {
   useEffect(() => {
     async function getData() {
       const res = await axios.get(
-        `https://sheets.googleapis.com/v4/spreadsheets/1evjoQPchLR8iUhjQQ8i56hy6Df5z7K_eVSWs8yVugC4/values/Sheet1?key=${googleAPIKey ||
-          googleAPIKey2}`
+        `https://sheets.googleapis.com/v4/spreadsheets/1evjoQPchLR8iUhjQQ8i56hy6Df5z7K_eVSWs8yVugC4/values/Sheet1?key=${googleAPIKey}`
       );
       const rawData = res.data.values;
       const formattedData = [];

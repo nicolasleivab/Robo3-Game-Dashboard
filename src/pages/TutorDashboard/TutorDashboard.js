@@ -4,7 +4,6 @@ import BarChart from "../../components/BarChart/BarChart";
 import Histogram from "../../components/Histogram/Histogram";
 import styles from "./TutorDashboard.module.css";
 const googleAPIKey = process.env.REACT_APP_GOOGLEAPI_KEY;
-const googleAPIKey2 = process.env.GOOGLEAPY_KEY;
 
 class TutorDashboard extends Component {
   state = {
@@ -20,8 +19,7 @@ class TutorDashboard extends Component {
   // Fetch Google Sheets data 1 (restricted api key)
   componentDidMount() {
     fetch(
-      `https://sheets.googleapis.com/v4/spreadsheets/10g_TGtruCriERlXJurPZQk76pvk30U0pkWgbbfzPrjA/values/Sheet1?key=${googleAPIKey ||
-        googleAPIKey2}`
+      `https://sheets.googleapis.com/v4/spreadsheets/10g_TGtruCriERlXJurPZQk76pvk30U0pkWgbbfzPrjA/values/Sheet1?key=${googleAPIKey}`
     )
       .then(res => res.json())
       .then(
