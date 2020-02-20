@@ -438,7 +438,7 @@ class GroupedChart extends Component {
 
   render() {
     return (
-      <div className={styles.GroupedChart} id='secondSection'>
+      <div className={styles.GroupedChart} id='thirdSection'>
         <p>Solutions</p>
         <div className={styles.Container}>
           {this.props.isTutor ? (

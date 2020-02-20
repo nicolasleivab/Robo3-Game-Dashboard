@@ -10,6 +10,7 @@ import "react-calendar-heatmap/dist/styles.css";
 import ReactTooltip from "react-tooltip";
 
 const googleAPIKey = process.env.REACT_APP_GOOGLEAPI_KEY;
+const dateFormat = require("dateformat");
 
 class StudentDashboard extends Component {
   state = {
@@ -38,7 +39,8 @@ class StudentDashboard extends Component {
           "Scatter"
         ]
       }
-    }
+    },
+    tooltipData: []
   };
   //fetch data from first sheet
   async componentDidMount() {
@@ -117,11 +119,34 @@ class StudentDashboard extends Component {
     }
     console.log(currentRounds);
 
+    function sumAll(arr) {
+      let sums = {},
+        value = [],
+        mapDate;
+      for (var i = 0; i < arr.length; i++) {
+        //loop through array
+        mapDate = arr[i].date;
+        if (!(mapDate in sums)) {
+          sums[mapDate] = 0;
+        }
+        sums[mapDate] += arr[i]["Success Probability"]; //sum of values per date
+      }
+
+      for (mapDate in sums) {
+        value.push({ date: mapDate, count: sums[mapDate] }); //push elements to new array with dates and values
+      }
+      return value; //return array of objects
+    }
+
+    const tooltipData = sumAll(filteredData);
+    console.log(tooltipData);
+
     this.setState({
       generalData: sheets1Data,
       studentId: currentStudent,
       currentStudentProgress: progressPercent * 100,
       barChartSeries: [{ name: "Rounds", data: currentRounds }],
+      tooltipData: tooltipData,
       rounds: [currentRounds],
       time: [currentTime],
       title: "Gameplay"
@@ -146,7 +171,11 @@ class StudentDashboard extends Component {
     value["count"]
       ? {
           "data-tip":
-            "count: " + value["count"] + ", " + "date: " + value["date"]
+            "count: " +
+            value["count"] +
+            ", " +
+            "date: " +
+            dateFormat(value["date"], "dddd, mmmm dS, yyyy")
         }
       : {};
 
@@ -171,25 +200,26 @@ class StudentDashboard extends Component {
         />
         <div className={styles.HeatMap}>
           <p style={{ marginBottom: 30 }}>Heatmap</p>
-          <CalendarHeatmap
-            startDate={new Date("2019-03-01")}
-            endDate={new Date("2020-03-01")}
-            style={{ width: 50 }}
-            tooltipDataAttrs={this.customTooltipDataAttrs}
-            values={[
-              { date: "2020-01-01", count: 12 },
-              { date: "2020-01-22", count: 122 },
-              { date: "2020-01-30", count: 38 },
-              { date: "2020-01-01", count: 12 },
-              { date: "2020-01-22", count: 122 },
-              { date: "2020-01-30", count: 38 },
-              { date: "2020-01-01", count: 12 },
-              { date: "2020-01-22", count: 122 },
-              { date: "2020-01-30", count: 38 }
-            ]}
-          />
-
-          <ReactTooltip />
+          {this.state.tooltipData[0] ? (
+            <div id='Heatmap'>
+              <CalendarHeatmap
+                startDate={new Date("2019-03-01")}
+                endDate={new Date("2020-03-01")}
+                style={{ width: 50 }}
+                tooltipDataAttrs={this.customTooltipDataAttrs}
+                values={this.state.tooltipData}
+                classForValue={value => {
+                  if (!value) {
+                    return "color-empty";
+                  }
+                  return `color-github-${value["count"]}`;
+                }}
+              />
+              <ReactTooltip />
+            </div>
+          ) : (
+            <div></div>
+          )}
         </div>
       </Fragment>
     );

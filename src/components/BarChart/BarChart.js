@@ -59,7 +59,7 @@ class BarChart extends Component {
 
   render() {
     return (
-      <div className={styles.BarChart} id='thirdSection'>
+      <div className={styles.BarChart} id='secondSection'>
         <p>{this.props.title}</p>
         {this.props.isTutor ? (
           <div></div>

@@ -120,15 +120,15 @@ class TutorDashboard extends Component {
     return (
       <div>
         <Histogram />
-        <GroupedChart
-          isTutor={this.state.isTutor}
-          defaultStudent={"10574525"}
-        />
         <BarChart
           barChartSeries={this.state.barChartSeries}
           categories={this.state.options}
           title={"Success Probability"}
           isTutor={this.state.isTutor}
+        />
+        <GroupedChart
+          isTutor={this.state.isTutor}
+          defaultStudent={"10574525"}
         />
       </div>
     );

@@ -16,8 +16,8 @@ function App() {
           render={props => (
             <Layout
               firstLink={"Distribution"}
-              secondLink={"Solutions"}
-              thirdLink={"Probability of Success"}
+              secondLink={"Probability of Success"}
+              thirdLink={"Solutions"}
             >
               <TutorDashboard />
             </Layout>
@@ -28,8 +28,8 @@ function App() {
           render={props => (
             <Layout
               firstLink={"Overview"}
-              secondLink={"Solutions"}
-              thirdLink={"Heatmap"}
+              secondLink={"Gameplay"}
+              thirdLink={"Solutions"}
             >
               <StudentDashboard />
             </Layout>
